@@ -1,11 +1,12 @@
 {
-
   "name": "csftutoringnode",
   "version": "1.0.0",
-  "description": ",
+  "description": "MVHS CSF tutoring site written in NodeJS ",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules "
   },
   "author": "MVHS",
   "license": "ISC",
@@ -19,7 +20,7 @@
     "express-session": "^1.15.6",
     "express-validator": "^5.0.3",
     "googleapis": "^27.0.0",
-    "mongoose": "^5.0.9",
+    "mongoose": "^5.0.17",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "properties-reader": "0.0.16",
