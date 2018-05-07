@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// TODO: conditional fields if tutor
 let userSchema = new mongoose.Schema({
 	name: { type: String, required: true },
 	password: { type: String, required: true },
@@ -8,10 +7,14 @@ let userSchema = new mongoose.Schema({
 	grade: { type: Number, required: true },
 	email: { type: String, required: true },
 	phone: { type: String, required: true },
-	group: [{ type: String, required: true }],
-	created: { type: String, required: true, default: Date.now },
+	group: { type: [String], required: true },
+	created: { type: Date, required: true, default: Date.now },
 	active: { type: Boolean, required: true },
-	warnings: { type: Number, required: true }
+	warnings: { type: Number, required: true },
+	// if a tutor
+	maxStudents: { type: Number, required: false },
+	payment: { type: String, required: false },
+	courses: { type: [Number], required: false }
 });
 
 let User = mongoose.model('User', userSchema);

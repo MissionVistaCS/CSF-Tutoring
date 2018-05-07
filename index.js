@@ -12,6 +12,9 @@ app.use('/src/assets', express.static('src/assets'));
 global._base = __dirname + '/';
 
 
+routescan(app, {
+	ignoreInvalid: true
+});
 
 app.use((req, res) => res.sendFile(path.join(_base, '/index.html')));
 
