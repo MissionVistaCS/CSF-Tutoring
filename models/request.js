@@ -1,9 +1,11 @@
-let mongoose = require('mongoose');
-
+const mongoose = require('mongoose'),
+	shortid = require('shortid');
 
 let requestSchema = new mongoose.Schema({
+	_id: { type: String, default: shortid.generate },
+	tutor: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 	studentName: { type: String, required: true },
-        studentEmail: { type: String, required: true },
+    studentEmail: { type: String, required: true },
 	studentPhone: { type: String, required: true },
 	grade: { type: Number, required: true },
 	gender: { type: String, required: true },
@@ -17,7 +19,7 @@ let requestSchema = new mongoose.Schema({
 	state: { type: String, required: true }, 
 	notifications: { type: [Date], required: true },
 	pairingAcceptance: { type: Date, required: true }
-}, { _db.get('db.collection.requests') });
+}, { collection: _db.get('db.collection.requests') });
 
 let Request = mongoose.model('Request', requestSchema);
 

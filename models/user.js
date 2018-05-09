@@ -1,6 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+	shortid = require('shortid');
 
 let userSchema = new mongoose.Schema({
+	_id: { type: String, default: shortid.generate },
 	name: { type: String, required: true },
 	password: { type: String, required: true },
 	gender: { type: String, required: true },
