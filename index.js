@@ -1,17 +1,34 @@
 const express = require('express'),
       path = require('path'),
       routescan = require('express-routescan'),
-      PropertiesReader = require('properties-reader');
+      PropertiesReader = require('properties-reader'),
+      session = require('express-session'),
+      bodyParser = require('body-parser'),
+      cookieParser = require('cookie-parser'),
+      fs = require('fs'),
+      passport = require('passport');
 const app = express();
 
 app.set('port', 3000 || process.ENV.PORT);  // did something wrong and stupid here
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(session({
+	secret: '54brtbnytuioy98rt%^BR*%Eryuhifgdghuif984t7io38gjiof😁',
+	resave: false,
+	saveUninitialized: true,
+	cookie: { secure: false, maxAge: Number(10000000000) }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/dist', express.static('dist'));
 app.use('/src/assets', express.static('src/assets'));
 
 // Globals 
 global._base = __dirname + '/';
-glboal._db = PropertiesReader('./resources/db.properties');
+global._db = PropertiesReader('./resources/db.properties');
 global._env = app.get('env');
 global._isDev = _env === 'development';
 global._isProd = _env === 'production';
@@ -28,7 +45,7 @@ console.critical = function(message) {
 	console.log('[!!!!! CRITICAL !!!!!]', message);
 };
 
-const setUpDatabase = reuqire(_base + 'services/SetupDatabase');
+const setUpDatabase = require(_base + 'services/SetupDatabase');
 
 setUpDatabase();
 
