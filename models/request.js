@@ -17,7 +17,7 @@ let requestSchema = new mongoose.Schema({
 	state: { type: String, required: true }, 
 	notifications: { type: [Date], required: true },
 	pairingAcceptance: { type: Date, required: true }
-});
+}, { _db.get('db.collection.requests') });
 
 let Request = mongoose.model('Request', requestSchema);
 

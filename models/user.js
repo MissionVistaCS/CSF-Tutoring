@@ -15,7 +15,7 @@ let userSchema = new mongoose.Schema({
 	maxStudents: { type: Number, required: false },
 	payment: { type: String, required: false },
 	courses: { type: [Number], required: false }
-});
+}, { collection: _db.get('db.collection.users') });
 
 let User = mongoose.model('User', userSchema);
 

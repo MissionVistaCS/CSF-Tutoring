@@ -1,6 +1,7 @@
 const express = require('express'),
       path = require('path'),
-      routescan = require('express-routescan');
+      routescan = require('express-routescan'),
+      PropertiesReader = require('properties-reader');
 const app = express();
 
 app.set('port', 3000 || process.ENV.PORT);  // did something wrong and stupid here
@@ -10,7 +11,8 @@ app.use('/src/assets', express.static('src/assets'));
 
 // Globals 
 global._base = __dirname + '/';
-
+// is this necessary, we can just export the needed paths
+glboal._db = PropertiesReader('./resources/db.properties');
 
 routescan(app, {
 	ignoreInvalid: true

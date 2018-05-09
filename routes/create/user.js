@@ -1,3 +1,5 @@
+'use strict'
+
 const User = require(_base + 'models/user');
 
 module.exports = {
