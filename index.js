@@ -11,8 +11,27 @@ app.use('/src/assets', express.static('src/assets'));
 
 // Globals 
 global._base = __dirname + '/';
-// is this necessary, we can just export the needed paths
 glboal._db = PropertiesReader('./resources/db.properties');
+global._env = app.get('env');
+global._isDev = _env === 'development';
+global._isProd = _env === 'production';
+
+console.info = function(message) {
+	console.log('[INFO]', message);
+};
+
+console.debug = function(message) {
+	console.log('[DEBUG]', message);
+};
+
+console.critical = function(message) {
+	console.log('[!!!!! CRITICAL !!!!!]', message);
+};
+
+const setUpDatabase = reuqire(_base + 'services/SetupDatabase');
+
+setUpDatabase();
+
 
 routescan(app, {
 	ignoreInvalid: true
