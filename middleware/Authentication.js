@@ -9,22 +9,35 @@ module.exports = {
         }
     },
 
-    /**
-     * Ensures that a session has a permission
-     *
-     * @param perm
-     * @param offline       If true, route is allowed when offline
-     * @returns {Function}
-     */
-    ensurePerm: function (perm) {
-        return function (req, res, next) {
-            permissions.hasPermission(req.user ? req.user._id : null, perm, function (err, hasPerm) {
-                if (hasPerm) {
-                    next();
-                } else {
-                    res.sendBaseResponse('', new PermissionError('User tried to use resource: ' + JSON.stringify(perm)));
-                }
-            });
-        };
+    ensureAdmin: function (req, res, next) {
+        if (!req.isAuthenticated() || !req.user.userGroup.includes('ADMIN')) {
+            res.sendBaseResponse('', new PermissionError(_strings.get('errors.unauthorized')));
+        } else {
+            next();
+        }
+    },
+
+    ensureGeneralTutor: function (req, res, next) {
+        if (!req.isAuthenticated() || !(req.user.userGroup.includes('TUTOR') || req.user.userGroup.includes('PACK_TUTOR'))) {
+            res.sendBaseResponse('', new PermissionError(_strings.get('errors.unauthorized')));
+        } else {
+            next();
+        }
+    },
+
+    ensureTutor: function (req, res, next) {
+        if (!req.isAuthenticated() || !req.user.userGroup.includes('TUTOR')) {
+            res.sendBaseResponse('', new PermissionError(_strings.get('errors.unauthorized')));
+        } else {
+            next();
+        }
+    },
+
+    ensurePackTutor: function (req, res, next) {
+        if (!req.isAuthenticated() || !req.user.userGroup.includes('PACK_TUTOR')) {
+            res.sendBaseResponse('', new PermissionError(_strings.get('errors.unauthorized')));
+        } else {
+            next();
+        }
     }
 };
