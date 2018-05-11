@@ -49,6 +49,14 @@ const setUpDatabase = require(_base + 'services/SetupDatabase');
 
 setUpDatabase();
 
+/**
+ * Auth, cookies, bodies
+ */
+
+const setUpPassport = require(_base + 'services/SetupPassport');
+
+setUpPassport();
+
 
 routescan(app, {
 	ignoreInvalid: true
