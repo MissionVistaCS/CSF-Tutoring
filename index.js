@@ -1,71 +1,79 @@
 const express = require('express'),
-      path = require('path'),
-      routescan = require('express-routescan'),
-      PropertiesReader = require('properties-reader'),
-      session = require('express-session'),
-      bodyParser = require('body-parser'),
-      cookieParser = require('cookie-parser'),
-      fs = require('fs'),
-      passport = require('passport');
+	routescan = require('express-routescan'),
+	PropertiesReader = require('properties-reader'),
+	format = require('string-format');
+
+/**
+ * START GLOBALS
+ */
+global._base = __dirname + '/';
+global._keys = PropertiesReader(_base + 'resources/keys.properties');
+global._db = PropertiesReader(_base + 'resources/db.properties');
+global._strings = PropertiesReader(_base + 'resources/strings.properties');
+
+console.info = function (message) {
+	console.log('[INFO] ' + message);
+};
+
+console.debug = function (message) {
+	if (_isDev) console.log('[DEBUG] ' + message);
+};
+
+console.critical = function (message) {
+	console.log('[!!! CRITICAL !!!] ' + message);
+};
+
+format.extend(String.prototype, {});
+String.prototype.replaceAll = function (a, b) {
+	return this.split(a).join(b);
+};
+
+global.RuntimeError = require(_base + 'domain/RuntimeError');
+global.CriticalError = require(_base + 'domain/CriticalError');
+global.UserError = require(_base + 'domain/UserError');
+global.PermissionError = require(_base + 'domain/PermissionError');
+global.BaseResponse = require(_base + 'domain/BaseResponse');
+
+/**
+ * START EXPRESS/DATABASE CONFIGURATION
+ */
 const app = express();
 
-app.set('port', 3000 || process.ENV.PORT);  // did something wrong and stupid here
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(session({
-	secret: '54brtbnytuioy98rt%^BR*%Eryuhifgdghuif984t7io38gjiof😁',
-	resave: false,
-	saveUninitialized: true,
-	cookie: { secure: false, maxAge: Number(10000000000) }
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use('/dist', express.static('dist'));
-app.use('/src/assets', express.static('src/assets'));
-
-// Globals 
-global._base = __dirname + '/';
-global._db = PropertiesReader('./resources/db.properties');
 global._env = app.get('env');
 global._isDev = _env === 'development';
 global._isProd = _env === 'production';
 
-console.info = function(message) {
-	console.log('[INFO]', message);
-};
+console.info('Running in ' + _env + ' environment.');
 
-console.debug = function(message) {
-	console.log('[DEBUG]', message);
-};
-
-console.critical = function(message) {
-	console.log('[!!!!! CRITICAL !!!!!]', message);
-};
-
+/**
+ * require database.js, upload to server, find error
+ */
 const setUpDatabase = require(_base + 'services/SetupDatabase');
 
 setUpDatabase();
 
 /**
- * Auth, cookies, bodies
+ * Middleware for auth, cookies, bodies
  */
-
 const setUpPassport = require(_base + 'services/SetupPassport');
+const setUpMiddleware = require(_base + 'services/SetupMiddleware');
 
 setUpPassport();
+setUpMiddleware(app);
 
+/**
+ * Custom middleware/routes
+ */
+const security = require(_base + 'middleware/Security');
+const errors = require(_base + 'middleware/Errors');
+const baseResponse = require(_base + 'middleware/BaseResponse');
 
+app.use(security.jsonVuln, security.stripRequest);
+app.use(express.static(_base + 'public'));
+app.use(baseResponse);
 routescan(app, {
 	ignoreInvalid: true
 });
+app.use(errors.notFound, errors.handler);
 
-app.use((req, res) => res.sendFile(path.join(_base, '/index.html')));
-
-app.get('/api', (req, res) => {
-	res.json({ message: 'Welcome to the Server' });
-});
-
-app.listen(app.get('port'), () => console.log('API listening on port', app.get('port')));
+module.exports = app;
