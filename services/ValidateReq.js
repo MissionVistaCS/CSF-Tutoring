@@ -54,6 +54,14 @@ module.exports = {
         return this;
     },
 
+    makePhoneNum: function (param) {
+        if ((request.body[param] === null || request.body[param] === undefined) && (request.query[param] === null || request.query[param] === undefined) && (request.params[param] === null || request.params[param] === undefined)) {
+            return this;
+        }
+        request.assert(param, "Invalid " + param + ", must be a phone number.").matches(/^\\d{3}-\\d{3}-\\d{4}/);
+        return this;
+    },
+
     makeAlphaWithSpace: function (param) {
         if ((request.body[param] === null || request.body[param] === undefined) && (request.query[param] === null || request.query[param] === undefined) && (request.params[param] === null || request.params[param] === undefined)) {
             return this;

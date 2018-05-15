@@ -111,6 +111,16 @@ module.exports = {
         }
     },
 
+    makePhoneNums: function (ints) {
+        return function (req, res, next) {
+            validate.setRequest(req);
+            ints.forEach(function (int) {
+                validate.makePhoneNum(int);
+            });
+            next();
+        }
+    },
+
     makeAlphaWithSpaces: function (ints) {
         return function (req, res, next) {
             validate.setRequest(req);
