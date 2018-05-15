@@ -28,16 +28,20 @@ module.exports = {
 				if (req.body.userGroup.includes('ADMIN')) {
 					req.body.userGroup.splice(req.body.userGroup.indexOf('ADMIN'), 1);
 				}
-				let cellphoneVerify = new CellPhoneVerification({
-					user: 
-				});
 				
 				let user = new User(options);
 				user.save(function(err, user) {
-					
+
+
+                    let cellphoneVerify = new CellPhoneVerification({
+                        user: user._id
+                    });
+                    cellphoneVerify.save(function (err, cellphoneVerify) {
+
+                    });
 				});
 			}
 		}
 	}
 	
-}
+};
