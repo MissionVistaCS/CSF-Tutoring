@@ -18,7 +18,7 @@ module.exports = {
     '/api/login/success': {
         methods: ['get'],
         fn: function (req, res, next) {
-            res.redirect('/api/current-user');
+            res.redirect('/api/session');
         }
     },
     '/api/login/fail': {
