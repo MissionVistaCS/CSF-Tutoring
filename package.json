@@ -4,7 +4,7 @@
   "description": "A student-led educational initiative",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development node --harmony ./bin/www",
+    "start": "node --harmony ./bin/www",
     "test": "mocha --timeout 10000",
     "db-init": "mongo localhost:27017 db-scripts/init_db.js db-scripts/create_roles.js db-scripts/create_permissions.js db-scripts/create_access_levels.js"
   },
