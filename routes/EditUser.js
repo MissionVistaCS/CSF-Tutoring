@@ -2,6 +2,8 @@ const boiler = require(_base + 'middleware/Boiler'),
       mongoose = require('mongoose'),
       User = requie(_base + 'models/User');
 
+const NAME = 'Modify User';
+
 module.exports = {
 	'/api/edituser': {
 		methods: ['put'],
@@ -44,7 +46,7 @@ module.exports = {
 						return next(err);
 					}
 
-					res.json({ result: result }); 
+					res.sendBaseResponse(NAME, null, 'modified user'); 
 				});
 			}
 		}

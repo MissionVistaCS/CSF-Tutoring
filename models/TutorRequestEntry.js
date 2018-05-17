@@ -13,7 +13,7 @@ let requestSchema = new mongoose.Schema({
 	parentEmail: { type: String, required: true },
 	parentCellPhoneNum: { type: String, required: true },
 	payment: { type: String, required: true }, 
-	duplicate: { type: Boolean, required: true },
+	duplicate: { type: Boolean, required: true, default: false },
 	courses: { type: [Number], required: true },
 	created: { type: Date, required: true, default: Date.now },
 	state: { type: String, required: true }, 
