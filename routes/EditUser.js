@@ -7,11 +7,11 @@ const NAME = 'Modify User';
 module.exports = {
 	'/api/edituser': {
 		methods: ['put'],
-		middleware: [boiler.requireFields(['fullName', 'password', 'gender', 'grade', 'email', 'cellPhoneNum', 'userGroup']), boiler.makeInts(['grade']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum']), boiler.handleErrors],
+		middleware: [boiler.requireFields(['id']), boiler.makeAlphaWithSpaces(['fullName', 'gender']), boiler.makeAlphas(['gender']), boiler.makeInts(['grade']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum']), boiler.handleErrors],
 		fn: function(req, res, next) {
 			if (req.user.userGroup === 'ADMIN') {
 				let updateFields = {};
-				const _id = req.body._id;	// get the id of the user you're trying to modify... could do it by name
+				const id = req.body.id;	// get the id of the user you're trying to modify... could do it by name
 
 				if (req.body.fullName) {
 					updateFields.fullName = req.body.fullName;
@@ -41,15 +41,15 @@ module.exports = {
 					updateFields.userGroup = req.body.userGroup;
 				}
 
-				User.findOneAndUpdate({ _id: _id }, updateFields, function(err, result) {
+				User.findOneAndUpdate({ _id: id }, updateFields, function(err, result) {
 					if (err) {
-						return next(err);
+						return res.sendBaseResponse(NAME, err);
 					}
 
-					res.sendBaseResponse(NAME, null, 'modified user'); 
+					res.sendBaseResponse(NAME, null, 'Modified user');
 				});
 			}
 		}
 	}
 
-}
+};

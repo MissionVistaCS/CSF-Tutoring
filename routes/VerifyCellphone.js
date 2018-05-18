@@ -10,7 +10,7 @@ module.exports = {
         middleware: [boiler.requireFields(['id']), boiler.makeAlphaNumerics(['id']), boiler.handleErrors],
         fn: function(req, res, next) {
             let verifyEntryId = req.params.id;
-            CellphoneVerifyEntry.findById(verifyEntryId, function(err, entry) {
+            CellphoneVerifyEntry.findById(verifyEntryId).populate('user').exec(function(err, entry) {
                 if(err) {
                     return res.sendBaseResponse(NAME, err);
                 }
@@ -23,4 +23,4 @@ module.exports = {
             });
         }
     }
-}
+};
