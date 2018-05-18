@@ -48,15 +48,15 @@ console.info('Running in ' + _env + ' environment.');
 /**
  * require database.js, upload to server, find error
  */
-const setUpDatabase = require(_base + 'services/SetupDatabase');
+const setUpDatabase = require(_base + 'services/SetUpDatabase');
 
 setUpDatabase();
 
 /**
  * Middleware for auth, cookies, bodies
  */
-const setUpPassport = require(_base + 'services/SetupPassport');
-const setUpMiddleware = require(_base + 'services/SetupMiddleware');
+const setUpPassport = require(_base + 'services/SetUpPassport');
+const setUpMiddleware = require(_base + 'services/SetUpMiddleware');
 
 setUpPassport();
 setUpMiddleware(app);
