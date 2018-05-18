@@ -1,7 +1,10 @@
+/*
 const passport = require('passport'),
       boiler = require(_base + 'middleware/Boiler'),
       User = require(_base + 'models/User'),
       CellPhoneVerification = require(_base + 'models/CellphoneVerifyEntry');	
+
+const NAME = 'Signup';
 
 module.exports = {
 	'/api/signup': {
@@ -12,11 +15,12 @@ module.exports = {
 				fullName: req.body.fullName,
 				password: req.body.password,
 				gender: req.body.gender,
-				grade: req.body.gender,
+				grade: req.body.grade,
 				email: req.body.email,
 				cellPhoneNum: req.body.cellPhoneNum,
 				userGroup: req.body.userGroup
 			};
+			console.debug(typeof options.userGroup);
 			if (req.user && req.user.userGroup.includes('ADMIN')) {
 				options.verified = true;
 				options.cellPhoneVerified = true;
@@ -30,11 +34,15 @@ module.exports = {
 				}
 				
 				let user = new User(options);
-				user.save(function(err, user) {
+				user.save(function(err, retUser) {
+				console.debug(retUser);
 
+				if (err) {
+					return res.sendBaseResponse(NAME, err);
+				}
 
                     let cellphoneVerify = new CellPhoneVerification({
-                        user: user._id
+                        user: retUser._id
                     });
                     cellphoneVerify.save(function (err, cellphoneVerify) {
 
@@ -45,3 +53,4 @@ module.exports = {
 	}
 	
 };
+*/

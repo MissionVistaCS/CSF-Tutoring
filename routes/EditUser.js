@@ -1,5 +1,4 @@
 const boiler = require(_base + 'middleware/Boiler'),
-      mongoose = require('mongoose'),
       User = require(_base + 'models/User');
 
 const NAME = 'Modify User';

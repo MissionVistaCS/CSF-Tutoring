@@ -68,7 +68,6 @@ const security = require(_base + 'middleware/Security');
 const errors = require(_base + 'middleware/Errors');
 const baseResponse = require(_base + 'middleware/BaseResponse');
 
-app.use(security.jsonVuln, security.stripRequest);
 app.use(express.static(_base + 'public'));
 app.use(baseResponse);
 routescan(app, {

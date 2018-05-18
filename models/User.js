@@ -12,7 +12,7 @@ let userSchema = new mongoose.Schema({
     grade: { type: Number, required: true },
     email: { type: String, required: true, unique: true },
     cellPhoneNum: { type: String, required: true, unique: true },
-    userGroup: { type: [String], required: true },
+    userGroup: { type: [String], required: false },
     created: { type: Date, required: true, default: Date.now },
     active: { type: Boolean, required: true, default: true },
     verified: { type: Boolean, required: true, default: false },
