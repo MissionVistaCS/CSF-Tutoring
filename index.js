@@ -1,7 +1,8 @@
 const express = require('express'),
 	routescan = require('express-routescan'),
 	PropertiesReader = require('properties-reader'),
-	format = require('string-format');
+	format = require('string-format'),
+	path = require('path');
 
 /**
  * START GLOBALS
@@ -74,6 +75,11 @@ app.use(baseResponse);
 routescan(app, {
 	ignoreInvalid: false
 });
+
+app.use(express.static('dist'));
+app.use('/assets', express.static('src/assets'));
+app.use((req, res) => res.sendFile(path.join(_base, '/index.html')));
+
 app.use(errors.notFound, errors.handler);
 
 module.exports = app;
