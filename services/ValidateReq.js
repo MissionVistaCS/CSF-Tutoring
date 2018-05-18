@@ -30,6 +30,14 @@ module.exports = {
         return this;
     },
 
+    makeAlpha: function (param) {
+        if ((request.body[param] === null || request.body[param] === undefined) && (request.query[param] === null || request.query[param] === undefined) && (request.params[param] === null || request.params[param] === undefined)) {
+            return this;
+        }
+        request.assert(param, "Invalid " + param + ", must consist of letters only.").isAlpha();
+        return this;
+    },
+
     makeAlphaNumeric: function (param) {
         if ((request.body[param] === null || request.body[param] === undefined) && (request.query[param] === null || request.query[param] === undefined) && (request.params[param] === null || request.params[param] === undefined)) {
             return this;

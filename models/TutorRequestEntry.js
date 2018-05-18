@@ -16,9 +16,9 @@ let requestSchema = new mongoose.Schema({
 	duplicate: { type: Boolean, required: true, default: false },
 	courses: { type: [Number], required: true },
 	created: { type: Date, required: true, default: Date.now },
-	state: { type: String, required: true }, 
-	notifications: { type: [Date], required: true },
-	pairingAcceptance: { type: Date, required: false }
+	state: { type: String, required: true, default: 'MANUAL' },
+	notifications: { type: [Date], required: true, default: [] },
+	pairingAcceptance: { type: Date, required: false, default: null }
 }, { collection: _db.get('db.collection.requests') });
 
 let Request = mongoose.model('Request', requestSchema);

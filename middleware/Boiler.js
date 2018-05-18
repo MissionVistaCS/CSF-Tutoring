@@ -81,6 +81,16 @@ module.exports = {
         }
     },
 
+    makeAlphas: function (ints) {
+        return function (req, res, next) {
+            validate.setRequest(req);
+            ints.forEach(function (int) {
+                validate.makeAlpha(int);
+            });
+            next();
+        }
+    },
+
     makeAlphaNumerics: function (ints) {
         return function (req, res, next) {
             validate.setRequest(req);
