@@ -17,7 +17,7 @@ let requestSchema = new mongoose.Schema({
 	courses: { type: [Number], required: true },
 	created: { type: Date, required: true, default: Date.now },
 	state: { type: String, required: true, default: 'MANUAL' },
-	notifications: { type: [Date], required: true, default: [] },
+	notifications: { type: [Date] },
 	pairingAcceptance: { type: Date, required: false, default: null }
 }, { collection: _db.get('db.collection.requests') });
 

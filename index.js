@@ -72,7 +72,7 @@ app.use(security.jsonVuln, security.stripRequest);
 app.use(express.static(_base + 'public'));
 app.use(baseResponse);
 routescan(app, {
-	ignoreInvalid: true
+	ignoreInvalid: false
 });
 app.use(errors.notFound, errors.handler);
 

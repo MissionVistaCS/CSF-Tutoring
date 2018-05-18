@@ -14,7 +14,7 @@ module.exports = {
             let options = {
                 fullName: req.body.fullName,
                 gender: req.body.gender,
-                grade: req.body.gender,
+                grade: req.body.grade,
                 email: req.body.email,
                 cellPhoneNum: req.body.cellPhoneNum,
                 parentFullName: req.body.parentFullName,
@@ -24,12 +24,12 @@ module.exports = {
                 courses: req.body.courses
             };
 
-            TutorRequestEntry.findOne({ cellPhoneNum: options.cellPhoneNum, parentCellPhoneNum: options.parentCellPhoneNum }, function (err, res) {
+            TutorRequestEntry.findOne({ cellPhoneNum: options.cellPhoneNum, parentCellPhoneNum: options.parentCellPhoneNum }, function (err, entry) {
                 if (err) {
                     return res.sendBaseResponse(NAME, err);
                 }
 
-                if (res) {
+                if (entry) {
                     options.duplicate = true;
                 }
 

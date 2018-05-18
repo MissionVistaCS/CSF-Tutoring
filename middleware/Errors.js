@@ -8,6 +8,7 @@ module.exports = {
      * Errors not explicitly handled by us usually go here
      */
     handler: function (err, req, res, next) {
+        console.critical(err);
         res.sendBaseResponse('An unknown error', new RuntimeError(err));
     }
 };
