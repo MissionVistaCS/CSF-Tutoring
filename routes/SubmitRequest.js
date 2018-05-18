@@ -1,5 +1,8 @@
 const passport = require('passport'),
-    boiler = require(_base + 'middleware/Boiler');
+    boiler = require(_base + 'middleware/Boiler'),
+    TutorRequestEntry = require(_base + 'models/TutorRequestEntry');
+
+const NAME = 'Submit Tutoring Request';
 
 module.exports = {
     '/api/submit-tutor-request': {
@@ -21,7 +24,25 @@ module.exports = {
                 courses: req.body.courses
             };
 
+            TutorRequestEntry.findOne({ cellPhoneNum: options.cellPhoneNum, parentCellPhoneNum: options.parentCellPhoneNum }, function (err, res) {
+                if (err) {
+                    return res.sendBaseResponse(NAME, err);
+                }
 
+                if (res) {
+                    options.duplicate = true;
+                }
+
+                let tutoringRequestEntry = new TutorRequestEntry(options);
+                tutoringRequestEntry.save(function (err, newEntry) {
+                    if (err) {
+                        return res.sendBaseResponse(NAME, err);
+                    }
+
+                    //TODO: Start background task for pairing. Pass in tutoringRequestEntry.
+                    res.sendBaseResponse(NAME, null, 'Submitted tutoring request');
+                });
+            });
         }
     }
 

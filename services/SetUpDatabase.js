@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 module.exports = function () {
     const url = _db.get('db.connection.' + _env);
-    console.info('Attempting to cnnect to', url);
+    console.info('Attempting to connect to', url);
     mongoose.connect(url);
     mongoose.connection.on('connected', function () {
         console.info('Database connection established');
