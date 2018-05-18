@@ -6,10 +6,12 @@
   "scripts": {
     "start": "node --harmony ./bin/www",
     "test": "mocha --timeout 10000",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "db-init": "mongo localhost:27017 db-scripts/init_db.js db-scripts/create_roles.js db-scripts/create_permissions.js db-scripts/create_access_levels.js"
   },
   "dependencies": {
     "async": "~2.1.4",
+    "babel-loader": "^7.1.4",
     "bcrypt-nodejs": "~0.0.3",
     "body-parser": "~1.15.2",
     "chai": "^4.0.2",
@@ -17,6 +19,7 @@
     "connect-flash": "~0.1.1",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
+    "cross-env": "^5.1.5",
     "debug": "~2.2.0",
     "ejs": "~2.5.2",
     "express": "~4.14.0",
@@ -35,6 +38,7 @@
     "opn": "^4.0.2",
     "passport": "~0.3.2",
     "passport-local": "~1.0.0",
+    "path": "^0.12.7",
     "pretty-bytes": "^4.0.2",
     "properties-reader": "0.0.15",
     "randomstring": "~1.1.5",
@@ -44,6 +48,15 @@
     "string-format": "^0.5.0",
     "striptags": "^3.0.1",
     "validator": "~6.2.0",
+    "vue": "^2.5.16",
+    "vue-cli": "^2.9.3",
+    "vue-loader": "^15.0.11",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.8.3",
     "youtube-api": "^2.0.6"
+  },
+  "devDependencies": {
+    "webpack-cli": "^2.1.3"
   }
 }
