@@ -1,6 +1,6 @@
 const boiler = require(_base + 'middleware/Boiler'),
       mongoose = require('mongoose'),
-      User = requie(_base + 'models/User');
+      User = require(_base + 'models/User');
 
 const NAME = 'Modify User';
 
