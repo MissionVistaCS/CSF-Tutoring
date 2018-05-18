@@ -66,7 +66,7 @@ module.exports = {
         if ((request.body[param] === null || request.body[param] === undefined) && (request.query[param] === null || request.query[param] === undefined) && (request.params[param] === null || request.params[param] === undefined)) {
             return this;
         }
-        request.assert(param, "Invalid " + param + ", must be a phone number.").matches(/^\\d{3}-\\d{3}-\\d{4}/);
+        request.assert(param, "Invalid " + param + ", must be a phone number.").matches(/^\d{3}-\d{3}-\d{4}/);
         return this;
     },
 
