@@ -16,6 +16,10 @@ BaseResponse.prototype.addError = function (error) {
     }
 };
 
+BaseResponse.prototype.hasErrors = function () {
+    return this.errors.length > 0;
+};
+
 BaseResponse.prototype.toJSON = function () {
     return {
         name: this.name,

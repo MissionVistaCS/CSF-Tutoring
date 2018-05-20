@@ -12,7 +12,7 @@ let userSchema = new mongoose.Schema({
     grade: { type: Number, required: true },
     email: { type: String, required: true, unique: true },
     cellPhoneNum: { type: String, required: true, unique: true },
-    userGroup: { type: [String], required: false },
+    userGroup: { type: [String], required: false }, /*ADMIN, TUTOR, PACK_TUTOR*/
     created: { type: Date, required: true, default: Date.now },
     active: { type: Boolean, required: true, default: true },
     verified: { type: Boolean, required: true, default: false },
@@ -21,7 +21,7 @@ let userSchema = new mongoose.Schema({
     // if a tutor
     maxStudents: { type: Number, required: false },
     payment: { type: String, required: false },
-    courses: { type: [Number], required: false }
+    courses: { type: [Number], required: true }
 }, { collection: _db.get('db.collection.users') });
 
 let noop = function () {};
@@ -30,6 +30,28 @@ userSchema.pre('save', function (done) {
     let user = this; //Reference to user model
 
     if (!user.isModified("password")) {
+        return done();
+    }
+
+    bcrypt.genSalt(SALT_FACTOR, function (err, salt) {
+        if (err) {
+            return done(err);
+        }
+        bcrypt.hash(user.password, salt, noop, function (err, hashedPassword) {
+            if (err) {
+                return done(err);
+            }
+            user.password = hashedPassword;
+            done();
+        });
+    });
+});
+
+userSchema.pre('findOneAndUpdate', function (done) {
+    let query = this; //Reference to user model
+    let user = query.getUpdate();
+
+    if (!user.password) {
         return done();
     }
 

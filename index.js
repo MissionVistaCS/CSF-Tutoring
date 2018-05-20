@@ -69,6 +69,7 @@ const security = require(_base + 'middleware/Security');
 const errors = require(_base + 'middleware/Errors');
 const baseResponse = require(_base + 'middleware/BaseResponse');
 
+app.use(security.jsonVuln); //TODO: Fix security.stripRequest. It converts string arrays to a concatenation of strings.
 app.use(express.static(_base + 'public'));
 app.use(baseResponse);
 routescan(app, {
