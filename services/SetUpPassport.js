@@ -15,14 +15,17 @@ module.exports = function () {
     });
 };
 
-passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, function (username, password, done) {
-    User.findOne({ email: username }, function (err, user) {
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+}, function (username, password, done) {
+    User.findOne({email: username}, function (err, user) {
         if (err) {
             return done(err);
         }
         if (!user) {
             return done(null, false,
-                { message: "Invalid email or password." });
+                {message: "Invalid email or password."});
         }
         user.checkPassword(password, function (err, isMatch) {
             if (err) {
@@ -32,7 +35,7 @@ passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'passwor
                 return done(null, user);
             } else {
                 return done(null, false,
-                    { message: "Invalid email or password." });
+                    {message: "Invalid email or password."});
             }
         });
     });

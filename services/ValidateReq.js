@@ -89,7 +89,7 @@ module.exports = {
     },
 
     handleError: function (fn) {
-        request.getValidationResult().then(function(result) {
+        request.getValidationResult().then(function (result) {
             if (!result.isEmpty()) {
                 let response = new BaseResponse('Incorrect parameters');
                 result.array().forEach(function (error) {

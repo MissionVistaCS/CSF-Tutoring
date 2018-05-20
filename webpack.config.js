@@ -27,7 +27,7 @@ module.exports = {
         ]
     },
     plugins: [
-    	new VueLoaderPlugin()
+        new VueLoaderPlugin()
     ],
     resolve: {
         alias: {

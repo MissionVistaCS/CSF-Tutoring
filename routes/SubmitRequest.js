@@ -10,7 +10,7 @@ module.exports = {
         middleware: [boiler.requireFields(['fullName', 'gender', 'grade', 'email', 'cellPhoneNum', 'parentFullName', 'parentEmail', 'parentCellPhoneNum', 'payment', 'courses']),
             boiler.makeInts(['grade']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum', 'parentCellPhoneNum']), boiler.makeAlphas(['gender', 'payment']),
             boiler.makeAlphaWithSpaces(['fullName', 'parentFullName']), boiler.handleErrors],
-        fn: function(req, res, next) {
+        fn: function (req, res, next) {
             let options = {
                 fullName: req.body.fullName,
                 gender: req.body.gender,
@@ -24,7 +24,10 @@ module.exports = {
                 courses: req.body.courses
             };
 
-            TutorRequestEntry.findOne({ cellPhoneNum: options.cellPhoneNum, parentCellPhoneNum: options.parentCellPhoneNum }, function (err, entry) {
+            TutorRequestEntry.findOne({
+                cellPhoneNum: options.cellPhoneNum,
+                parentCellPhoneNum: options.parentCellPhoneNum
+            }, function (err, entry) {
                 if (err) {
                     return res.sendBaseResponse(NAME, err);
                 }

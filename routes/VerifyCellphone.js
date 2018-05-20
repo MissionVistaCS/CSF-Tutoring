@@ -8,15 +8,15 @@ module.exports = {
     '/api/verify-cellphone/:id': {
         methods: ['post'],
         middleware: [boiler.requireFields(['id']), boiler.makeAlphaNumerics(['id']), boiler.handleErrors],
-        fn: function(req, res, next) {
+        fn: function (req, res, next) {
             let verifyEntryId = req.params.id;
-            CellphoneVerifyEntry.findById(verifyEntryId).populate('user').exec(function(err, entry) {
-                if(err) {
+            CellphoneVerifyEntry.findById(verifyEntryId).populate('user').exec(function (err, entry) {
+                if (err) {
                     return res.sendBaseResponse(NAME, err);
                 }
-                if(entry && entry.user) { // Will there ever be a situation where the user in a given entry is not defined?
+                if (entry && entry.user) { // Will there ever be a situation where the user in a given entry is not defined?
                     entry.user.cellPhoneVerified = true;
-                    entry.user.save(function(err, updatedUser) {
+                    entry.user.save(function (err, updatedUser) {
                         res.sendBaseResponse(NAME, null, 'Verified cellphone');
                     });
                 }

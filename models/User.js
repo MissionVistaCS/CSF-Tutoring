@@ -5,26 +5,27 @@ const shortid = require('shortid');
 const SALT_FACTOR = 10;
 
 let userSchema = new mongoose.Schema({
-    _id: { type: String, default: shortid.generate },
-    fullName: { type: String, required: true },
-    password: { type: String, required: true },
-    gender: { type: String, required: true },
-    grade: { type: Number, required: true },
-    email: { type: String, required: true, unique: true },
-    cellPhoneNum: { type: String, required: true, unique: true },
-    userGroup: { type: [String], required: false }, /*ADMIN, TUTOR, PACK_TUTOR*/
-    created: { type: Date, required: true, default: Date.now },
-    active: { type: Boolean, required: true, default: true },
-    verified: { type: Boolean, required: true, default: false },
-    cellPhoneVerified: { type: Boolean, required: true, default: false },
-    warnings: { type: Number, required: true, default: 0 },
+    _id: {type: String, default: shortid.generate},
+    fullName: {type: String, required: true},
+    password: {type: String, required: true},
+    gender: {type: String, required: true},
+    grade: {type: Number, required: true},
+    email: {type: String, required: true, unique: true},
+    cellPhoneNum: {type: String, required: true, unique: true},
+    userGroup: {type: [String], required: false}, /*ADMIN, TUTOR, PACK_TUTOR*/
+    created: {type: Date, required: true, default: Date.now},
+    active: {type: Boolean, required: true, default: true},
+    verified: {type: Boolean, required: true, default: false},
+    cellPhoneVerified: {type: Boolean, required: true, default: false},
+    warnings: {type: Number, required: true, default: 0},
     // if a tutor
-    maxStudents: { type: Number, required: false },
-    payment: { type: String, required: false },
-    courses: { type: [Number], required: true }
-}, { collection: _db.get('db.collection.users') });
+    maxStudents: {type: Number, required: false},
+    payment: {type: String, required: false},
+    courses: {type: [Number], required: true}
+}, {collection: _db.get('db.collection.users')});
 
-let noop = function () {};
+let noop = function () {
+};
 
 userSchema.pre('save', function (done) {
     let user = this; //Reference to user model
@@ -69,8 +70,8 @@ userSchema.pre('findOneAndUpdate', function (done) {
     });
 });
 
-userSchema.methods.checkPassword = function(guess, done) {
-    bcrypt.compare(guess, this.password, function(err, isMatch) {
+userSchema.methods.checkPassword = function (guess, done) {
+    bcrypt.compare(guess, this.password, function (err, isMatch) {
         done(err, isMatch);
     });
 };

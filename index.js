@@ -1,8 +1,8 @@
 const express = require('express'),
-	routescan = require('express-routescan'),
-	PropertiesReader = require('properties-reader'),
-	format = require('string-format'),
-	path = require('path');
+    routescan = require('express-routescan'),
+    PropertiesReader = require('properties-reader'),
+    format = require('string-format'),
+    path = require('path');
 
 /**
  * START GLOBALS
@@ -13,20 +13,20 @@ global._db = PropertiesReader(_base + 'resources/db.properties');
 global._strings = PropertiesReader(_base + 'resources/strings.properties');
 
 console.info = function (message) {
-	console.log('[INFO] ' + message);
+    console.log('[INFO] ' + message);
 };
 
 console.debug = function (message) {
-	if (_isDev) console.log('[DEBUG] ' + message);
+    if (_isDev) console.log('[DEBUG] ' + message);
 };
 
 console.critical = function (message) {
-	console.log('[!!! CRITICAL !!!] ' + message);
+    console.log('[!!! CRITICAL !!!] ' + message);
 };
 
 format.extend(String.prototype, {});
 String.prototype.replaceAll = function (a, b) {
-	return this.split(a).join(b);
+    return this.split(a).join(b);
 };
 
 global.RuntimeError = require(_base + 'domain/RuntimeError');
@@ -53,6 +53,8 @@ const setUpDatabase = require(_base + 'services/SetUpDatabase');
 
 setUpDatabase();
 
+require('./services/PairTutor');
+
 /**
  * Middleware for auth, cookies, bodies
  */
@@ -73,7 +75,7 @@ app.use(security.jsonVuln); //TODO: Fix security.stripRequest. It converts strin
 app.use(express.static(_base + 'public'));
 app.use(baseResponse);
 routescan(app, {
-	ignoreInvalid: false
+    ignoreInvalid: false
 });
 
 app.use(express.static('dist'));

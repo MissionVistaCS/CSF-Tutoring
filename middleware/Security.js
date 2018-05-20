@@ -17,7 +17,7 @@ module.exports = {
     /**
      * Protects against injection attacks and XSS
      */
-    stripRequest: function(req, res, next) {
+    stripRequest: function (req, res, next) {
         for (var key in req.body) {
             if (req.body.hasOwnProperty(key)) {
                 req.body[key] = striptags(req.body[key]);

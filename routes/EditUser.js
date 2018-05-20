@@ -1,26 +1,26 @@
 const boiler = require(_base + 'middleware/Boiler'),
-      User = require(_base + 'models/User');
+    User = require(_base + 'models/User');
 
 const NAME = 'Modify User';
 
 module.exports = {
-	'/api/edituser': {
-		methods: ['post'],
-		middleware: [boiler.requireFields(['id', 'fullName', 'password', 'gender', 'grade', 'email', 'cellPhoneNum', 'userGroup']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
+    '/api/edituser': {
+        methods: ['post'],
+        middleware: [boiler.requireFields(['id', 'fullName', 'password', 'gender', 'grade', 'email', 'cellPhoneNum', 'userGroup']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
             boiler.makeInts(['grade', 'maxStudents']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum']), boiler.handleErrors],
-		fn: function(req, res, next) {
+        fn: function (req, res, next) {
             const id = req.body.id;
 
             if (req.user && (req.user.userGroup.includes('ADMIN') || req.user._id === id)) {
-				let updateFields = {};
+                let updateFields = {};
 
-				if (req.body.fullName) updateFields.fullName = req.body.fullName;
-				if (req.body.password) updateFields.password = req.body.password;
-				if (req.body.gender) updateFields.gender = req.body.gender;
-				if (req.body.grade) updateFields.grade = req.body.grade;
-				if (req.body.email) updateFields.email = req.body.email;
-				if (req.body.cellPhoneNum) updateFields.cellPhoneNum = req.body.cellPhoneNum;
-				if (req.body.userGroup) updateFields.userGroup = req.body.userGroup;
+                if (req.body.fullName) updateFields.fullName = req.body.fullName;
+                if (req.body.password) updateFields.password = req.body.password;
+                if (req.body.gender) updateFields.gender = req.body.gender;
+                if (req.body.grade) updateFields.grade = req.body.grade;
+                if (req.body.email) updateFields.email = req.body.email;
+                if (req.body.cellPhoneNum) updateFields.cellPhoneNum = req.body.cellPhoneNum;
+                if (req.body.userGroup) updateFields.userGroup = req.body.userGroup;
 
                 //Optional fields. Required for tutors.
                 if (req.body.maxStudents) updateFields.maxStudents = req.body.maxStudents;
@@ -43,17 +43,17 @@ module.exports = {
                     if (updateFields.userGroup.length === 0) return res.sendBaseResponse('Incorrect Parameters', new UserError('You can\'t add an ADMIN user with your permissions.'));
                 }
 
-				User.findOneAndUpdate({ _id: id }, updateFields, function(err, newUser) {
-					if (err) {
-						return res.sendBaseResponse(NAME, new UserError('Mongoose error: duplicate key, invalid field types, etc.'));
-					}
+                User.findOneAndUpdate({_id: id}, updateFields, function (err, newUser) {
+                    if (err) {
+                        return res.sendBaseResponse(NAME, new UserError('Mongoose error: duplicate key, invalid field types, etc.'));
+                    }
 
-					res.sendBaseResponse(NAME, null, "Modified " + newUser.fullName + " with id " + newUser._id + " and roles " + newUser.userGroup.join(', '));
-				});
-			} else {
+                    res.sendBaseResponse(NAME, null, "Modified " + newUser.fullName + " with id " + newUser._id + " and roles " + newUser.userGroup.join(', '));
+                });
+            } else {
                 res.sendBaseResponse(NAME, new PermissionError('Must be an admin to edit specified user.'));
             }
-		}
-	}
+        }
+    }
 
 };
