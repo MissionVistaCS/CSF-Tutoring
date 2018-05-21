@@ -2,7 +2,8 @@ const express = require('express'),
     routescan = require('express-routescan'),
     PropertiesReader = require('properties-reader'),
     format = require('string-format'),
-    path = require('path');
+    path = require('path'),
+    AWS = require('aws-sdk');
 
 /**
  * START GLOBALS
@@ -53,8 +54,6 @@ const setUpDatabase = require(_base + 'services/SetUpDatabase');
 
 setUpDatabase();
 
-require('./services/PairTutor');
-
 /**
  * Middleware for auth, cookies, bodies
  */
@@ -63,6 +62,15 @@ const setUpMiddleware = require(_base + 'services/SetUpMiddleware');
 
 setUpPassport();
 setUpMiddleware(app);
+
+/*
+ * Setup AWS-sdk
+*/
+AWS.config.update({ //TODO: insert your AWS keys below.
+    accessKeyId: _keys.get('aws.accessKeyId'),
+    secretAccessKey: _keys.get('aws.secretAccessKey'),
+    region: _keys.get('aws.region')
+});
 
 /**
  * Custom middleware/routes
