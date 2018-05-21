@@ -83,7 +83,7 @@ app.use(security.jsonVuln); //TODO: Fix security.stripRequest. It converts strin
 app.use(express.static(_base + 'public'));
 app.use(baseResponse);
 routescan(app, {
-    ignoreInvalid: false
+    ignoreInvalid: true
 });
 
 app.use(express.static('dist'));
