@@ -3,7 +3,7 @@ const mongoose = require('mongoose'),
 
 let requestSchema = new mongoose.Schema({
     _id: {type: String, default: shortid.generate},
-    tutor: [{type: String, ref: 'User'}],
+    tutor: {type: String, ref: 'User'},
     fullName: {type: String, required: true},
     gender: {type: String, required: true},
     grade: {type: Number, required: true},
