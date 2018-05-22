@@ -1,5 +1,3 @@
-const permissions = require(_base + 'services/Permissions');
-
 module.exports = {
     ensureAuthenticated: function (req, res, next) {
         if (req.isAuthenticated()) {
