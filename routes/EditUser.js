@@ -6,7 +6,7 @@ const NAME = 'Modify User';
 module.exports = {
     '/api/edituser': {
         methods: ['post'],
-        middleware: [boiler.requireFields(['id', 'fullName', 'password', 'gender', 'grade', 'email', 'cellPhoneNum', 'userGroup']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
+        middleware: [boiler.requireFields(['id']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
             boiler.makeInts(['grade', 'maxStudents']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum']), boiler.handleErrors],
         fn: function (req, res, next) {
             const id = req.body.id;
@@ -38,7 +38,7 @@ module.exports = {
                     if (response.hasErrors()) return res.sendBaseResponse(response);
                 }
 
-                if (!req.user.userGroup.includes('ADMIN') && updateFields.userGroup.includes('ADMIN')) {
+                if (!req.user.userGroup.includes('ADMIN') && updateFields.userGroup.includes('ADMIN')) { //Users shouldn't be able to edit themselves into admins...
                     updateFields.userGroup.splice(updateFields.userGroup.indexOf('ADMIN'), 1);
                     if (updateFields.userGroup.length === 0) return res.sendBaseResponse('Incorrect Parameters', new UserError('You can\'t add an ADMIN user with your permissions.'));
                 }
@@ -51,7 +51,7 @@ module.exports = {
                     res.sendBaseResponse(NAME, null, "Modified " + newUser.fullName + " with id " + newUser._id + " and roles " + newUser.userGroup.join(', '));
                 });
             } else {
-                res.sendBaseResponse(NAME, new PermissionError('Must be an admin to edit specified user.'));
+                res.sendBaseResponse(NAME, new UserError('Must be an admin to edit specified user.'));
             }
         }
     }

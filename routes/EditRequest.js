@@ -4,11 +4,15 @@ const boiler = require(_base + 'middleware/Boiler'),
 
 const NAME = 'Modify Tutor Request';
 
+/**
+ * Edit request does not allow editing of tutor, courses, created, state, notifications, or pairing acceptance. See other routes for those.
+ */
 module.exports = {
-    '/api/editrequest': {
+    '/api/edit-request': {
         methods: ['post'],
-        middleware: [auth.ensureAdmin, boiler.requireFields(['fullName', 'gender', 'grade', 'email', 'cellPhoneNum', 'parentFullName', 'parentEmail', 'parentCellPhoneNum', 'payment', 'duplicate', 'courses', 'state', 'notifications']),
-            boiler.makeInts(['grade']), boiler.makeEmails(['email', 'parentEmail']), boiler.makePhoneNums(['cellPhoneNum', 'parentCellPhoneNum']), boiler.makeBooleans(['duplicate']), boiler.handleErrors],
+        middleware: [auth.ensureAdmin, boiler.requireFields(['id']),
+            boiler.makeInts(['grade']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum', 'parentCellPhoneNum']), boiler.makeAlphas(['gender', 'payment']),
+            boiler.makeAlphaWithSpaces(['fullName', 'parentFullName']), boiler.makeBooleans(['duplicate']), boiler.handleErrors],
         fn: function (req, res, next) {
             let updateFields = {};
             const id = req.body.id;
@@ -24,7 +28,6 @@ module.exports = {
             if (req.body.parentCellPhoneNum) updateFields.parentCellPhoneNum = req.body.parentCellPhoneNum;
             if (req.body.payment) updateFields.payment = req.body.payment;
             if (req.body.duplicate) updateFields.duplicate = req.body.duplicate;
-            if (req.body.courses) updateFields.courses = req.body.courses;
 
             TutorRequest.findOneAndUpdate({_id: id}, updateFields, function (err, result) {
                 if (err) {
