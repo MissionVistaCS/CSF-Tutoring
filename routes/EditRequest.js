@@ -10,7 +10,7 @@ const NAME = 'Modify Tutor Request';
 module.exports = {
     '/api/edit-request': {
         methods: ['post'],
-        middleware: [auth.ensureAdmin, boiler.requireFields(['id']),
+        middleware: [auth.ensureAdmin, boiler.requireFields(['id']), boiler.makeAlphaSpecials(['id']),
             boiler.makeInts(['grade']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum', 'parentCellPhoneNum']), boiler.makeAlphas(['gender', 'payment']),
             boiler.makeAlphaWithSpaces(['fullName', 'parentFullName']), boiler.makeBooleans(['duplicate']), boiler.handleErrors],
         fn: function (req, res, next) {

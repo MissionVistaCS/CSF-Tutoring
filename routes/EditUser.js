@@ -6,7 +6,7 @@ const NAME = 'Modify User';
 module.exports = {
     '/api/edituser': {
         methods: ['post'],
-        middleware: [boiler.requireFields(['id']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
+        middleware: [boiler.requireFields(['id']), boiler.makeAlphaSpecials(['id']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
             boiler.makeInts(['grade', 'maxStudents']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum']), boiler.handleErrors],
         fn: function (req, res, next) {
             const id = req.body.id;

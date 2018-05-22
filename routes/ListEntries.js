@@ -10,7 +10,7 @@ const NAME = 'List entries for a given tutor';
 module.exports = {
     '/api/list-entries': {
         methods: ['get'],
-        middleware: [boiler.requireFields(['user']), boiler.makeAlphaNumerics(['user'])],
+        middleware: [boiler.requireFields(['user']), boiler.makeAlphaSpecials(['user'])],
         fn: function (req, res, next) {
             let id = req.query.user;
 

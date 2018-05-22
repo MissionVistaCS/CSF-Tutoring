@@ -6,7 +6,7 @@ const NAME = 'Accept pairing';
 module.exports = {
     '/api/accept-pairing/:request': {
         methods: ['get'],
-        middleware: [boiler.requireFields(['request']), boiler.makeAlphaNumerics(['request']), boiler.handleErrors],
+        middleware: [boiler.requireFields(['request']), boiler.makeAlphaSpecials(['request']), boiler.handleErrors],
         fn: function (req, res, next) {
             const id = req.params.request;
             TutorRequestEntry.findOneAndUpdate({_id: id, state: 'UNACCEPTED'}, { state: 'ACCEPTED', pairingAcceptance: Date.now() }, function (err, entry) {

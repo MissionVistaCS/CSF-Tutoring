@@ -7,7 +7,7 @@ const NAME = 'Warn User';
 module.exports = {
     '/api/warn-user': {
         methods: ['post'],
-        middleware: [auth.ensureAdmin, boiler.requireFields(['id']), boiler.makeAlphaNumerics(['id']), boiler.handleErrors],
+        middleware: [auth.ensureAdmin, boiler.requireFields(['id']), boiler.makeAlphaSpecials(['id']), boiler.handleErrors],
         fn: function (req, res, next) {
             const id = req.body.id;
 
