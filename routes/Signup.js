@@ -1,7 +1,8 @@
 const passport = require('passport'),
     boiler = require(_base + 'middleware/Boiler'),
     User = require(_base + 'models/User'),
-    CellPhoneVerification = require(_base + 'models/CellphoneVerifyEntry');
+    CellPhoneVerification = require(_base + 'models/CellphoneVerifyEntry'),
+    SNS = require(_base + 'services/SNS');
 
 const NAME = 'Signup new user';
 
@@ -63,12 +64,19 @@ module.exports = {
                         user: newUser._id
                     });
 
-                    cellphoneVerify.save(function (err) {
+                    cellphoneVerify.save(function (err, cellPhoneVerifyEntry) {
                         if (err) {
                             return res.sendBaseResponse(NAME, err);
                         }
 
-                        res.sendBaseResponse(NAME, null, message);
+                        //TODO: Change link to be specified in config and don't use /api
+                        SNS.sendSMS('Please open http://localhost:3000/api/verify-cellphone/' + cellPhoneVerifyEntry._id + ' to verify your cell number.', options.cellPhoneNum.replaceAll('-', ''), function (err, data) {
+                            if (err) {
+                                return res.sendBaseResponse(NAME, new UserError('Error in sending text message, but created user.'));
+                            }
+
+                            res.sendBaseResponse(NAME, null, message);
+                        });
                     });
                 }
             });

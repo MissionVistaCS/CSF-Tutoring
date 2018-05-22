@@ -2,12 +2,15 @@ const cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require("express-session"),
     expressValidator = require('express-validator'),
+    shortid = require('shortid'),
     validator = require('validator');
 passport = require('passport');
 
 const specials = ['-', '_'];
 
 module.exports = function (app) {
+    shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_');
+
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(expressValidator({
