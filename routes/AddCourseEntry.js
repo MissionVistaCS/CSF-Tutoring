@@ -1,6 +1,6 @@
 const auth = require(_base + 'middleware/Authentication'),
     boiler = require(_base + 'middleware/Boiler'),
-    User = require(_base + 'models/User');
+    TutorRequestEntry = require(_base + 'models/TutorRequestEntry');
 
 const NAME = 'Add Course Entry';
 
@@ -8,20 +8,21 @@ module.exports = {
     '/api/add-course-entry': {
         methods: ['post'],
         middleware: [auth.ensureAdmin, boiler.requireFields(['entry', 'course']), boiler.makeAlphaNumerics(['entry', 'course']), boiler.handleErrors],
-        fn: function(req, res, next) {
-            entry = req.body.entry;
-            course = req.body.course;
-            User.findById(entry, function(err, user) {
-                if(err) {
-                    req.sendBaseResponse(NAME, err);
+        fn: function (req, res, next) {
+            let entry = req.body.entry;
+            let course = req.body.course;
+            TutorRequestEntry.findById(entry, function (err, entryF) {
+                if (err) {
+                    return res.sendBaseResponse(NAME, err);
                 }
-                if(user) {
-                    user.courses.push(course);
-                    user.save(function(err, updatedUser) {
-                        res.sendBaseResponse(NAME, null, 'Added ' + course + ' course entry to user');
+
+                if (entryF) {
+                    entryF.courses.push(course);
+                    entryF.save(function (err, updatedF) {
+                        res.sendBaseResponse(NAME, null, 'Added ' + course + ' course to tutoring request entry.');
                     });
                 }
             });
         }
     }
-}
+};
