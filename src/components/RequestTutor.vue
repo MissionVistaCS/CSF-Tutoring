@@ -716,17 +716,3 @@
     </ul>
 </form>
 </template>
-
-<script>
-    export default {
-        name: 'Request Tutor',
-        data () {
-            return {
-                boards: []
-            }
-        }
-    }
-</script>
-
-<style scoped>
-</style>

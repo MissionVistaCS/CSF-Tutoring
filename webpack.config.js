@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     entry: './src/main.js',
@@ -14,7 +13,7 @@ module.exports = {
             {
                 test: /\.vue$/,
                 use: {
-                    loader: 'vue-loader',
+                    loader: 'vue-loader'
                 }
             },
             {
@@ -26,9 +25,12 @@ module.exports = {
             }
         ]
     },
+<<<<<<< Updated upstream
     plugins: [
         new VueLoaderPlugin()
     ],
+=======
+>>>>>>> Stashed changes
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
@@ -48,6 +50,11 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
             }
         }),
         new webpack.optimize.OccurrenceOrderPlugin()
