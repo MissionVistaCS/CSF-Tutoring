@@ -14,15 +14,13 @@ module.exports = {
                 gender: req.user.gender,
                 grade: req.user.grade,
                 email: req.user.email,
-                cellPhoneNum: req.user.cellPhoneNum
-                ,
+                cellPhoneNum: req.user.cellPhoneNum,
                 userGroup: req.user.userGroup,
                 created: req.user.created,
                 active: req.user.active,
                 verified: req.user.verified,
-                cellPhoneVerified: req.user.cellPhoneVerified
-                ,
-                warnings: req.user.warnings,
+                cellPhoneVerified: req.user.cellPhoneVerified,
+                // warnings: req.user.warnings,
                 maxStudents: req.user.maxStudents,
                 payment: req.user.payment,
                 courses: req.user.courses
