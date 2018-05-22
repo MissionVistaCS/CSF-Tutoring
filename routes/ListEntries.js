@@ -8,15 +8,20 @@ const NAME = 'List entries for a given tutor';
  * Users will get a list of entires assigned to themselves as UNACCEPTED and ACTIVE
  */
 module.exports = {
-    '/api/list-entries/:user': {
+    '/api/list-entries': {
         methods: ['get'],
         middleware: [boiler.requireFields(['user']), boiler.makeAlphaNumerics(['user'])],
         fn: function (req, res, next) {
-            let id = req.params.user;
-            let isAdmin = req.user.userGroup.includes('ADMIN');
+            let id = req.query.user;
 
-            if (req.user && (isAdmin || req.user._id === id)) {
+            if (req.user && (req.user.userGroup.includes('ADMIN') || req.user._id === id)) {
+                let isAdmin = req.user.userGroup.includes('ADMIN');
+
                 TutorRequestEntry.find({ state: { $in: isAdmin ? ['PENDING', 'UNACCEPTED', 'ACTIVE', 'INACTIVE'] : ['UNACCEPTED', 'ACTIVE'] }, tutor: id }, function (err, entries) {
+                    if (err) {
+                        return res.sendBaseResponse(NAME, err);
+                    }
+
                     let purgedEntries = [];
                     for (let i = 0; i < entries.length; i++) {
                         let currentEntry = entries[i];
@@ -42,7 +47,7 @@ module.exports = {
                     res.sendBaseResponse(NAME, null, purgedEntries);
                 });
             } else {
-                res.sendBaseResponse(NAME, new PermissionError('Must be an admin to retrieve tutoring request entries for the specified user.'));
+                res.sendBaseResponse(NAME, new UserError('Must be an admin to retrieve tutoring request entries for the specified user.'));
             }
         }
     }
