@@ -5,7 +5,9 @@ module.exports = {
     pairRequestWithTutor(id) {
         setTimeout(function () {
             TutorRequestEntry.findById(id, function (err, entry) {
+                User.find({ userGroup: { $all: ['TUTOR']  }, courses: { $all: entry.courses } }, function (err, users) {
 
+                });
             });
         }, 0);
     }
