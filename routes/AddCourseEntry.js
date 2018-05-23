@@ -19,6 +19,9 @@ module.exports = {
                 if (entryF) {
                     entryF.courses.push(course);
                     entryF.save(function (err, updatedF) {
+                        if(err) {
+                            return res.sendBaseResponse(NAME, err);
+                        }
                         res.sendBaseResponse(NAME, null, 'Added ' + course + ' course to tutoring request entry.');
                     });
                 }

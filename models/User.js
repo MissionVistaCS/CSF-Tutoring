@@ -20,7 +20,7 @@ let userSchema = new mongoose.Schema({
     warnings: {type: Number, required: true, default: 0},
     // if a tutor
     maxStudents: {type: Number, required: false},
-    payment: {type: String, required: false},
+    payment: {type: String, required: false}, //CASH, BOTH
     courses: {type: [Number], required: false}
 }, {collection: _db.get('db.collection.users')});
 
