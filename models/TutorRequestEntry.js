@@ -12,7 +12,7 @@ let requestSchema = new mongoose.Schema({
     parentFullName: {type: String, required: true},
     parentEmail: {type: String, required: true},
     parentCellPhoneNum: {type: String, required: true},
-    payment: {type: String, required: true},
+    payment: {type: String, required: true}, //COMM_SERVICE, BOTH
     duplicate: {type: Boolean, required: true, default: false},
     courses: {type: [Number], required: true},
     created: {type: Date, required: true, default: Date.now},
