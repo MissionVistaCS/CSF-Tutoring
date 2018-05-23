@@ -1,13 +1,13 @@
 const auth = require(_base + 'middleware/Authentication'),
 	boiler = require(_base + 'middleware/Boiler'),
-	User = (_base + 'models/User');
+	User = require(_base + 'models/User');
 
 const NAME = 'Add Course User'
 
 module.exports = {
 	'/api/add-course-user': {
 		methods: ['post'],
-		middleware: [auth.ensureAdmin, boiler.requireFields(['entry', 'course']), boiler.makeAlphaNumerics(['user', 'course']), boiler.handleErrors],
+		middleware: [auth.ensureAdmin, boiler.requireFields(['user', 'course']), boiler.makeAlphaNumerics(['user', 'course']), boiler.handleErrors],
 		fn: function (req, res, next) {
 			let user = req.body.user;
 			let course = req.body.course;
