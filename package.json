@@ -12,7 +12,7 @@
   "author": "MVHS",
   "license": "ISC",
   "dependencies": {
-    "async": "~2.1.4",
+    "async": "^2.1.5",
     "aws-sdk": "^2.243.1",
     "babel-loader": "^7.1.4",
     "bcrypt-nodejs": "0.0.3",
