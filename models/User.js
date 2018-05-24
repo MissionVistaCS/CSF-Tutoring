@@ -21,7 +21,7 @@ let userSchema = new mongoose.Schema({
     // if a tutor
     maxStudents: {type: Number, required: false},
     payment: {type: String, required: false}, //CASH, BOTH
-    courses: {type: [Number], required: false}
+    courses: {type: [String], required: false}
 }, {collection: _db.get('db.collection.users')});
 
 let noop = function () {
