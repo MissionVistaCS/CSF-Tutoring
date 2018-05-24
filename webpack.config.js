@@ -25,12 +25,6 @@ module.exports = {
             }
         ]
     },
-<<<<<<< Updated upstream
-    plugins: [
-        new VueLoaderPlugin()
-    ],
-=======
->>>>>>> Stashed changes
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
