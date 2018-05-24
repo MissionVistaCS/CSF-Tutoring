@@ -1,13 +1,16 @@
 <template>
 <div class="index">
-	<div id="doc">
-		<div id="hd">
-			<h1>	
+	<form class="register-form">
+		<div id="doc">
+			<div id="hd">
+				<h1>Peer Tutor Request Form ({{ getFormTitle }})</h1>
+			</div>
+			<div id="bd">
+				
+				<button type="submit" class="btn btn-large btn-block btn-primary full-width">Submit Request</button>
+			</div>
 		</div>
-		<div id="bd">
-
-		</div>
-	</div>
+	</form>
 </div>
 </template>
 
@@ -32,6 +35,21 @@
 					vm.courses = res.result;
 				}
 			});
+
+		}
+	},
+	computed: {
+		getFormTitle() {
+			let date = new Date();
+			let term = '';
+			if (date.getMonth() >= 7 && date.getMonth() <= 11) {
+				term = 'Fall';
+			}
+			else {
+				term = 'Spring';
+			}
+
+			return(term + ' ' + date.getFullYear());
 
 		}
 	},
