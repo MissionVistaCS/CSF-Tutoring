@@ -56,14 +56,18 @@ module.exports = {
                                 if (uTutees < bestUser.numPairedEntries) { //Default tutor is the one with least number of tutees. Ensures everyone gets at least one
                                     bestUser = user;
                                 } else if (uTutees === bestUser.numPairedEntries) {
-                                    if (uCourses < bestUser.courses.length) {
-                                        if (uGrade > eGrade) {
-                                            if (uGrade > bestUser.grade) {
-                                                bestUser = user;
-                                            }
+                                    if (uCourses < bestUser.courses.length) { //Users with less courses are prioritized
+                                        // This block ensures that tutees are paired with tutors the the highest grade possible
+                                        if (uGrade >= bestUser.grade) {
+                                            bestUser = user;
                                         }
+                                        ////////////////////////////////////
                                     } else {
-
+////////                                // This block ensures that tutees are paired with tutors the the highest grade possible and grade is higher than tutee grade
+                                        if (uGrade >= bestUser.grade && (uGrade > eGrade + 1 || (uGrade === 12 && eGrade === 12))) {
+                                            bestUser = user;
+                                        }
+                                        ////////////////////////////////////
                                     }
                                 }
                             }
@@ -78,6 +82,7 @@ module.exports = {
                                 if (err) {
                                     return console.info("Error in saving assigned tutor to entry.");
                                 }
+                                //TODO: Alert admins of pairing.
                             });
                         } else {
                             entry.tutor = null;
@@ -88,6 +93,7 @@ module.exports = {
                                 if (err) {
                                     return console.info("Error in saving assigned tutor to entry after pairing failure.");
                                 }
+                                //TODO: Alert admins of pairing failure.
                             });
                         }
                     });
