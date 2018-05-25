@@ -3,12 +3,12 @@ let _api = {};
 axios.defaults.withCredentials = true;
 
 (function () {
-	const root = 'http://localhost:3001/';
+	const root = 'http://localhost:3000/';
 	const urls = {
 		coursesUrl: 'api/courses'	// dummy route thoughhhh
 	};
 
-	function url(api) [
+	function url(api) {
 		return root + urls[api];
 	}
 
@@ -48,7 +48,7 @@ axios.defaults.withCredentials = true;
 		axios.delete(url, { data: params })
 		.then(function (response) {
 			fn(null, response.data);
-		}
+		})
 		.catch(function (error) {
 			fn(error);
 		});
