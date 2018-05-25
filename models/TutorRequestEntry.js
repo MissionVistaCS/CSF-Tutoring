@@ -14,7 +14,7 @@ let requestSchema = new mongoose.Schema({
     parentCellPhoneNum: {type: String, required: true},
     payment: {type: String, required: true}, //COMM_SERVICE, BOTH
     duplicate: {type: Boolean, required: true, default: false},
-    courses: {type: [Number], required: true},
+    courses: {type: [String], required: true},
     created: {type: Date, required: true, default: Date.now},
     state: {type: String, required: true, default: 'MANUAL'}, /*MANUAL, PENDING, UNACCEPTED, ACTIVE, INACTIVE*/
     notifications: {type: [Date]},

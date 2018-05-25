@@ -3,3 +3,4 @@ dist/
 .idea/
 package-lock.json
 *.iml
+resources/keys.properties

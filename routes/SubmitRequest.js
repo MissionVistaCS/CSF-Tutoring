@@ -1,6 +1,7 @@
 const passport = require('passport'),
     boiler = require(_base + 'middleware/Boiler'),
-    TutorRequestEntry = require(_base + 'models/TutorRequestEntry');
+    TutorRequestEntry = require(_base + 'models/TutorRequestEntry'),
+    PairTutor = require(_base + 'services/PairTutor');
 
 const NAME = 'Submit Tutoring Request';
 
@@ -42,7 +43,7 @@ module.exports = {
                         return res.sendBaseResponse(NAME, err);
                     }
 
-                    //TODO: Start background task for pairing. Pass in tutoringRequestEntry.
+                    PairTutor.pairRequestWithTutor(newEntry._id);
                     res.sendBaseResponse(NAME, null, 'Submitted tutoring request');
                 });
             });
