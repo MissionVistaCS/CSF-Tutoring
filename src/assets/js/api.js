@@ -5,7 +5,7 @@ axios.defaults.withCredentials = true;
 (function () {
 	const root = 'http://localhost:3000/';
 	const urls = {
-		coursesUrl: 'api/courses'	// dummy route thoughhhh
+		coursesUrl: 'api/courses'
 	};
 
 	function url(api) {

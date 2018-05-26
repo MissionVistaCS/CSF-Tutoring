@@ -9,7 +9,7 @@
 			</div>
 			<div id="bd">
 			<ul v-for="course in courses">
-				<li>{{ course }}
+				<li> course: ( name: {{ course }}, id: {{ Object.keys(courses)[0] }} )</li>
 			</ul>
 				<div class="container" id="classification">
 				</div>
@@ -88,15 +88,14 @@
 	methods: {
 		updateCourses() {
 			let vm = this;
-			_api.courses(function (err, res) {
-				console.log(res.result);
+			_api.courses(function(err, res) {
 				if (err) {
 					console.log(err);
 					vm.courses = [];
 				}
 
-				else if (res.result) {
-					vm.courses = res.result;
+				else if (res) {
+					vm.courses = JSON.parse(res.slice(6));
 				}
 			});
 
