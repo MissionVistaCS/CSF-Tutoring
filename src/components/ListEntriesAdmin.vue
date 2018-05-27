@@ -62,7 +62,12 @@
                         <p v-if="openedEntry.tutor">Tutor: {{openedEntry.tutor.fullName}}</p>
                         <p v-if="openedEntry.ideas">Ideas: {{openedEntry.ideas}}</p>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer" v-if="openedEntry">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state !== 'INACTIVE'" v-on:click="deactivate(openedEntry)">Deactivate</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state === 'PENDING'" v-on:click="approvePairing(openedEntry)">Approve Pairing</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="editRequest(openedEntry)">Edit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="newPair(openedEntry)">New Pair</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.tutor" v-on:click="notifyTutor(openedEntry)">Notify Tutor</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="closeEntry">Close</button>
                     </div>
                 </div>
