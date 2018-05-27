@@ -11,21 +11,21 @@
                             <i class="fa fa-globe fa-lg"></i> Admin Stuff <span class="arrow"></span>
                         </li>
                         <ul class="sub-menu" id="service">
-                            <a href="#"><li>List All Users</li></a>
-                            <a href="#"><li>List All Tutoring Request Entries</li></a>
-                            <a href="#"><li>Edit Courses</li></a>
-                            <a href="#"><li>Add User</li></a>
+                            <a :href="'/admin/users'"><li>List All Users</li></a>
+                            <a :href="'/admin/entries'"><li>List All Tutoring Request Entries</li></a>
+                            <a :href="'/admin/courses'"><li>Edit Courses</li></a>
+                            <a :href="'/admin/add-user'"><li>Add User</li></a>
                         </ul>
                     </div>
 
                     <li>
-                        <a href="#">
+                        <a :href="'/edit-profile'">
                             <i class="fa fa-user fa-lg"></i> Edit Profile
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a :href="'/entries'">
                             <i class="fa fa-users fa-lg"></i> List Tutees (Assigned to me)
                         </a>
                     </li>
@@ -91,9 +91,6 @@
                     vm.loggedIn = false;
                     vm.$router.push('/');
                 });
-            },
-            clearVars() {
-                console.log('CLEARING VARS IN HEADER-ONE!');
             }
         }
     }
