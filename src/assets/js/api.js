@@ -9,7 +9,10 @@ axios.defaults.withCredentials = true;
 		coursesUrl: 'api/courses',
 		loginUrl: 'api/login',
         logoutUrl: 'api/logout',
-        allEntries: 'api/list-entries'
+        allEntries: 'api/list-entries',
+        editRequestUrl: 'api/edit-request',
+        newPairUrl: 'api/new-pair',
+        notifyUserUrl: 'api/notify-user'
     };
 
 	function url(api) {
@@ -46,6 +49,22 @@ axios.defaults.withCredentials = true;
 		get(url('coursesUrl'), {}, fn);
 	};
 
+	_api.getCourseName = function (id, fn) {
+        get(url('coursesUrl'), {}, function (err, res) {
+            if (err) {
+                fn(err);
+            }
+            else if (res.data)
+            {
+                if (res.data[id]) {
+                    fn(null, res.data[id]);
+                } else {
+                    fn(new Error('No course has that ID!'));
+                }
+            }
+        });
+    };
+
     _api.login = function (email, password, fn) {
         post(url('loginUrl'), {email: email, password: password}, fn);
     };
@@ -56,5 +75,25 @@ axios.defaults.withCredentials = true;
 
     _api.allEntries = function (fn) {
         get(url('allEntries'), {}, fn);
+    };
+
+    _api.deactivateEntry = function (entry, fn) {
+        post(url('editRequestUrl'), {id: entry._id, state: 'INACTIVE'}, fn);
+    };
+
+    _api.approvePairing = function (entry, fn) {
+        post(url('editRequestUrl'), {id: entry._id, state: 'UNACCEPTED'}, fn);
+    };
+
+    _api.editRequest = function (entry, fn) {
+
+    };
+
+    _api.newPair = function (entry, fn) {
+        post(url('newPairUrl'), {request: entry._id}, fn);
+    };
+
+    _api.notifyTutor = function (entry, fn) {
+        post(url('notifyUserUrl'), {request: entry._id}, fn);
     };
 })();

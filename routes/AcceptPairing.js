@@ -9,7 +9,7 @@ module.exports = {
         middleware: [boiler.requireFields(['request']), boiler.makeAlphaSpecials(['request']), boiler.handleErrors],
         fn: function (req, res, next) {
             const id = req.params.request;
-            TutorRequestEntry.findOneAndUpdate({_id: id, state: 'UNACCEPTED'}, { state: 'ACCEPTED', pairingAcceptance: Date.now() }, function (err, entry) {
+            TutorRequestEntry.findOneAndUpdate({_id: id, state: 'UNACCEPTED'}, { state: 'ACTIVE', pairingAcceptance: Date.now() }, function (err, entry) {
                 if (err) {
                     return res.sendBaseResponse(NAME, new UserError('Mongoose error: duplicate key, invalid field types, etc.'));
                 }

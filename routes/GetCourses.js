@@ -13,7 +13,7 @@ module.exports = {
 			}
 			res.json({ retArray });
 		*/
-			res.json(courses);
+			res.sendBaseResponse("Get courses", null, courses);
 		}
 	}
 }

@@ -13,7 +13,7 @@
                         <ul class="sub-menu" id="service">
                             <a :href="'/admin/users'"><li>List All Users</li></a>
                             <a :href="'/admin/entries'"><li>List All Tutoring Request Entries</li></a>
-                            <a :href="'/admin/courses'"><li>Edit Courses</li></a>
+                            <!--<a :href="'/admin/courses'"><li>Edit Courses</li></a>-->
                             <a :href="'/admin/add-user'"><li>Add User</li></a>
                         </ul>
                     </div>
