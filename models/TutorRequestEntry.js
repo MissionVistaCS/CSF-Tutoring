@@ -18,7 +18,8 @@ let requestSchema = new mongoose.Schema({
     created: {type: Date, required: true, default: Date.now},
     state: {type: String, required: true, default: 'MANUAL'}, /*MANUAL, PENDING, UNACCEPTED, ACTIVE, INACTIVE*/
     notifications: {type: [Date]},
-    pairingAcceptance: {type: Date, required: false, default: null}
+    pairingAcceptance: {type: Date, required: false, default: null},
+    ideas: { type: String, required: false }
 }, {collection: _db.get('db.collection.requests')});
 
 let Request = mongoose.model('Request', requestSchema);

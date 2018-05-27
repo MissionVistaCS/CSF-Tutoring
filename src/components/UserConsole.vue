@@ -2,7 +2,7 @@
     <div class="container">
 
         <!-- Sidebar -->
-        <div class="nav-side-menu col-lg-3 col-offset-4 centered">
+        <div v-if="loggedIn" class="nav-side-menu col-lg-3 col-offset-4 centered">
             <div class="menu-list">
 
                 <ul id="menu-content" class="menu-content">
@@ -37,11 +37,7 @@
             </div>
         </div>
 
-        <!-- Page Content -->
-        <div id="content">
-            <!-- We'll fill this with dummy content -->
-        </div>
-
+        <a :href="'/login'" v-if="!loggedIn">You are not logged in!</a>
     </div>
 </template>
 

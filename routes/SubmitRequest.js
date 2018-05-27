@@ -22,7 +22,8 @@ module.exports = {
                 parentEmail: req.body.parentEmail,
                 parentCellPhoneNum: req.body.parentCellPhoneNum,
                 payment: req.body.payment,
-                courses: req.body.courses
+                courses: req.body.courses,
+                ideas: req.body.ideas
             };
 
             TutorRequestEntry.findOne({

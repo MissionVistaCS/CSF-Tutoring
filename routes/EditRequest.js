@@ -28,6 +28,7 @@ module.exports = {
             if (req.body.parentCellPhoneNum) updateFields.parentCellPhoneNum = req.body.parentCellPhoneNum;
             if (req.body.payment) updateFields.payment = req.body.payment;
             if (req.body.duplicate) updateFields.duplicate = req.body.duplicate;
+            if (req.body.ideas) updateFields.ideas = req.body.ideas;
 
             TutorRequest.findOneAndUpdate({_id: id}, updateFields, function (err, result) {
                 if (err) {

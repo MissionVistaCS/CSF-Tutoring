@@ -17,7 +17,12 @@ module.exports = {
             if (req.user && (req.user.userGroup.includes('ADMIN') || req.user._id === id)) {
                 let isAdmin = req.user.userGroup.includes('ADMIN');
 
-                TutorRequestEntry.find({ state: { $in: isAdmin ? ['PENDING', 'UNACCEPTED', 'ACTIVE', 'INACTIVE'] : ['UNACCEPTED', 'ACTIVE'] }, tutor: id }, function (err, entries) {
+                let query = { state: { $in: isAdmin ? ['MANUAL', 'PENDING', 'UNACCEPTED', 'ACTIVE', 'INACTIVE'] : ['UNACCEPTED', 'ACTIVE'] } };
+                if (id) {
+                    query.tutor = id;
+                }
+
+                TutorRequestEntry.find(query).populate('tutor').exec(function (err, entries) {
                     if (err) {
                         return res.sendBaseResponse(NAME, err);
                     }
@@ -25,9 +30,11 @@ module.exports = {
                     let purgedEntries = [];
                     for (let i = 0; i < entries.length; i++) {
                         let currentEntry = entries[i];
+                        if (currentEntry.tutor) currentEntry.tutor.password = "";
                         purgedEntries.push({
                             _id: currentEntry._id,
                             fullName: currentEntry.fullName,
+                            tutor: currentEntry.tutor,
                             gender: currentEntry.gender,
                             grade: currentEntry.grade,
                             email: currentEntry.email,
@@ -41,7 +48,8 @@ module.exports = {
                             created: currentEntry.created,
                             state: currentEntry.state,
                             notifications: currentEntry.notifications,
-                            pairingAcceptance: currentEntry.pairingAcceptance
+                            pairingAcceptance: currentEntry.pairingAcceptance,
+                            ideas: currentEntry.ideas
                         });
                     }
                     res.sendBaseResponse(NAME, null, purgedEntries);

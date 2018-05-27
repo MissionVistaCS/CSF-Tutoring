@@ -8,7 +8,8 @@ axios.defaults.withCredentials = true;
 		sessionUrl: 'api/session',
 		coursesUrl: 'api/courses',
 		loginUrl: 'api/login',
-        logoutUrl: 'api/logout'
+        logoutUrl: 'api/logout',
+        allEntries: 'api/list-entries'
     };
 
 	function url(api) {
@@ -51,5 +52,9 @@ axios.defaults.withCredentials = true;
 
     _api.logout = function (fn) {
         post(url('logoutUrl'), {}, fn);
+    };
+
+    _api.allEntries = function (fn) {
+        get(url('allEntries'), {}, fn);
     };
 })();
