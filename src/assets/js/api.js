@@ -5,8 +5,11 @@ axios.defaults.withCredentials = true;
 (function () {
 	const root = 'http://localhost:3000/';
 	const urls = {
-		coursesUrl: 'api/courses'
-	};
+		sessionUrl: 'api/session',
+		coursesUrl: 'api/courses',
+		loginUrl: 'api/login',
+        logoutUrl: 'api/logout'
+    };
 
 	function url(api) {
 		return root + urls[api];
@@ -34,27 +37,19 @@ axios.defaults.withCredentials = true;
 		});	
 	}
 
-	function put(url, params, fn) {
-		axios.put(url, params)
-		.then(function (response) {
-			fn(null, response.data);
-		})
-		.catch(function (error) {
-			fn(error);
-		});
-	}
-
-	function del(url, params, fn) {
-		axios.delete(url, { data: params })
-		.then(function (response) {
-			fn(null, response.data);
-		})
-		.catch(function (error) {
-			fn(error);
-		});
-	}
+	_api.session = function (fn) {
+		get(url('sessionUrl'), {}, fn);
+	};
 
 	_api.courses = function (fn) {
 		get(url('coursesUrl'), {}, fn);
 	};
+
+    _api.login = function (email, password, fn) {
+        post(url('loginUrl'), {email: email, password: password}, fn);
+    };
+
+    _api.logout = function (fn) {
+        post(url('logoutUrl'), {}, fn);
+    };
 })();

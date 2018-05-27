@@ -11,8 +11,9 @@ const specials = ['-', '_'];
 module.exports = function (app) {
     shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_');
 
-    app.use(function (req, res) {
+    app.use(function (req, res, next) {
         global._url = req.protocol + '://' + req.get('host') + '/';
+        next();
     });
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
