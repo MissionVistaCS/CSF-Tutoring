@@ -69,8 +69,7 @@ module.exports = {
                             return res.sendBaseResponse(NAME, err);
                         }
 
-                        //TODO: Change link to be specified in config and don't use /api
-                        SNS.sendSMS('Please open http://localhost:3000/api/verify-cellphone/' + cellPhoneVerifyEntry._id + ' to verify your cell number.', options.cellPhoneNum.replaceAll('-', ''), function (err, data) {
+                        SNS.sendSMS('Please open ' + _url + 'api/verify-cellphone/' + cellPhoneVerifyEntry._id + ' to verify your cell number.', options.cellPhoneNum.replaceAll('-', ''), function (err, data) {
                             if (err) {
                                 return res.sendBaseResponse(NAME, new UserError('Error in sending text message, but created user.'));
                             }

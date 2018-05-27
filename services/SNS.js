@@ -5,7 +5,7 @@ const User = require(_base + 'models/User');
 
 let sns = new AWS.SNS();
 
-let sendSms = function(message, phoneNumber, fn) {
+function sendMessage (message, phoneNumber, fn) {
     let messageParams = {
         Message: message,
         MessageStructure: 'string',
@@ -19,30 +19,31 @@ let sendSms = function(message, phoneNumber, fn) {
             fn(null, data);
         }
     });
-};
+}
+
+function sendToAdmins (message, fn) {
+    User.find({ userGroup: { $all: ['ADMIN'] }, verified: true }, function (err, users) {
+        if (err) {
+            return fn(err);
+        }
+
+        async.each(users, function (user, fn) {
+            sendMessage(message, user.cellPhoneNum.replaceAll('-', ''), function (err) {
+                if (err) {
+                    return fn(err);
+                }
+
+                fn();
+            });
+        }, function (err) {
+            if (err) {
+                fn(err);
+            }
+        });
+    });
+}
 
 module.exports = {
-    sendSMS: sendSms,
-
-    sendToAdmins: function (message, fn) {
-        User.find({ userGroup: { $all: ['ADMIN'] }, verified: true }, function (err, users) {
-            if (err) {
-                return fn(err);
-            }
-
-            async.each(users, function (user, fn) {
-                sendSMS(message, user.cellPhoneNum.replaceAll('-', ''), function (err) {
-                    if (err) {
-                        return fn(err);
-                    }
-
-                    fn();
-                });
-            }, function (err) {
-                if (err) {
-                    fn(err);
-                }
-            });
-        });
-    }
+    sendSMS: sendMessage,
+    sendToAdmins: sendToAdmins
 };
