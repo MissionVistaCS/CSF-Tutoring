@@ -12,7 +12,8 @@ axios.defaults.withCredentials = true;
         allEntries: 'api/list-entries',
         editRequestUrl: 'api/edit-request',
         newPairUrl: 'api/new-pair',
-        notifyUserUrl: 'api/notify-user'
+        notifyUserUrl: 'api/notify-user',
+        signupUrl: 'api/signup'
     };
 
 	function url(api) {
@@ -95,5 +96,9 @@ axios.defaults.withCredentials = true;
 
     _api.notifyTutor = function (entry, fn) {
         post(url('notifyUserUrl'), {request: entry._id}, fn);
+    };
+
+    _api.signup = function(user, fn) {
+        post(url('signupUrl'), user, fn);
     };
 })();
