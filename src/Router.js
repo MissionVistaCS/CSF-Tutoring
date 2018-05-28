@@ -4,6 +4,7 @@ import Index from './components/Index.vue'
 import UserConsole from './components/UserConsole.vue'
 import Login from './components/Login.vue'
 import ListEntriesAdmin from './components/ListEntriesAdmin.vue'
+import ListEntries from './components/ListEntries.vue'
 
 Vue.use(Router);
 
@@ -29,6 +30,11 @@ export default new Router({
             path: '/admin/entries',
             name: 'ListEntriesAdmin',
             component: ListEntriesAdmin
+        },
+        {
+            path: '/entries',
+            name: 'ListEntries',
+            component: ListEntries
         }
     ]
 });

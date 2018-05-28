@@ -31,7 +31,7 @@ module.exports = {
                     for (let i = 0; i < entries.length; i++) {
                         let currentEntry = entries[i];
                         if (currentEntry.tutor) currentEntry.tutor.password = "";
-                        purgedEntries.push({
+                        let obj = {
                             _id: currentEntry._id,
                             fullName: currentEntry.fullName,
                             tutor: currentEntry.tutor,
@@ -48,9 +48,10 @@ module.exports = {
                             created: currentEntry.created,
                             state: currentEntry.state,
                             notifications: currentEntry.notifications,
-                            pairingAcceptance: currentEntry.pairingAcceptance,
-                            ideas: currentEntry.ideas
-                        });
+                            pairingAcceptance: currentEntry.pairingAcceptance
+                        };
+                        if (isAdmin) obj.ideas = currentEntry.ideas;
+                        purgedEntries.push(obj);
                     }
                     res.sendBaseResponse(NAME, null, purgedEntries);
                 });
