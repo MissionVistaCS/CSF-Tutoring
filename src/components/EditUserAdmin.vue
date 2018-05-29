@@ -53,7 +53,7 @@
                 <tr>
                     <td style="width: 65px; text-align: center">Cellphone Number (Format: xxx-xxx-xxxx)</td>
                     <td>
-                        <input name="cellPhoneNum" style="width: 145px;" type="text" pattern="^\d{3}-\d{3}-\d{4}" v-model="user.cellphoneNum" required>
+                        <input name="cellPhoneNum" style="width: 145px;" type="text" pattern="^\d{3}-\d{3}-\d{4}" v-model="user.cellPhoneNum" required>
                     </td>
                 </tr>
                 <tr>
