@@ -16,11 +16,8 @@ axios.defaults.withCredentials = true;
         notifyUserUrl: 'api/notify-user',
         signupUrl: 'api/signup',
         editUserUrl: 'api/edituser',
-<<<<<<< HEAD
-        getUserUrl: 'api/get-user'
-=======
-	newEntryUrl: 'api/submit-tutor-request'
->>>>>>> 7b6be04b3b8f482e352068e5acb9302ab23ccfe6
+        getUserUrl: 'api/get-user',
+	    newEntryUrl: 'api/submit-tutor-request'
     };
 
     function url(api) {
