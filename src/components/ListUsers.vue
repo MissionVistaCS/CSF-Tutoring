@@ -13,7 +13,13 @@
                 <th>Phone Number</th>
 		<th>Groups</th>
                 <th>Created</th>
-                <th>Status</th>
+                <th>Active</th>
+		<th>Verified</th>
+		<th>Cell Phone Verified</th>
+		<th>Warnings</th>
+		<th>Max Students</th>
+		<th>Payment</th>
+		<th>Courses</th>
             </tr>
             </thead>
             <tbody>
@@ -23,8 +29,15 @@
                 <td>{{entry.grade}}</td>
 		<td>{{entry.email}}</td>
                 <td>{{entry.cellPhoneNum}}</td>
+		<td>{{entry.userGroup.join(', ')}}</td>
                 <td>{{new Date(entry.created).toDateString()}}</td>
-                <td>{{entry.state}}</td>
+                <td>{{entry.active}}</td>
+		<td>{{entry.verified}}</td>
+		<td>{{entry.cellPhoneVerified}}</td>
+		<td>{{entry.warnings}}</td>
+		<td>{{entry.maxStudents}}</td>
+		<td>{{entry.payment}}</td>
+		<td>{{entry.courses.join(', ')}}</td>
                 <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#entry">Open Entry</button></td>
             </tr>
             </tbody>
@@ -49,10 +62,7 @@
                         <p v-if="openedEntry.courses">Courses: {{openedEntry.courses.join(', ')}}</p>
                     </div>
                     <div class="modal-footer" v-if="openedEntry">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state !== 'INACTIVE'" v-on:click="deactivate(openedEntry)">Deactivate</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="newPair(openedEntry)">New Pair</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state === 'PENDING'" v-on:click="approvePairing(openedEntry)">Approve Pairing</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.tutor && (openedEntry.state === 'UNACCEPTED' || openedEntry.state === 'ACTIVE')" v-on:click="notifyTutor(openedEntry)">Notify Tutor</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.verified !== true" v-on:click="verify(openedEntry)">Verify</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="editRequest(openedEntry)">Edit</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="closeEntry">Close</button>
                     </div>
@@ -125,7 +135,7 @@
                 }
             });
 
-            _api.allEntries(function (err, res) {
+            _api.allUsers(function (err, res) {
                 if (err) {
                     console.log("Error getting entries.");
                 }
@@ -159,55 +169,20 @@
             closeEntry() {
                 this.openedEntry = null;
             },
-            deactivate(entry) {
-                _api.deactivateEntry(entry, function (err, res) {
+            verify(entry) {
+                _api.verifyEntry(entry, function (err, res) {
                     if (err) {
-                        alert("Error deactivating entry.");
+                        alert("Error verifying user.");
                     }
                     else if (res.data)
                     {
-                        alert("Successfully deactivated entry!");
-                        entry.state = 'INACTIVE';
-                    }
-                });
-            },
-            approvePairing(entry) {
-                _api.approvePairing(entry, function (err, res) {
-                    if (err) {
-                        alert("Error approving pairing for entry.");
-                    }
-                    else if (res.data)
-                    {
-                        alert("Successfully approved pairing for entry!");
-                        entry.state = 'UNACCEPTED';
+                        alert("Successfully verified user!");
+                        entry.verified = true;
                     }
                 });
             },
             editRequest(entry) {
-                //TODO: Later
-            },
-            newPair(entry) {
-                _api.newPair(entry, function (err, res) {
-                    if (err) {
-                        alert("Error initiating new pairing for entry.");
-                    }
-                    else if (res.data)
-                    {
-                        alert("Successfully initiated new pairing for entry. Please wait for a text message and then reload the page.");
-                    }
-                });
-            },
-            notifyTutor(entry) {
-                _api.notifyTutor(entry, function (err, res) {
-                    if (err) {
-                        alert("Error notifying the paired tutor for this entry.");
-                    }
-                    else if (res.data)
-                    {
-                        alert("Successfully notified the tutor paired with this entry.");
-                        entry.notifications.push(Date.now().toDateString());
-                    }
-                });
+                window.location.href = "/editUser/"+entry._id;
             }
         }
     }

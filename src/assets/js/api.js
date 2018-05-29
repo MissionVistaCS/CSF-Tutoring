@@ -10,13 +10,17 @@ axios.defaults.withCredentials = true;
         loginUrl: 'api/login',
         logoutUrl: 'api/logout',
         allEntries: 'api/list-entries',
-	    allUsers: 'api/list-users',
+	allUsers: 'api/list-users',
         editRequestUrl: 'api/edit-request',
         newPairUrl: 'api/new-pair',
         notifyUserUrl: 'api/notify-user',
         signupUrl: 'api/signup',
         editUserUrl: 'api/edituser',
+<<<<<<< HEAD
         getUserUrl: 'api/get-user'
+=======
+	newEntryUrl: 'api/submit-tutor-request'
+>>>>>>> 7b6be04b3b8f482e352068e5acb9302ab23ccfe6
     };
 
     function url(api) {
@@ -92,6 +96,10 @@ axios.defaults.withCredentials = true;
         post(url('editRequestUrl'), {id: entry._id, state: 'INACTIVE'}, fn);
     };
 
+    _api.verifyEntry = function (user, fn) {
+    	post(url('editUserUrl'), {id: user._id, verified: true}, fn);
+    };
+
     _api.approvePairing = function (entry, fn) {
         post(url('editRequestUrl'), {id: entry._id, state: 'UNACCEPTED'}, fn);
     };
@@ -119,4 +127,9 @@ axios.defaults.withCredentials = true;
     _api.getUser = function(user, fn) {
         get(url('getUserUrl'), user, fn);
     }
+
+    _api.submitTutorRequest = function(request, fn) {
+    	post(url('newEntryUrl'), request, fn);
+	    //post(url('newEntryUrl'), {fullName: request.fullName, gender: request.gender, grade: request.grade, email: request.email, cellPhoneNum: request.cellPhoneNum, parentFullName: request.parentFullName, parentEmail: request.parentEmail, parentCellPhoneNum: request.parentCellPhoneNum, payment: request.payment, courses: request.courses}, fn);	
+    };
 })();

@@ -11,6 +11,7 @@ import ListEntries from './components/ListEntries.vue'
 import ListUsers from './components/ListUsers.vue'
 import EditUser from './components/EditUser.vue'
 import EditUserSuccess from './components/EditUserSuccess.vue'
+import EntrySuccess from './components/EntrySuccess.vue'
 
 Vue.use(Router);
 
@@ -71,6 +72,11 @@ export default new Router({
             path: '/editUser/success',
             name: 'EditUserSuccess',
             component: EditUserSuccess
+        },
+        {
+            path: '/request/success',
+            name: 'EntrySuccess',
+            component: EntrySuccess
         }
     ]
 });
