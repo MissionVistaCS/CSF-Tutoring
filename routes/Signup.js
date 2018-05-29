@@ -39,7 +39,7 @@ module.exports = {
             }
 
             //Bypasses certain restrictions if logged in user is an ADMIN
-            /*if (req.user && req.user.userGroup.includes('ADMIN')) {
+            if (req.user && req.user.userGroup.includes('ADMIN')) {
                 options.verified = true;
                 options.cellPhoneVerified = true;
             } else {
@@ -47,7 +47,7 @@ module.exports = {
                     options.userGroup.splice(options.userGroup.indexOf('ADMIN'), 1);
                     if (options.userGroup.length === 0) return res.sendBaseResponse('Incorrect Parameters', new UserError('You can\'t add an ADMIN user with your permissions.'));
                 }
-            }*/
+            }
 
             let user = new User(options);
             user.save(function (err, newUser) {
