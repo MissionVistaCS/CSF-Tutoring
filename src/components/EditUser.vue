@@ -139,7 +139,7 @@
                         vm.editorUserGroup = res.data.userGroup;
                         _api.courses(function(err, res) {
                             if(err) {
-                                console.log("Error getting courses");
+                                console.log("Error getting courses.");
                             } else if(res.data) {
                                 vm.courses = res.data;
                             }
@@ -173,7 +173,7 @@
                     if(err) {
                         console.log("Error updating profile." + err);
                     } else if(res.data) {
-                        vm.$router.push('/editUser/success');
+                        vm.$router.push('/edituser/success');
                     }
                 });
             }

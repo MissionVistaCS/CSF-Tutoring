@@ -63,7 +63,7 @@ export default new Router({
             component: ListUsers
         },
         {
-            path: '/editUser/:id',
+            path: '/edituser/:id',
             name: 'EditUser',
             component: EditUser
         },
