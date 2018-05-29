@@ -51,9 +51,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 65px; text-align: center">Cellphone Number (Format: xxx-xxx-xxxx or without dashes)</td>
+                    <td style="width: 65px; text-align: center">Cellphone Number (Format: xxx-xxx-xxxx)</td>
                     <td>
-                        <input name="cellPhoneNum" style="width: 145px;" type="text" pattern="^ ?\(?\d{3}\)?-? ?\d{3}-? ?\d{4} ?" v-model="user.cellPhoneNum" required>
+                        <input name="cellPhoneNum" style="width: 145px;" type="text" pattern="^\d{3}-\d{3}-\d{4}" v-model="user.cellPhoneNum" required>
                     </td>
                 </tr>
                 <tr>

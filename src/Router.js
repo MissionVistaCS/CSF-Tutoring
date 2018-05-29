@@ -10,6 +10,7 @@ import SignupSuccess from './components/SignupSuccess.vue'
 import ListEntries from './components/ListEntries.vue'
 import ListUsers from './components/ListUsers.vue'
 import EditUser from './components/EditUser.vue'
+import AdminEditUser from './components/EditUserAdmin.vue'
 import EditUserSuccess from './components/EditUserSuccess.vue'
 import EntrySuccess from './components/EntrySuccess.vue'
 
@@ -64,9 +65,14 @@ export default new Router({
             component: ListUsers
         },
         {
-            path: '/edituser/:id',
+            path: '/edituser',
             name: 'EditUser',
             component: EditUser
+        },
+        {
+            path: '/admin/edituser/:id',
+            name: 'AdminEditUser',
+            component: AdminEditUser
         },
         {
             path: '/editUser/success',

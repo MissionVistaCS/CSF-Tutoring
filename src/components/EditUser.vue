@@ -1,6 +1,6 @@
 <template>
-    <div class="signup">
-        <h2>Signup</h2>
+    <div class="editUser">
+        <h2>Edit User</h2>
         <hr style="width: 90%">
         <br>
         <form action="" method="">
@@ -51,9 +51,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 65px; text-align: center">Cellphone Number (Format: xxx-xxx-xxxx or without dashes)</td>
+                    <td style="width: 65px; text-align: center">Cellphone Number (Format: xxx-xxx-xxxx)</td>
                     <td>
-                        <input name="cellPhoneNum" style="width: 145px;" type="text" pattern="^ ?\(?\d{3}\)?-? ?\d{3}-? ?\d{4} ?" v-model="user.cellphoneNum" required>
+                        <input name="cellPhoneNum" style="width: 145px;" type="text" pattern="^\d{3}-\d{3}-\d{4}" v-model="user.cellphoneNum" required>
                     </td>
                 </tr>
                 <tr>
@@ -64,7 +64,7 @@
                         <br>
                         <input name="userGroup" value="PACK_TUTOR" style="width: 145px;" type="checkbox" v-model="user.userGroup" required>
                         <span>PACK tutor</span>
-                        <div v-if="editorUserGroup.includes('ADMIN')">
+                        <div v-if="user.userGroup.includes('ADMIN')">
                             <input name="userGroup" value="ADMIN" style="width: 145px;" type="checkbox" v-model="user.userGroup">
                             <span>Admin</span>
                         </div>
@@ -121,7 +121,6 @@
         data() {
             return {
                 loggedIn: false,
-                editorUserGroup: [],
                 user: {},
                 courses: []
             }
@@ -133,35 +132,18 @@
                     console.log("Not logged in." + err);
                     vm.$router.push('/login');
                 } else if (res.data) {
-                    let userId = vm.$route.params._id;
-                    if(res.data._id === userId || res.data.userGroup.includes('ADMIN')) {
-                        vm.loggedIn = true;
-                        vm.editorUserGroup = res.data.userGroup;
-                        _api.courses(function(err, res) {
-                            if(err) {
-                                console.log("Error getting courses.");
-                            } else if(res.data) {
-                                vm.courses = res.data;
-                            }
-                        });
-                        if(res.data._id === userId) {
-                            vm.user = res.data;
-                        } else {
-                            _api.getUser(userId, function(err, res) {
-                                if(err) {
-                                    console.log("Error getting user." + err);
-                                } else if(res.data) {
-                                    vm.user = res.data;
-                                }
-                            });
+                    vm.loggedIn = true;
+                    _api.courses(function(err, res) {
+                        if(err) {
+                            console.log("Error getting courses." + err);
+                        } else if(res.data) {
+                            vm.courses = res.data;
                         }
-                    } else {
-                        console.log("Improper credentials.");
-                        vm.$router.push('/');
-                    }
+                    });
+                    vm.user = res.data;
                 }
             });
-        }, 
+        },
         methods: {
             updateUser() {
                 let vm = this;
