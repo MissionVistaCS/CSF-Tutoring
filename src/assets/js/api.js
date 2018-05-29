@@ -126,7 +126,21 @@ axios.defaults.withCredentials = true;
     }
 
     _api.submitTutorRequest = function(request, fn) {
-    	post(url('newEntryUrl'), request, fn);
+        post(url('newEntryUrl'), {
+            fullName: request.firstName + ' ' + request.lastName,
+            gender: request.gender,
+            grade: request.grade,
+            email: request.email,
+            cellPhoneNum: request.cellPhoneNum,
+            parentFullName: request.parentFullName,
+            parentEmail: request.parentEmail,
+            parentCellPhoneNum: request.parentCellPhoneNum,
+            payment: request.payment,
+            courses: request.coursesToSubmit,
+            state: "MANUAL",
+            ideas: request.ideas
+        }, fn);
+    	//post(url('newEntryUrl'), request, fn);
 	    //post(url('newEntryUrl'), {fullName: request.fullName, gender: request.gender, grade: request.grade, email: request.email, cellPhoneNum: request.cellPhoneNum, parentFullName: request.parentFullName, parentEmail: request.parentEmail, parentCellPhoneNum: request.parentCellPhoneNum, payment: request.payment, courses: request.courses}, fn);	
     };
 })();

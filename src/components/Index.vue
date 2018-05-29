@@ -101,7 +101,7 @@
 					<tr>
 						<td>Payment</td>
 						<td>
-							<input type="checkbox" name="payment" v-model="request.payment">
+							<input type="checkbox" value="BOTH" name="payment" v-model="request.payment">
 						</td>
 					</tr>
 				</div>
@@ -109,7 +109,10 @@
 				<div class="container" id="courses">
 					<tr>
 						<td>Courses</td>
-						<td>Do this later</td>
+						<ul v-for="(course, key, index) in request.courses">
+							<li><input type="checkbox" v-model="request.coursesToSubmit" v-bind:value="getValue(key, course)">{{ course }}</li>
+<!-- 							<li><input type="checkbox" name="coursesToSubmit" v-on:click="addCourseToSubmit(index, key, course)"> course {{ course }}, key {{ key }}, index {{ index }} </li>
+ -->						</ul>
 					</tr>
 				</div>
 
@@ -117,7 +120,7 @@
 					<tr>
 						<td>Ideas</td>
 						<td>
-							<input name="ideas" type="text" v-model="request.ideas" required>
+							<input name="ideas" type="text" v-model="request.ideas">
 						</td>
 					</tr>
 				</div>
@@ -143,23 +146,24 @@
         name: 'Request Tutor',
         data () {
             return {
-		request: {
-		    	classification: '',
-			firstName: '',
-			lastName: '',
-			cellPhoneNum: '',
-			email: '',
-			gender: '', 
-			grade: '',
-			parentFullName: '',
-			parentEmail: '',
-			parentCellPhoneNum: '',
-			payment: '',
-			ideas: '',
-			termsAndConditions: '',
-       		        courses: []
-            	}
-	    }
+				request: {
+				    classification: '',
+					firstName: '',
+					lastName: '',
+					cellPhoneNum: '',
+					email: '',
+					gender: '', 
+					grade: '',
+					parentFullName: '',
+					parentEmail: '',
+					parentCellPhoneNum: '',
+					payment: 'COMM_SERVICE',
+					ideas: '',
+					termsAndConditions: '',
+		       		courses: [],
+		       		coursesToSubmit: []
+		        }
+		    }
         },
 	methods: {
 		updateCourses() {
@@ -167,24 +171,64 @@
 			_api.courses(function(err, res) {
 				if (err) {
 					console.log(err);
-					vm.courses = [];
+					vm.request.courses = [];
 				}
 
-				else if (res) {
-					vm.courses = JSON.parse(res.slice(6));
+				else if (res.data) {
+					//vm.request.courses = JSON.parse(res.slice(6));
+					vm.request.courses = res.data;
 				}
 			});
 
 		},
 		submitRequest() {
 			let vm = this;
-			_api.submitRequestEntry(vm.request, function(err, res) {
+			let temp = [];
+			for(course in vm.request.coursesToSubmit) {
+				temp.push(course);
+			}
+			vm.request.coursesToSubmit = temp;
+			_api.submitTutorRequest(vm.request, function(err, res) {
 				if(err) {
 					console.log("Error submitting request." + err);
 				} else if(res.data) {
 					vm.$router.push('/signup/success');
 				}
 			});
+		},
+		addCourseToSubmit(/*index, name, value*/) {
+			let vm = this;
+
+			console.log(vm.request.coursesToSubmit);
+			// let obj = {
+			// 	name: name,
+			// 	value: value
+			// };
+			// let clickAgain = false;
+			// console.log('coursesToSubmit', vm.request.coursesToSubmit);
+			// for(let i = 0; i < vm.request.coursesToSubmit.length; i++) {
+			// 	console.log('name test', vm.request.coursesToSubmit[i].name === name);
+			// 	console.log('value test', vm.request.coursesToSubmit[i].value === value);
+			// 	if (vm.request.coursesToSubmit[i].name === name && vm.request.coursesToSubmit[i].value === value) {
+			// 		clickAgain = true;
+			// 	}
+
+			// }
+			// if (clickAgain) {
+			// 		vm.request.coursesToSubmit.splice(vm.request.coursesToSubmit.indexOf(obj), 1);
+			// }
+			// else {
+			// 	vm.request.coursesToSubmit.push(obj);
+			// }
+			// console.log('courses to submit arr', vm.request.coursesToSubmit);
+
+		},
+		getValue(key, course) {
+			let json = {
+				key: key,
+				course: course
+			};
+			return JSON.stringify(json);
 		}
 	},
 	computed: {
