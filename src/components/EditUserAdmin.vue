@@ -160,6 +160,8 @@
                     console.log("No user group selected.");
                     alert("Please select what type of tutor you are.");
                 }
+                vm.user.id = vm.user._id;
+                vm.user.grade = vm.user.grade.toString();
                 _api.editUser(vm.user, function(err, res) {
                     if(err) {
                         console.log("Error updating profile." + err);
