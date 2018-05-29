@@ -148,6 +148,9 @@
                     console.log("No user group selected.");
                     alert("Please select what type of tutor you are.");
                 }
+                vm.user.id = vm.user._id;
+                vm.user.grade = vm.user.grade.toString();
+                vm.user.maxStudents = vm.user.maxStudents.toString();
                 _api.signup(vm.user, function(err, res) {
                     if(err) {
                         console.log("Error signing up." + err);
