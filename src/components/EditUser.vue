@@ -9,7 +9,7 @@
                 <tr>
                     <td style="width: 65px; text-align: center">Full Name</td>
                     <td>
-                        <input name="fullName" style="width: 145px;" type="text" v-model="user.fullName" required>
+                        <input name="fullName" style="width: 145px;" type="text" v-model="user.fullName"  required>
                     </td>
                 </tr>
                 <tr>
@@ -102,7 +102,7 @@
                 <tr>
                     <td colspan="2"
                         style="padding: 5px 0; border: none; background: none; text-align: center; font-weight: normal; padding-bottom: 20px">
-                        <input value="Submit" style="margin: 0px;" type="button" v-on:click="signup">
+                        <input value="Submit" style="margin: 0px;" type="button" v-on:click="updateUser">
                     </td>
                 </tr>
                 </tbody>
@@ -116,39 +116,43 @@
     export default {
         data() {
             return {
-                user: {
-                    fullName: "",
-                    password: "",
-                    gender: "",
-                    grade: "",
-                    email: "",
-                    cellphoneNum: "",
-                    userGroup: [],
-                    maxStudents: "",
-                    payment: "",
-                    courses: ""
-                },
+                loggedIn: false,
+                user: false,
                 courses: []
             }
         },
         created() {
             let vm = this;
-            _api.courses(function(err, res) {
-                if(err) {
-                    console.log("Error getting courses." + err);
-                } else if(res.data) {
-                    vm.courses = res.data;
+            _api.session(function (err, res) {
+                if (err) {
+                    console.log("Not logged in." + err);
+                    vm.$router.push('/login');
+                } else if (res.data) {
+                    if(res.data._id === vm.route.params._id || res.data.userGroup.includes('ADMIN')) {
+                        vm.loggedIn = true;
+                        _api.courses(function(err, res) {
+                            if(err) {
+                                console.log("Error getting courses");
+                            } else if(res.data) {
+                                vm.courses = res.data;
+                            }
+                        });
+                        vm.user = res.data;
+                    } else {
+                        console.log("Improper credentials.");
+                        vm.$router.push('/login');
+                    }
                 }
             });
         }, 
         methods: {
-            signup() {
+            updateUser() {
                 let vm = this;
-                _api.signup(vm.user, function(err, res) {
+                _api.editUser(vm.user._id, vm.user, function(err, res) {
                     if(err) {
-                        console.log("Error signing up." + err);
+                        console.log("Error updating profile." + err);
                     } else if(res.data) {
-                        vm.$router.push('/signup/success');
+                        vm.$router.push('/editProfile/success');
                     }
                 });
             }

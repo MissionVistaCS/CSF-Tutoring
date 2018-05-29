@@ -6,6 +6,7 @@ import Login from './components/Login.vue'
 import ListEntriesAdmin from './components/ListEntriesAdmin.vue'
 import Signup from './components/Signup.vue'
 import SignupSuccess from './components/SignupSuccess.vue'
+import ListEntries from './components/ListEntries.vue'
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
             path: '/signup/success',
             name: 'SignupSuccess',
             component: SignupSuccess
+        },
+        {
+            path: '/entries',
+            name: 'ListEntries',
+            component: ListEntries
         }
     ]
 });

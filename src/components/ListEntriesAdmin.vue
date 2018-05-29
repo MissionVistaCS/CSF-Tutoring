@@ -25,7 +25,7 @@
                 <td>{{entry.cellPhoneNum}}</td>
                 <td>{{new Date(entry.created).toDateString()}}</td>
                 <td>{{entry.state}}</td>
-                <td>{{entry.notifications.length === 0 ? 'None sent' : entry.notifications}}</td>
+                <td>{{entry.notifications.length === 0 ? 'None sent' : entry.notifications.join(', ')}}</td>
                 <td>{{new Date(entry.pairingAcceptance).toDateString()}}</td>
                 <td v-if="entry.tutor">{{entry.tutor.fullName}}</td>
                 <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#entry">Open Entry</button></td>
@@ -53,10 +53,10 @@
                         <p v-if="openedEntry.parentCellPhoneNum">Parent Number: {{openedEntry.parentCellPhoneNum}}</p>
                         <p v-if="openedEntry.payment">Payment: {{openedEntry.payment}}</p>
                         <p v-if="openedEntry.duplicate">Duplicate: {{openedEntry.duplicate}}</p>
-                        <p v-if="openedEntry.courses">Courses: {{openedEntry.courses}}</p>
+                        <p v-if="openedEntry.courses">Courses: {{openedEntry.courses.join(', ')}}</p>
                         <p v-if="openedEntry.created">Created: {{new Date(openedEntry.created).toDateString()}}</p>
                         <p v-if="openedEntry.state">State: {{openedEntry.state}}</p>
-                        <p v-if="openedEntry.notifications">Notifications: {{openedEntry.notifications.length === 0 ? 'None sent' : openedEntry.notifications}}</p>
+                        <p v-if="openedEntry.notifications">Notifications: {{openedEntry.notifications.length === 0 ? 'None sent' : openedEntry.notifications.join(', ')}}</p>
                         <p v-if="openedEntry.pairingAcceptance">Pairing Acceptance Date: {{new Date(openedEntry.pairingAcceptance).toDateString()}}</p>
                         <p v-if="openedEntry.tutor">Tutor: {{openedEntry.tutor.fullName}}</p>
                         <p v-if="openedEntry.ideas">Ideas: {{openedEntry.ideas}}</p>
@@ -105,7 +105,7 @@
                 }
                 else if (res.data)
                 {
-                    vm.entries = res.data; //TODO: parse each date inside entry.notifications here. loop through
+                    vm.entries = res.data;
                     vm.entries.forEach(function (entry) {
                         entry.courses.forEach(function (course, index) {
                             _api.getCourseName(course, function (err, name) {

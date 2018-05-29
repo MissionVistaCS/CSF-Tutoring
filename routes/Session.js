@@ -9,7 +9,7 @@ module.exports = {
             }
 
             res.sendBaseResponse(NAME, null, {
-                id: req.user._id,
+                _id: req.user._id,
                 fullName: req.user.fullName,
                 gender: req.user.gender,
                 grade: req.user.grade,
