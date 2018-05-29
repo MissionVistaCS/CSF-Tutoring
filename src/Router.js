@@ -5,6 +5,7 @@ import UserConsole from './components/UserConsole.vue'
 import Login from './components/Login.vue'
 import ListEntriesAdmin from './components/ListEntriesAdmin.vue'
 import Signup from './components/Signup.vue'
+import SignupAdmin from './components/SignupAdmin.vue'
 import SignupSuccess from './components/SignupSuccess.vue'
 import ListEntries from './components/ListEntries.vue'
 import ListUsers from './components/ListUsers.vue'
@@ -42,6 +43,11 @@ export default new Router({
             component: Signup
         },
         {
+            path: '/admin/signup',
+            name: 'SignupAdmin',
+            component: SignupAdmin
+        },
+        {
             path: '/signup/success',
             name: 'SignupSuccess',
             component: SignupSuccess
@@ -53,11 +59,11 @@ export default new Router({
         },
         {
             path: '/admin/users',
-            name: 'ListEntries',
+            name: 'ListUsers',
             component: ListUsers
         },
         {
-            path: '/editUser',
+            path: '/editUser/:id',
             name: 'EditUser',
             component: EditUser
         },
@@ -65,7 +71,7 @@ export default new Router({
             path: '/editUser/success',
             name: 'EditUserSuccess',
             component: EditUserSuccess
-        },
+        }
     ]
 });
 

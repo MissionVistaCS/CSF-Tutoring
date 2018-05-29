@@ -1,6 +1,6 @@
 <template>
-    <div class="signup">
-        <h2>Signup</h2>
+    <div class="signupAdmin">
+        <h2>Signup Admin</h2>
         <hr style="width: 90%">
         <br>
         <form action="" method="">
@@ -57,18 +57,20 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 65px; text-align: center">What type of tutor are you?</td>
+                    <td style="width: 65px; text-align: center">User Type</td>
                     <td>
                         <input name="userGroup" value="TUTOR" style="width: 145px;" type="checkbox" v-model="user.userGroup">
                         <span>One-on-one tutor</span>
                         <br>
                         <input name="userGroup" value="PACK_TUTOR" style="width: 145px;" type="checkbox" v-model="user.userGroup">
                         <span>PACK tutor</span>
+                        <input name="userGroup" value="ADMIN" style="width: 145px;" type="checkbox" v-model="user.userGroup">
+                        <span>Admin</span>
                     </td>
                 </tr>
                 <div v-if="user.userGroup.includes('TUTOR')">
                     <tr>
-                        <td style="width: 65px; text-align: center">How many students can you realistically tutor at one time?</td>
+                        <td style="width: 65px; text-align: center">Max Students</td>
                         <td>
                             <input name="maxStudents" id="maxStudents1" value="1" style="width: 145px;" type="radio" v-model="user.maxStudents">
                             <span>1</span>
@@ -81,7 +83,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 65px; text-align: center">Form of payment?</td>
+                        <td style="width: 65px; text-align: center">Payment</td>
                         <td>
                             <input name="payment" id="paymentCash" value="CASH" style="width: 145px;" type="radio" v-model="user.payment">
                             <span>ONLY Cash</span>
@@ -90,7 +92,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 65px; text-align: center">What courses are you willing to tutor?</td>
+                        <td style="width: 65px; text-align: center">Courses</td>
                         <td>
                             <div v-for="(course, courseCode) in courses">
                                 <input name="courses" :value="courseCode" style="width: 145px;" type="checkbox" v-model="user.courses">
@@ -116,6 +118,7 @@
     export default {
         data() {
             return {
+                loggedIn: false,
                 user: {
                     fullName: "",
                     password: "",
@@ -133,11 +136,19 @@
         },
         created() {
             let vm = this;
-            _api.courses(function(err, res) {
-                if(err) {
-                    console.log("Error getting courses." + err);
-                } else if(res.data) {
-                    vm.courses = res.data;
+            _api.session(function (err, res) {
+                if (err) {
+                    console.log("Not logged in." + err);
+                    vm.$router.push('/login');
+                } else if (res.data && res.data.userGroup.includes('ADMIN')) {
+                    vm.loggedIn = true;
+                    _api.courses(function(err, res) {
+                        if(err) {
+                            console.log("Error getting courses." + err);
+                        } else if(res.data) {
+                            vm.courses = res.data;
+                        }
+                    });
                 }
             });
         }, 

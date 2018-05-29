@@ -64,6 +64,10 @@
                         <br>
                         <input name="userGroup" value="PACK_TUTOR" style="width: 145px;" type="checkbox" v-model="user.userGroup" required>
                         <span>PACK tutor</span>
+                        <div v-if="editorUserGroup.includes('ADMIN')">
+                            <input name="userGroup" value="ADMIN" style="width: 145px;" type="checkbox" v-model="user.userGroup">
+                            <span>Admin</span>
+                        </div>
                     </td>
                 </tr>
                 <div v-if="user.userGroup.includes('TUTOR')">
@@ -117,7 +121,8 @@
         data() {
             return {
                 loggedIn: false,
-                user: false,
+                editorUserGroup: [],
+                user: {},
                 courses: []
             }
         },
@@ -128,8 +133,9 @@
                     console.log("Not logged in." + err);
                     vm.$router.push('/login');
                 } else if (res.data) {
-                    if(res.data._id === vm.route.params._id || res.data.userGroup.includes('ADMIN')) {
+                    if(res.data._id === vm.$route.params._id || res.data.userGroup.includes('ADMIN')) {
                         vm.loggedIn = true;
+                        vm.editorUserGroup = res.data.userGroup;
                         _api.courses(function(err, res) {
                             if(err) {
                                 console.log("Error getting courses");
@@ -137,10 +143,14 @@
                                 vm.courses = res.data;
                             }
                         });
-                        vm.user = res.data;
+                        if(res.data._id === vm.$route.params._id) {
+                            vm.user = res.data;
+                        } else {
+                            vm.user = {}; // TODO: Get user information
+                        }
                     } else {
                         console.log("Improper credentials.");
-                        vm.$router.push('/login');
+                        vm.$router.push('/');
                     }
                 }
             });
@@ -148,6 +158,10 @@
         methods: {
             updateUser() {
                 let vm = this;
+                if(vm.user.userGroup.length < 1) {
+                    console.log("No user group selected.");
+                    alert("Please select what type of tutor you are.");
+                }
                 _api.editUser(vm.user, function(err, res) {
                     if(err) {
                         console.log("Error updating profile." + err);
