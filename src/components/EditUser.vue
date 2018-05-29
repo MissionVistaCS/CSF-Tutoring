@@ -148,11 +148,11 @@
         methods: {
             updateUser() {
                 let vm = this;
-                _api.editUser(vm.user._id, vm.user, function(err, res) {
+                _api.editUser(vm.user, function(err, res) {
                     if(err) {
                         console.log("Error updating profile." + err);
                     } else if(res.data) {
-                        vm.$router.push('/editProfile/success');
+                        vm.$router.push('/editUser/success');
                     }
                 });
             }

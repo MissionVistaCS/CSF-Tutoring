@@ -10,12 +10,12 @@ axios.defaults.withCredentials = true;
         loginUrl: 'api/login',
         logoutUrl: 'api/logout',
         allEntries: 'api/list-entries',
-	allUsers: 'api/list-users',
+	    allUsers: 'api/list-users',
         editRequestUrl: 'api/edit-request',
         newPairUrl: 'api/new-pair',
         notifyUserUrl: 'api/notify-user',
         signupUrl: 'api/signup',
-        editUserUrl: 'api/edit-user/:id'
+        editUserUrl: 'api/edituser'
     };
 
     function url(api) {
@@ -111,7 +111,7 @@ axios.defaults.withCredentials = true;
         post(url('signupUrl'), user, fn);
     };
 
-    _api.updateUser = function(userId, user, fn) {
-        post(url('updateUser'))
+    _api.editUser = function(user, fn) {
+        post(url('editUserUrl'), user, fn);
     }
 })();
