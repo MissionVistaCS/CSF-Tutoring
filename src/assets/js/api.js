@@ -91,6 +91,10 @@ axios.defaults.withCredentials = true;
         post(url('editRequestUrl'), {id: entry._id, state: 'INACTIVE'}, fn);
     };
 
+    _api.verifyEntry = function (user, fn) {
+    	post(url('editUserUrl'), {id: user._id, verified: true}, fn);
+    };
+
     _api.approvePairing = function (entry, fn) {
         post(url('editRequestUrl'), {id: entry._id, state: 'UNACCEPTED'}, fn);
     };

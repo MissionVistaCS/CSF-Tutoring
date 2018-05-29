@@ -10,7 +10,7 @@ module.exports = {
             boiler.makeInts(['grade', 'maxStudents']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum']), boiler.handleErrors],
         fn: function (req, res, next) {
             const id = req.body.id;
-
+console.log(req.user);
             if (req.user && (req.user.userGroup.includes('ADMIN') || req.user._id === id)) {
                 let updateFields = {};
 
@@ -21,6 +21,7 @@ module.exports = {
                 if (req.body.email) updateFields.email = req.body.email;
                 if (req.body.cellPhoneNum) updateFields.cellPhoneNum = req.body.cellPhoneNum;
                 if (req.body.userGroup) updateFields.userGroup = req.body.userGroup;
+		if (req.body.verified) updateFields.verified = req.body.verified;
 
                 //Optional fields. Required for tutors.
                 if (req.body.maxStudents) updateFields.maxStudents = req.body.maxStudents;
@@ -28,7 +29,7 @@ module.exports = {
                 if (req.body.courses) updateFields.courses = req.body.courses;
 
                 //Check required fields for tutors
-                if (updateFields.userGroup.includes('TUTOR')) {
+                if (updateFields.userGroup && updateFields.userGroup.includes('TUTOR')) {
                     let response = new BaseResponse('Incorrect parameters');
 
                     if (!updateFields.maxStudents) response.addError(new UserError('Missing maxStudents - required for TUTOR'));

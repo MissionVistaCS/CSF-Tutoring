@@ -14,6 +14,12 @@
 		<th>Groups</th>
                 <th>Created</th>
                 <th>Active</th>
+		<th>Verified</th>
+		<th>Cell Phone Verified</th>
+		<th>Warnings</th>
+		<th>Max Students</th>
+		<th>Payment</th>
+		<th>Courses</th>
             </tr>
             </thead>
             <tbody>
@@ -26,6 +32,12 @@
 		<td>{{entry.userGroup.join(', ')}}</td>
                 <td>{{new Date(entry.created).toDateString()}}</td>
                 <td>{{entry.active}}</td>
+		<td>{{entry.verified}}</td>
+		<td>{{entry.cellPhoneVerified}}</td>
+		<td>{{entry.warnings}}</td>
+		<td>{{entry.maxStudents}}</td>
+		<td>{{entry.payment}}</td>
+		<td>{{entry.courses.join(', ')}}</td>
                 <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#entry">Open Entry</button></td>
             </tr>
             </tbody>
@@ -50,7 +62,7 @@
                         <p v-if="openedEntry.courses">Courses: {{openedEntry.courses.join(', ')}}</p>
                     </div>
                     <div class="modal-footer" v-if="openedEntry">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state !== 'INACTIVE'" v-on:click="deactivate(openedEntry)">Deactivate</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.verified !== true" v-on:click="verify(openedEntry)">Verify</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="editRequest(openedEntry)">Edit</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="closeEntry">Close</button>
                     </div>
@@ -157,15 +169,15 @@
             closeEntry() {
                 this.openedEntry = null;
             },
-            deactivate(entry) {
-                _api.deactivateEntry(entry, function (err, res) {
+            verify(entry) {
+                _api.verifyEntry(entry, function (err, res) {
                     if (err) {
-                        alert("Error deactivating entry.");
+                        alert("Error verifying user.");
                     }
                     else if (res.data)
                     {
-                        alert("Successfully deactivated entry!");
-                        entry.state = 'INACTIVE';
+                        alert("Successfully verified user!");
+                        entry.verified = true;
                     }
                 });
             },
