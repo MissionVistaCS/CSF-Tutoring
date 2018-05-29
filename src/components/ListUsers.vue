@@ -182,7 +182,7 @@
                 });
             },
             editRequest(entry) {
-                window.location.href = "/editUser/"+entry._id;
+                window.location.href = "/edituser/"+entry._id;
             }
         }
     }
