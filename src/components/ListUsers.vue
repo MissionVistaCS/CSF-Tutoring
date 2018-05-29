@@ -13,7 +13,7 @@
                 <th>Phone Number</th>
 		<th>Groups</th>
                 <th>Created</th>
-                <th>Status</th>
+                <th>Active</th>
             </tr>
             </thead>
             <tbody>
@@ -23,8 +23,9 @@
                 <td>{{entry.grade}}</td>
 		<td>{{entry.email}}</td>
                 <td>{{entry.cellPhoneNum}}</td>
+		<td>{{entry.userGroup.join(', ')}}</td>
                 <td>{{new Date(entry.created).toDateString()}}</td>
-                <td>{{entry.state}}</td>
+                <td>{{entry.active}}</td>
                 <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#entry">Open Entry</button></td>
             </tr>
             </tbody>
@@ -50,9 +51,6 @@
                     </div>
                     <div class="modal-footer" v-if="openedEntry">
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state !== 'INACTIVE'" v-on:click="deactivate(openedEntry)">Deactivate</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="newPair(openedEntry)">New Pair</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state === 'PENDING'" v-on:click="approvePairing(openedEntry)">Approve Pairing</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.tutor && (openedEntry.state === 'UNACCEPTED' || openedEntry.state === 'ACTIVE')" v-on:click="notifyTutor(openedEntry)">Notify Tutor</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="editRequest(openedEntry)">Edit</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="closeEntry">Close</button>
                     </div>
@@ -125,7 +123,7 @@
                 }
             });
 
-            _api.allEntries(function (err, res) {
+            _api.allUsers(function (err, res) {
                 if (err) {
                     console.log("Error getting entries.");
                 }
@@ -171,43 +169,8 @@
                     }
                 });
             },
-            approvePairing(entry) {
-                _api.approvePairing(entry, function (err, res) {
-                    if (err) {
-                        alert("Error approving pairing for entry.");
-                    }
-                    else if (res.data)
-                    {
-                        alert("Successfully approved pairing for entry!");
-                        entry.state = 'UNACCEPTED';
-                    }
-                });
-            },
             editRequest(entry) {
                 //TODO: Later
-            },
-            newPair(entry) {
-                _api.newPair(entry, function (err, res) {
-                    if (err) {
-                        alert("Error initiating new pairing for entry.");
-                    }
-                    else if (res.data)
-                    {
-                        alert("Successfully initiated new pairing for entry. Please wait for a text message and then reload the page.");
-                    }
-                });
-            },
-            notifyTutor(entry) {
-                _api.notifyTutor(entry, function (err, res) {
-                    if (err) {
-                        alert("Error notifying the paired tutor for this entry.");
-                    }
-                    else if (res.data)
-                    {
-                        alert("Successfully notified the tutor paired with this entry.");
-                        entry.notifications.push(Date.now().toDateString());
-                    }
-                });
             }
         }
     }

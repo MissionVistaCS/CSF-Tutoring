@@ -53,7 +53,7 @@ export default new Router({
         },
         {
             path: '/admin/users',
-            name: 'ListEntries',
+            name: 'ListUsers',
             component: ListUsers
         },
         {

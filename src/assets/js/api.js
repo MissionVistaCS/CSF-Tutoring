@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
         loginUrl: 'api/login',
         logoutUrl: 'api/logout',
         allEntries: 'api/list-entries',
-	    allUsers: 'api/list-users',
+	allUsers: 'api/list-users',
         editRequestUrl: 'api/edit-request',
         newPairUrl: 'api/new-pair',
         notifyUserUrl: 'api/notify-user',
