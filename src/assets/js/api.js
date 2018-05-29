@@ -121,8 +121,8 @@ axios.defaults.withCredentials = true;
         post(url('editUserUrl'), user, fn);
     }
 
-    _api.getUser = function(user, fn) {
-        get(url('getUserUrl'), user, fn);
+    _api.getUser = function(id, fn) {
+        get(url('getUserUrl'), {id: id}, fn);
     }
 
     _api.submitTutorRequest = function(request, fn) {
