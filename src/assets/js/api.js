@@ -10,6 +10,7 @@ axios.defaults.withCredentials = true;
         loginUrl: 'api/login',
         logoutUrl: 'api/logout',
         allEntries: 'api/list-entries',
+	allUsers: 'api/list-users',
         editRequestUrl: 'api/edit-request',
         newPairUrl: 'api/new-pair',
         notifyUserUrl: 'api/notify-user'
@@ -74,6 +75,10 @@ axios.defaults.withCredentials = true;
 
     _api.allEntries = function (fn) {
         get(url('allEntries'), {}, fn);
+    };
+
+    _api.allUsers = function (fn) {
+    	get(url('allUsers'), {}, fn);
     };
 
     _api.myEntries = function (id, fn) {
