@@ -162,6 +162,7 @@
                 }
                 vm.user.id = vm.user._id;
                 vm.user.grade = vm.user.grade.toString();
+                vm.user.maxStudents = vm.user.maxStudents.toString();
                 _api.editUser(vm.user, function(err, res) {
                     if(err) {
                         console.log("Error updating profile." + err);
