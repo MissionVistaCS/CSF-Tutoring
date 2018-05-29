@@ -15,43 +15,30 @@
 				<li> course: ( name: {{ course }}, id: {{ Object.keys(courses)[0] }} )</li>
 			</ul>
 			</tr>
-				<div class="container" id="classification">
 					<tr>
 						<td>Classification</td>
 						<td>
 							<input name="classification" type="text" v.model="request.classification" required>
 						</td>
 					</tr>		
-				</div>
-
-				<div class="container" id="fullName">
 					<tr>
 						<td>Full Name</td>
 						<td>
 							<input name="fullName" type="text" v-model="request.fullName" required>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="cellPhoneNum">
 					<tr>
 						<td>Cellphone Number</td>
 						<td>
 							<input name="cellPhoneNum" type="text" v-model="request.cellPhoneNum" required>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="email">
 					<tr>
 						<td>Email</td>
 						<td>
 							<input name="email" type="text" v-model="request.email" required>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="gender">
 					<tr>
 						<td>Gender</td>
 						<td>
@@ -59,54 +46,36 @@
 							<input type="radio" name="gender" v-model="request.gender" value="Female"> Female<br>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="grade">
 					<tr>
 						<td>Grade</td>
 						<td>
 							<input name="grade" type="text" v-model="request.grade" required>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="parentFullName">
 					<tr>
 						<td>Parent Full Name</td>
 						<td>
 							<input name="parentFullName" type="text" v-model="request.parentFullName" required>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="parentEmail">
 					<tr>
 						<td>Parent Email</td>
 						<td>
 							<input name="parentEmail" type="text" v-model="request.parentEmail" required>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="parentCellPhoneNum">
 					<tr>
 						<td>Parent Cellphone Number</td>
 						<td>
 							<input name="parentCellPhoneNum" type="text" v-model="request.parentCellPhoneNum" required>
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="payment">
 					<tr>
 						<td>Payment</td>
 						<td>
 							<input type="checkbox" value="BOTH" name="payment" v-model="request.payment">
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="courses">
 					<tr>
 						<td>Courses</td>
 						<ul v-for="(course, key, index) in request.courses">
@@ -114,18 +83,12 @@
 <!-- 							<li><input type="checkbox" name="coursesToSubmit" v-on:click="addCourseToSubmit(index, key, course)"> course {{ course }}, key {{ key }}, index {{ index }} </li>
  -->						</ul>
 					</tr>
-				</div>
-
-				<div class="container" id="ideas">
 					<tr>
 						<td>Ideas</td>
 						<td>
 							<input name="ideas" type="text" v-model="request.ideas">
 						</td>
 					</tr>
-				</div>
-
-				<div class="container" id="termsAndConditions">
 				</div>
 
 				<div class="#" id="captcha">
@@ -148,8 +111,7 @@
             return {
 				request: {
 				    classification: '',
-					firstName: '',
-					lastName: '',
+					fullName: '',
 					cellPhoneNum: '',
 					email: '',
 					gender: '', 
