@@ -7,6 +7,7 @@ import ListEntriesAdmin from './components/ListEntriesAdmin.vue'
 import Signup from './components/Signup.vue'
 import SignupSuccess from './components/SignupSuccess.vue'
 import ListEntries from './components/ListEntries.vue'
+import ListUsers from './components/ListUsers.vue'
 
 Vue.use(Router);
 
@@ -47,7 +48,12 @@ export default new Router({
             path: '/entries',
             name: 'ListEntries',
             component: ListEntries
-        }
+        },
+	{
+	    path: '/admin/users',
+	    name: 'ListEntries',
+	    component: ListUsers
+	}
     ]
 });
 
