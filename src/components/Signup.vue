@@ -124,8 +124,8 @@
                     email: "",
                     cellPhoneNum: "",
                     userGroup: [],
-                    maxStudents: null,
-                    payment: null,
+                    maxStudents: "",
+                    payment: "",
                     courses: []
                 },
                 courses: []
