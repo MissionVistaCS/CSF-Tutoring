@@ -15,7 +15,8 @@ axios.defaults.withCredentials = true;
         newPairUrl: 'api/new-pair',
         notifyUserUrl: 'api/notify-user',
         signupUrl: 'api/signup',
-        editUserUrl: 'api/edituser'
+        editUserUrl: 'api/edituser',
+	newEntryUrl: 'api/submit-tutor-request'
     };
 
     function url(api) {
@@ -117,5 +118,10 @@ axios.defaults.withCredentials = true;
 
     _api.editUser = function(user, fn) {
         post(url('editUserUrl'), user, fn);
-    }
+    };
+
+    _api.submitTutorRequest = function(request, fn) {
+    	post(url('newEntryUrl'), request, fn);
+	    //post(url('newEntryUrl'), {fullName: request.fullName, gender: request.gender, grade: request.grade, email: request.email, cellPhoneNum: request.cellPhoneNum, parentFullName: request.parentFullName, parentEmail: request.parentEmail, parentCellPhoneNum: request.parentCellPhoneNum, payment: request.payment, courses: request.courses}, fn);	
+    };
 })();
