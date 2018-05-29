@@ -15,7 +15,8 @@ axios.defaults.withCredentials = true;
         newPairUrl: 'api/new-pair',
         notifyUserUrl: 'api/notify-user',
         signupUrl: 'api/signup',
-        editUserUrl: 'api/edituser'
+        editUserUrl: 'api/edituser',
+        getUserUrl: 'api/get-user'
     };
 
     function url(api) {
@@ -113,5 +114,9 @@ axios.defaults.withCredentials = true;
 
     _api.editUser = function(user, fn) {
         post(url('editUserUrl'), user, fn);
+    }
+
+    _api.getUser = function(user, fn) {
+        get(url('getUserUrl'), user, fn);
     }
 })();

@@ -133,7 +133,8 @@
                     console.log("Not logged in." + err);
                     vm.$router.push('/login');
                 } else if (res.data) {
-                    if(res.data._id === vm.$route.params._id || res.data.userGroup.includes('ADMIN')) {
+                    let userId = vm.$route.params._id;
+                    if(res.data._id === userId || res.data.userGroup.includes('ADMIN')) {
                         vm.loggedIn = true;
                         vm.editorUserGroup = res.data.userGroup;
                         _api.courses(function(err, res) {
@@ -143,10 +144,16 @@
                                 vm.courses = res.data;
                             }
                         });
-                        if(res.data._id === vm.$route.params._id) {
+                        if(res.data._id === userId) {
                             vm.user = res.data;
                         } else {
-                            vm.user = {}; // TODO: Get user information
+                            _api.getUser(userId, function(err, res) {
+                                if(err) {
+                                    console.log("Error getting user." + err);
+                                } else if(res.data) {
+                                    vm.user = res.data;
+                                }
+                            });
                         }
                     } else {
                         console.log("Improper credentials.");
