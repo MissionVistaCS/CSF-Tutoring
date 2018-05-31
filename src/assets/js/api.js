@@ -110,22 +110,7 @@ axios.defaults.withCredentials = true;
         get(url('getUserUrl'), {id: id}, fn);
     }
 
-    _api.submitTutorRequest = function (request, fn) {
-        post(url('newEntryUrl'), {
-            fullName: request.firstName + ' ' + request.lastName,
-            gender: request.gender,
-            grade: request.grade,
-            email: request.email,
-            cellPhoneNum: request.cellPhoneNum,
-            parentFullName: request.parentFullName,
-            parentEmail: request.parentEmail,
-            parentCellPhoneNum: request.parentCellPhoneNum,
-            payment: request.payment,
-            courses: request.coursesToSubmit,
-            state: "MANUAL",
-            ideas: request.ideas
-        }, fn);
-        //post(url('newEntryUrl'), request, fn);
-        //post(url('newEntryUrl'), {fullName: request.fullName, gender: request.gender, grade: request.grade, email: request.email, cellPhoneNum: request.cellPhoneNum, parentFullName: request.parentFullName, parentEmail: request.parentEmail, parentCellPhoneNum: request.parentCellPhoneNum, payment: request.payment, courses: request.courses}, fn);
+    _api.newRequest = function (request, fn) {
+        post(url('newEntryUrl'), request, fn);
     };
 })();

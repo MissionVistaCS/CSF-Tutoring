@@ -1,107 +1,101 @@
 <template>
-<div class="index">
-	<form class="register-form" method="post">
-		<div id="doc">
-			<div id="hd">
-				<h1>Peer Tutor Request Form ({{ getFormTitle }})</h1>
-				<br>
-				<span id="description">Tutoring is provided by students from the California Scholarship Federation MVHS chapter. Students will be paired with student tutors, who are members of CSF. The tutoring program won't begin until late January 2018, but you can start submitting requests now.</span>
-			</div>
-			<table class="postForm">
-			<tbody>
-			<div id="bd">
-			<tr>
-			<ul v-for="course in courses">
-				<li> course: ( name: {{ course }}, id: {{ Object.keys(courses)[0] }} )</li>
-			</ul>
-			</tr>
-					<tr>
-						<td>Classification</td>
-						<td>
-							<input name="classification" type="text" v.model="request.classification" required>
-						</td>
-					</tr>		
-					<tr>
-						<td>Full Name</td>
-						<td>
-							<input name="fullName" type="text" v-model="request.fullName" required>
-						</td>
-					</tr>
-					<tr>
-						<td>Cellphone Number</td>
-						<td>
-							<input name="cellPhoneNum" type="text" v-model="request.cellPhoneNum" required>
-						</td>
-					</tr>
-					<tr>
-						<td>Email</td>
-						<td>
-							<input name="email" type="text" v-model="request.email" required>
-						</td>
-					</tr>
-					<tr>
-						<td>Gender</td>
-						<td>
-							<input type="radio" name="gender" v-model="request.gender" value="Male" checked> Male<br>
-							<input type="radio" name="gender" v-model="request.gender" value="Female"> Female<br>
-						</td>
-					</tr>
-					<tr>
-						<td>Grade</td>
-						<td>
-							<input name="grade" type="text" v-model="request.grade" required>
-						</td>
-					</tr>
-					<tr>
-						<td>Parent Full Name</td>
-						<td>
-							<input name="parentFullName" type="text" v-model="request.parentFullName" required>
-						</td>
-					</tr>
-					<tr>
-						<td>Parent Email</td>
-						<td>
-							<input name="parentEmail" type="text" v-model="request.parentEmail" required>
-						</td>
-					</tr>
-					<tr>
-						<td>Parent Cellphone Number</td>
-						<td>
-							<input name="parentCellPhoneNum" type="text" v-model="request.parentCellPhoneNum" required>
-						</td>
-					</tr>
-					<tr>
-						<td>Payment</td>
-						<td>
-							<input type="checkbox" value="BOTH" name="payment" v-model="request.payment">
-						</td>
-					</tr>
-					<tr>
-						<td>Courses</td>
-						<ul v-for="(course, key, index) in request.courses">
-							<li><input type="checkbox" v-model="request.coursesToSubmit" v-bind:value="getValue(key, course)">{{ course }}</li>
-<!-- 							<li><input type="checkbox" name="coursesToSubmit" v-on:click="addCourseToSubmit(index, key, course)"> course {{ course }}, key {{ key }}, index {{ index }} </li>
- -->						</ul>
-					</tr>
-					<tr>
-						<td>Ideas</td>
-						<td>
-							<input name="ideas" type="text" v-model="request.ideas">
-						</td>
-					</tr>
+	<div class="index">
+		<form class="formyboy justify-content-center" @submit="request" action="" method="">
+			<div id="doc">
+				<div id="hd">
+					<h1>Peer Tutor Request Form ({{ getFormTitle }})</h1>
+					<br>
+					<span id="description">Tutoring is provided by students from the California Scholarship Federation MVHS chapter. Students will be paired with student tutors, who are members of CSF. The tutoring program won't begin until late January 2018, but you can start submitting requests now.</span>
 				</div>
+				<table class="postForm">
+					<tbody>
+						<div id="bd">
+							<!-- <tr>
+								<ul v-for="course in courses">
+									<li> course: ( name: {{ course }}, id: {{ Object.keys(courses)[0] }} )</li>
+								</ul>
+							</tr> -->
+							<tr>
+								<td>Full Name</td>
+								<td>
+									<input name="fullName" type="text" v-model="request.fullName" required>
+								</td>
+							</tr>
+							<tr>
+								<td>Cellphone Number</td>
+								<td>
+									<input name="cellPhoneNum" type="text" v-model="request.cellPhoneNum" required>
+								</td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td>
+									<input name="email" type="text" v-model="request.email" required>
+								</td>
+							</tr>
+							<tr>
+								<td>Gender</td>
+								<td>
+									<input type="radio" name="gender" v-model="request.gender" value="Male" checked> Male<br>
+									<input type="radio" name="gender" v-model="request.gender" value="Female"> Female<br>
+								</td>
+							</tr>
+							<tr>
+								<td>Grade</td>
+								<td>
+									<input name="grade" type="text" v-model="request.grade" required>
+								</td>
+							</tr>
+							<tr>
+								<td>Parent Full Name</td>
+								<td>
+									<input name="parentFullName" type="text" v-model="request.parentFullName" required>
+								</td>
+							</tr>
+							<tr>
+								<td>Parent Email</td>
+								<td>
+									<input name="parentEmail" type="text" v-model="request.parentEmail" required>
+								</td>
+							</tr>
+							<tr>
+								<td>Parent Cellphone Number</td>
+								<td>
+									<input name="parentCellPhoneNum" type="text" v-model="request.parentCellPhoneNum" required>
+								</td>
+							</tr>
+							<tr>
+								<td>Payment</td>
+								<td>
+									<input type="checkbox" value="BOTH" name="payment" v-model="request.payment">
+								</td>
+							</tr>
+							<tr>
+								<td>Courses</td>
+								<div class="form-check" v-for="(course, courseCode) in courseList">
+									<input class="form-check-input" type="checkbox" name="payment" v-bind:id="courseCode" v-bind:value="courseCode"
+										v-model="request.courses">
+									<label class="form-check-label" v-bind:for="courseCode">
+										{{course}}
+									</label>
+								</div>
+							</tr>
+							<tr>
+								<td>Ideas</td>
+								<td>
+									<input name="ideas" type="text" v-model="request.ideas">
+								</td>
+							</tr>
+						</div>
 
-				<div class="#" id="captcha">
-				</div>
+						<div class="#" id="captcha"></div>
 
-
-				<button type="submit" class="btn btn-large btn-block btn-primary full-width" v-on:click="submitRequest">Submit Request</button>
-			</tbody>
-			</table>
+						<input type="submit" class="btn btn-primary" value="Submit">
+					</tbody>
+				</table>
 			</div>
-		</div>
-	</form>
-</div>
+		</form>
+	</div>
 </template>
 
 <script>
@@ -110,7 +104,6 @@
         data () {
             return {
 				request: {
-				    classification: '',
 					fullName: '',
 					cellPhoneNum: '',
 					email: '',
@@ -119,106 +112,48 @@
 					parentFullName: '',
 					parentEmail: '',
 					parentCellPhoneNum: '',
-					payment: 'COMM_SERVICE',
+					payment: '',
 					ideas: '',
 					termsAndConditions: '',
-		       		courses: [],
-		       		coursesToSubmit: []
-		        }
+		       		courses: []
+		        },
+				courseList: []
 		    }
         },
-	methods: {
-		updateCourses() {
-			let vm = this;
-			_api.courses(function(err, res) {
-				if (err) {
-					console.log(err);
-					vm.request.courses = [];
-				}
-
-				else if (res.data) {
-					//vm.request.courses = JSON.parse(res.slice(6));
-					vm.request.courses = res.data;
-				}
-			});
-
-		},
-		submitRequest() {
-			let vm = this;
-			let temp = [];
-			for(course in vm.request.coursesToSubmit) {
-				temp.push(course);
-			}
-			vm.request.coursesToSubmit = temp;
-			_api.submitTutorRequest(vm.request, function(err, res) {
-				if(err) {
-					console.log("Error submitting request." + err);
-				} else if(res.data) {
-					vm.$router.push('/signup/success');
-				}
-			});
-		},
-		addCourseToSubmit(/*index, name, value*/) {
-			let vm = this;
-
-			console.log(vm.request.coursesToSubmit);
-			// let obj = {
-			// 	name: name,
-			// 	value: value
-			// };
-			// let clickAgain = false;
-			// console.log('coursesToSubmit', vm.request.coursesToSubmit);
-			// for(let i = 0; i < vm.request.coursesToSubmit.length; i++) {
-			// 	console.log('name test', vm.request.coursesToSubmit[i].name === name);
-			// 	console.log('value test', vm.request.coursesToSubmit[i].value === value);
-			// 	if (vm.request.coursesToSubmit[i].name === name && vm.request.coursesToSubmit[i].value === value) {
-			// 		clickAgain = true;
-			// 	}
-
-			// }
-			// if (clickAgain) {
-			// 		vm.request.coursesToSubmit.splice(vm.request.coursesToSubmit.indexOf(obj), 1);
-			// }
-			// else {
-			// 	vm.request.coursesToSubmit.push(obj);
-			// }
-			// console.log('courses to submit arr', vm.request.coursesToSubmit);
-
-		},
-		getValue(key, course) {
-			let json = {
-				key: key,
-				course: course
-			};
-			return JSON.stringify(json);
-		}
-	},
-	computed: {
-		getFormTitle() {
-			let date = new Date();
-			let term = '';
-			if (date.getMonth() >= 7 && date.getMonth() <= 11) {
-				term = 'Fall';
-			}
-			else {
-				term = 'Spring';
-			}
-
-			return(term + ' ' + date.getFullYear());
-
-		}
-	},
-	created () {
-		let vm = this;
-		vm.updateCourses();
-	},
-	beforeRouteUpdate(to, from, next) {
-		let vm = this;
-		vm.updateCourses();
-		next();
-	}
+		created() {
+            let vm = this;
+            _api.courses(function (err, res) {
+                if (err) {
+                    console.log("Error getting courses." + err);
+                } else if (res.data) {
+                    vm.courseList = res.data;
+                }
+            });
+        },
+        methods: {
+            request(event) {
+                let vm = this;
+                if (vm.request.grade) vm.request.grade = vm.request.grade.toString();
+                _api.newRequest(vm.request, function (err, res) {
+                    if (err) {
+                        event.preventDefault();
+                        alert('There was a problem signing up!');
+                    } else if (res.data) {
+                        event.preventDefault();
+                        vm.$router.push("/signup/success");
+                    }
+                });
+                return false;
+            }
+        }
     }
 </script>
 
 <style scoped>
+    .formyboy {
+        padding: 3rem;
+        border-width: 1px;
+        border: solid #f7f7f9;
+        width: 50%;
+    }
 </style>
