@@ -1,126 +1,148 @@
 <template>
-	<div class="index">
-		<form class="formyboy justify-content-center" @submit="request" action="" method="">
-			<div id="doc">
-				<div id="hd">
-					<h1>Peer Tutor Request Form ({{ getFormTitle }})</h1>
-					<br>
-					<span id="description">Tutoring is provided by students from the California Scholarship Federation MVHS chapter. Students will be paired with student tutors, who are members of CSF. The tutoring program won't begin until late January 2018, but you can start submitting requests now.</span>
-				</div>
-				<table class="postForm">
-					<tbody>
-						<div id="bd">
-							<!-- <tr>
-								<ul v-for="course in courses">
-									<li> course: ( name: {{ course }}, id: {{ Object.keys(courses)[0] }} )</li>
-								</ul>
-							</tr> -->
-							<tr>
-								<td>Full Name</td>
-								<td>
-									<input name="fullName" type="text" v-model="request.fullName" required>
-								</td>
-							</tr>
-							<tr>
-								<td>Cellphone Number</td>
-								<td>
-									<input name="cellPhoneNum" type="text" v-model="request.cellPhoneNum" required>
-								</td>
-							</tr>
-							<tr>
-								<td>Email</td>
-								<td>
-									<input name="email" type="text" v-model="request.email" required>
-								</td>
-							</tr>
-							<tr>
-								<td>Gender</td>
-								<td>
-									<input type="radio" name="gender" v-model="request.gender" value="Male" checked> Male<br>
-									<input type="radio" name="gender" v-model="request.gender" value="Female"> Female<br>
-								</td>
-							</tr>
-							<tr>
-								<td>Grade</td>
-								<td>
-									<input name="grade" type="text" v-model="request.grade" required>
-								</td>
-							</tr>
-							<tr>
-								<td>Parent Full Name</td>
-								<td>
-									<input name="parentFullName" type="text" v-model="request.parentFullName" required>
-								</td>
-							</tr>
-							<tr>
-								<td>Parent Email</td>
-								<td>
-									<input name="parentEmail" type="text" v-model="request.parentEmail" required>
-								</td>
-							</tr>
-							<tr>
-								<td>Parent Cellphone Number</td>
-								<td>
-									<input name="parentCellPhoneNum" type="text" v-model="request.parentCellPhoneNum" required>
-								</td>
-							</tr>
-							<tr>
-								<td>Payment</td>
-								<td>
-									<input type="checkbox" value="BOTH" name="payment" v-model="request.payment">
-								</td>
-							</tr>
-							<tr>
-								<td>Courses</td>
-								<div class="form-check" v-for="(course, courseCode) in courseList">
-									<input class="form-check-input" type="checkbox" name="payment" v-bind:id="courseCode" v-bind:value="courseCode"
-										v-model="request.courses">
-									<label class="form-check-label" v-bind:for="courseCode">
-										{{course}}
-									</label>
-								</div>
-							</tr>
-							<tr>
-								<td>Ideas</td>
-								<td>
-									<input name="ideas" type="text" v-model="request.ideas">
-								</td>
-							</tr>
-						</div>
-
-						<div class="#" id="captcha"></div>
-
-						<input type="submit" class="btn btn-primary" value="Submit">
-					</tbody>
-				</table>
-			</div>
-		</form>
-	</div>
+    <form class="formyboy justify-content-center" @submit="newRequest" action="" method="">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" class="form-control" id="fullName" placeholder="Enter fullname" v-model="entry.fullName"
+                   required>
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="MALE" v-model="entry.gender"
+                       required>
+                <label class="form-check-label" for="male">
+                    Male
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="FEMALE"
+                       v-model="entry.gender" required>
+                <label class="form-check-label" for="female">
+                    Female
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Grade</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="9" value="9" v-model="entry.grade"
+                       required>
+                <label class="form-check-label" for="9">
+                    9th Grade
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="10" value="10" v-model="entry.grade"
+                       required>
+                <label class="form-check-label" for="10">
+                    10th Grade
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="11" value="11" v-model="entry.grade"
+                       required>
+                <label class="form-check-label" for="11">
+                    11th Grade
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="12" value="12" v-model="entry.grade"
+                       required>
+                <label class="form-check-label" for="12">
+                    12th Grade
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                   v-model="entry.email" required>
+            <small id="emailHelp"
+                   class="form-text text-muted">We will only contact you through email as a last resort.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="cellPhoneNum">Cellphone Number</label>
+            <input type="text" pattern="^\d{3}-\d{3}-\d{4}" class="form-control" id="cellPhoneNum"
+                   aria-describedby="cellHelp" placeholder="Enter cellphone number" v-model="entry.cellPhoneNum"
+                   required>
+            <small id="cellHelp"
+                   class="form-text text-muted">Cellphone numbers should be entered in xxx-xxx-xxxx format.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="parentFullName">Parent Full Name</label>
+            <input type="text" class="form-control" id="parentFullName" placeholder="Enter parent fullname" v-model="entry.parentFullName"
+                   required>
+        </div>
+        <div class="form-group">
+            <label for="parentEmail">Parent Email</label>
+            <input type="email" class="form-control" id="parentEmail" aria-describedby="parentEmailHelp" placeholder="Enter email"
+                   v-model="entry.parentEmail" required>
+            <small id="parentEmailHelp"
+                   class="form-text text-muted">We will only contact you through email as a last resort.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="cellPhoneNum">Parent Cellphone Number</label>
+            <input type="text" pattern="^\d{3}-\d{3}-\d{4}" class="form-control" id="parentCellPhoneNum"
+                   aria-describedby="parentCellHelp" placeholder="Enter parent cellphone number" v-model="entry.parentCellPhoneNum"
+                   required>
+            <small id="parentCellHelp"
+                   class="form-text text-muted">Cellphone numbers should be entered in xxx-xxx-xxxx format.
+            </small>
+        </div>
+        <div class="form-group">
+            <label>Form of payment?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="payment" id="cash" value="COMM_SERVICE"
+                       v-model="entry.payment" required>
+                <label class="form-check-label" for="cash">
+                    Only community service
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="payment" id="both" value="BOTH"
+                       v-model="entry.payment" required>
+                <label class="form-check-label" for="both">
+                    Community service and/or cash
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>What courses do you need help with?</label>
+            <div class="form-check" v-for="(course, courseCode) in courseList">
+                <input class="form-check-input" type="checkbox" :id="courseCode" :value="courseCode"
+                       v-model="entry.courses">
+                <label class="form-check-label" :for="courseCode">
+                    {{course}}
+                </label>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
 </template>
 
 <script>
     export default {
-        name: 'Request Tutor',
-        data () {
+        data() {
             return {
-				request: {
-					fullName: '',
-					cellPhoneNum: '',
-					email: '',
-					gender: '', 
-					grade: '',
-					parentFullName: '',
-					parentEmail: '',
-					parentCellPhoneNum: '',
-					payment: '',
-					ideas: '',
-					termsAndConditions: '',
-		       		courses: []
-		        },
-				courseList: []
-		    }
+                entry: {
+                    fullName: "",
+                    gender: "",
+                    grade: "",
+                    email: "",
+                    cellPhoneNum: "",
+                    parentFullName: "",
+                    parentEmail: "",
+                    parentCellPhoneNum: "",
+                    payment: "",
+                    courses: []
+                },
+                courseList: []
+            }
         },
-		created() {
+        created() {
             let vm = this;
             _api.courses(function (err, res) {
                 if (err) {
@@ -131,16 +153,20 @@
             });
         },
         methods: {
-            request(event) {
+            newRequest(event) {
                 let vm = this;
-                if (vm.request.grade) vm.request.grade = vm.request.grade.toString();
-                _api.newRequest(vm.request, function (err, res) {
+                if (!vm.entry.courses || vm.entry.courses.length < 1) {
+                    event.preventDefault();
+                    return alert("Please select at least one course.");
+                }
+                if (vm.entry.grade) vm.entry.grade = vm.entry.grade.toString();
+                _api.newRequest(vm.entry, function (err, res) {
                     if (err) {
                         event.preventDefault();
-                        alert('There was a problem signing up!');
+                        alert('There was a problem submitting an entry!');
                     } else if (res.data) {
                         event.preventDefault();
-                        vm.$router.push("/signup/success");
+                        vm.$router.push("/request/success");
                     }
                 });
                 return false;

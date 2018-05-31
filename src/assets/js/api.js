@@ -104,11 +104,11 @@ axios.defaults.withCredentials = true;
 
     _api.editUser = function (user, fn) {
         post(url('editUserUrl'), user, fn);
-    }
+    };
 
     _api.getUser = function (id, fn) {
         get(url('getUserUrl'), {id: id}, fn);
-    }
+    };
 
     _api.newRequest = function (request, fn) {
         post(url('newEntryUrl'), request, fn);
