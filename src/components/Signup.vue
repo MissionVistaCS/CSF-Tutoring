@@ -142,9 +142,9 @@
             <div class="form-group">
                 <label>What courses are you willing to tutor?</label>
                 <div class="form-check" v-for="(course, courseCode) in courseList">
-                    <input class="form-check-input" type="checkbox" name="payment" v-bind:id="courseCode" v-bind:value="courseCode"
+                    <input class="form-check-input" type="checkbox" :id="courseCode" :value="courseCode"
                            v-model="user.courses">
-                    <label class="form-check-label" v-bind:for="courseCode">
+                    <label class="form-check-label" :for="courseCode">
                         {{course}}
                     </label>
                 </div>
@@ -166,7 +166,8 @@
                     grade: "",
                     email: "",
                     cellPhoneNum: "",
-                    userGroup: []
+                    userGroup: [],
+                    courses: []
                 },
                 courseList: []
             }

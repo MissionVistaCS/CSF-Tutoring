@@ -86,14 +86,14 @@
                 let vm = this;
                 _api.login(this.email, this.password, function (err, res) {
                     if (err) {
-                        vm.error = err;
+                        vm.error = "Invalid username or password";
                     }
                     else if (res.data) {
                         vm.loggedIn = true;
                         vm.$router.push('/console');
                     }
                     else if (res.error) {
-                        vm.error = res.error;
+                        vm.error = "Invalid username or password";
                     }
                 });
             }
