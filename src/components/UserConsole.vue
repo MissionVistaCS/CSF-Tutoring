@@ -19,7 +19,7 @@
                     </div>
 
                     <li>
-                        <a :href="'/edituser'">
+                        <a :href="'/edit-user'">
                             <i class="fa fa-user fa-lg"></i> Edit Profile
                         </a>
                     </li>

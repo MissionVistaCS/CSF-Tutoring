@@ -107,15 +107,14 @@
                 {
                     vm.entries = res.data;
                     vm.entries.forEach(function (entry) {
-                        entry.courses.forEach(function (course, index) {
-                            _api.getCourseName(course, function (err, name) {
-                                if (err) {
-                                    console.log("Error getting course name.");
-                                }
-                                else if (name) {
-                                    entry.courses[index] = name;
-                                }
-                            });
+                        _api.courses(function (err, res) {
+                            if (err) {
+                                console.log("Error getting courses.");
+                            } else if (res.data) {
+                                entry.courses.forEach(function (courseId, index) {
+                                    entry.courses[index] = res.data[courseId];
+                                });
+                            }
                         });
 
                         entry.notifications.forEach(function (notification, index) {
@@ -144,17 +143,16 @@
                 }
                 else if (res.data)
                 {
-                    vm.entries = res.data; //TODO: parse each date inside entry.notifications here. loop through
+                    vm.entries = res.data;
                     vm.entries.forEach(function (entry) {
-                        entry.courses.forEach(function (course, index) {
-                            _api.getCourseName(course, function (err, name) {
-                                if (err) {
-                                    console.log("Error getting course name.");
-                                }
-                                else if (name) {
-                                    entry.courses[index] = name;
-                                }
-                            });
+                        _api.courses(function (err, res) {
+                            if (err) {
+                                console.log("Error getting courses.");
+                            } else if (res.data) {
+                                entry.courses.forEach(function (courseId, index) {
+                                    entry.courses[index] = res.data[courseId];
+                                });
+                            }
                         });
 
                         entry.notifications.forEach(function (notification, index) {

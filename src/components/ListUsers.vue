@@ -9,62 +9,77 @@
                 <th>Name</th>
                 <th>Gender</th>
                 <th>Grade</th>
-		<th>Email</th>
+                <th>Email</th>
                 <th>Phone Number</th>
-		<th>Groups</th>
+                <th>Groups</th>
                 <th>Created</th>
                 <th>Active</th>
-		<th>Verified</th>
-		<th>Cell Phone Verified</th>
-		<th>Warnings</th>
-		<th>Max Students</th>
-		<th>Payment</th>
-		<th>Courses</th>
+                <th>Verified</th>
+                <th>Cell Phone Verified</th>
+                <th>Warnings</th>
+                <th>Max Students</th>
+                <th>Payment</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="entry in entries" class="clickable" v-on:click="openEntry(entry)">
-                <td>{{entry.fullName}}</td>
-                <td>{{entry.gender}}</td>
-                <td>{{entry.grade}}</td>
-		<td>{{entry.email}}</td>
-                <td>{{entry.cellPhoneNum}}</td>
-		<td>{{entry.userGroup.join(', ')}}</td>
-                <td>{{new Date(entry.created).toDateString()}}</td>
-                <td>{{entry.active}}</td>
-		<td>{{entry.verified}}</td>
-		<td>{{entry.cellPhoneVerified}}</td>
-		<td>{{entry.warnings}}</td>
-		<td>{{entry.maxStudents}}</td>
-		<td>{{entry.payment}}</td>
-		<td>{{entry.courses.join(', ')}}</td>
-                <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#entry">Open Entry</button></td>
+            <tr v-for="user in users" class="clickable" v-on:click="openEntry(user)">
+                <td>{{user.fullName}}</td>
+                <td>{{user.gender}}</td>
+                <td>{{user.grade}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.cellPhoneNum}}</td>
+                <td>{{user.userGroup.join(', ')}}</td>
+                <td>{{new Date(user.created).toDateString()}}</td>
+                <td>{{user.active}}</td>
+                <td>{{user.verified}}</td>
+                <td>{{user.cellPhoneVerified}}</td>
+                <td>{{user.warnings}}</td>
+                <td>{{user.maxStudents}}</td>
+                <td>{{user.payment}}</td>
+                <td>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                            data-target="#user">Open Entry
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
 
         <!-- Modal -->
-        <div id="entry" class="modal fade" role="dialog">
+        <div id="user" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" v-if="openedEntry">{{openedEntry.fullName}}</h4>
+                        <h4 class="modal-title" v-if="openedUser">{{openedUser.fullName}}</h4>
                     </div>
-                    <div class="modal-body" v-if="openedEntry">
-                        <p v-if="openedEntry.fullName">Name: {{openedEntry.fullName}}</p>
-                        <p v-if="openedEntry.gender">Gender: {{openedEntry.gender}}</p>
-                        <p v-if="openedEntry.grade">Grade: {{openedEntry.grade}}</p>
-                        <p v-if="openedEntry.email">Email: {{openedEntry.email}}</p>
-                        <p v-if="openedEntry.cellPhoneNum">Cell Phone Num: {{openedEntry.cellPhoneNum}}</p>
-                        <p v-if="openedEntry.payment">Payment: {{openedEntry.payment}}</p>
-                        <p v-if="openedEntry.courses">Courses: {{openedEntry.courses.join(', ')}}</p>
+                    <div class="modal-body" v-if="openedUser">
+                        <p v-if="openedUser.fullName">Name: {{openedUser.fullName}}</p>
+                        <p v-if="openedUser.gender">Gender: {{openedUser.gender}}</p>
+                        <p v-if="openedUser.grade">Grade: {{openedUser.grade}}</p>
+                        <p v-if="openedUser.email">Email: {{openedUser.email}}</p>
+                        <p v-if="openedUser.cellPhoneNum">Cell Phone Num: {{openedUser.cellPhoneNum}}</p>
+                        <p v-if="openedUser.userGroup">User Groups: {{user.userGroup.join(', ')}}</p>
+                        <p v-if="openedUser.created">Created: {{new Date(user.created).toDateString()}}</p>
+                        <p v-if="openedUser.active">Active: {{user.active}}</p>
+                        <p v-if="openedUser.verified">Verified: {{user.verified}}</p>
+                        <p v-if="openedUser.cellPhoneVerified">Cellphone Verified: {{user.cellPhoneVerified}}</p>
+                        <p v-if="openedUser.warnings">Warnings: {{user.warnings}}</p>
+                        <p v-if="openedUser.maxStudents">Max Students: {{user.maxStudents}}</p>
+                        <p v-if="openedUser.payment">Payment: {{openedUser.payment}}</p>
+                        <p v-if="openedUser.courses">Courses: {{openedUser.courses.join(', ')}}</p>
                     </div>
-                    <div class="modal-footer" v-if="openedEntry">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.verified !== true" v-on:click="verify(openedEntry)">Verify</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="editRequest(openedEntry)">Edit</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="closeEntry">Close</button>
+                    <div class="modal-footer" v-if="openedUser">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                v-if="openedUser.verified !== true" v-on:click="verify(openedUser)">Verify
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                v-on:click="editUser(openedUser)">Edit
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                v-on:click="closeUser">Close
+                        </button>
                     </div>
                 </div>
 
@@ -79,8 +94,8 @@
             return {
                 loggedIn: false,
                 user: false,
-                entries: [],
-                openedEntry: null
+                users: [],
+                openedUser: null
             }
         },
         created() {
@@ -89,8 +104,7 @@
                 if (err) {
                     console.log("Not logged in.");
                 }
-                else if (res.data)
-                {
+                else if (res.data) {
                     vm.loggedIn = true;
                     vm.user = res.data;
                 }
@@ -100,36 +114,29 @@
                 if (err) {
                     console.log("Error getting users.");
                 }
-                else if (res.data)
-                {
-                    vm.entries = res.data;
-                    vm.entries.forEach(function (entry) {
-                        entry.courses.forEach(function (course, index) {
-                            _api.getCourseName(course, function (err, name) {
-                                if (err) {
-                                    console.log("Error getting course name.");
-                                }
-                                else if (name) {
-                                    entry.courses[index] = name;
-                                }
-                            });
-                        });
-
-                        entry.notifications.forEach(function (notification, index) {
-                            entry.notifications[index] = new Date(notification).toDateString();
+                else if (res.data) {
+                    vm.users = res.data;
+                    vm.users.forEach(function (user) {
+                        _api.courses(function (err, res) {
+                            if (err) {
+                                console.log("Error getting courses.");
+                            } else if (res.data) {
+                                user.courses.forEach(function (courseId, index) {
+                                    user.courses[index] = res.data[courseId];
+                                });
+                            }
                         });
                     });
                 }
             });
         },
-        beforeRouteUpdate (to, from, next) {
+        beforeRouteUpdate(to, from, next) {
             let vm = this;
             _api.session(function (err, res) {
                 if (err) {
                     console.log("Not logged in.");
                 }
-                else if (res.data)
-                {
+                else if (res.data) {
                     vm.loggedIn = true;
                     vm.user = res.data;
                 }
@@ -137,25 +144,19 @@
 
             _api.allUsers(function (err, res) {
                 if (err) {
-                    console.log("Error getting entries.");
+                    console.log("Error getting users.");
                 }
-                else if (res.data)
-                {
-                    vm.entries = res.data; //TODO: parse each date inside entry.notifications here. loop through
-                    vm.entries.forEach(function (entry) {
-                        entry.courses.forEach(function (course, index) {
-                            _api.getCourseName(course, function (err, name) {
-                                if (err) {
-                                    console.log("Error getting course name.");
-                                }
-                                else if (name) {
-                                    entry.courses[index] = name;
-                                }
-                            });
-                        });
-
-                        entry.notifications.forEach(function (notification, index) {
-                            entry.notifications[index] = new Date(notification).toDateString();
+                else if (res.data) {
+                    vm.users = res.data;
+                    vm.users.forEach(function (user) {
+                        _api.courses(function (err, res) {
+                            if (err) {
+                                console.log("Error getting courses.");
+                            } else if (res.data) {
+                                user.courses.forEach(function (courseId, index) {
+                                    user.courses[index] = res.data[courseId];
+                                });
+                            }
                         });
                     });
                 }
@@ -163,26 +164,26 @@
             next();
         },
         methods: {
-            openEntry(entry) {
-                this.openedEntry = entry;
+            openEntry(user) {
+                this.openedUser = user;
             },
-            closeEntry() {
-                this.openedEntry = null;
+            closeUser() {
+                this.openedUser = null;
             },
-            verify(entry) {
-                _api.verifyEntry(entry, function (err, res) {
+            verify(user) {
+                _api.verifyEntry(user, function (err, res) {
                     if (err) {
                         alert("Error verifying user.");
                     }
-                    else if (res.data)
-                    {
+                    else if (res.data) {
                         alert("Successfully verified user!");
-                        entry.verified = true;
+                        user.verified = true;
                     }
                 });
             },
-            editRequest(entry) {
-                window.location.href = "/admin/edituser/" + entry._id;
+            editUser(user) {
+                let vm = this;
+                vm.$router.push('/admin/edit-user/' + user._id);
             }
         }
     }

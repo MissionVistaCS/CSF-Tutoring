@@ -10,14 +10,14 @@ axios.defaults.withCredentials = true;
         loginUrl: 'api/login',
         logoutUrl: 'api/logout',
         allEntries: 'api/list-entries',
-	allUsers: 'api/list-users',
+        allUsers: 'api/list-users',
         editRequestUrl: 'api/edit-request',
         newPairUrl: 'api/new-pair',
         notifyUserUrl: 'api/notify-user',
         signupUrl: 'api/signup',
         editUserUrl: 'api/edituser',
         getUserUrl: 'api/get-user',
-	    newEntryUrl: 'api/submit-tutor-request'
+        newEntryUrl: 'api/submit-tutor-request'
     };
 
     function url(api) {
@@ -54,21 +54,6 @@ axios.defaults.withCredentials = true;
         get(url('coursesUrl'), {}, fn);
     };
 
-    _api.getCourseName = function (id, fn) {
-        get(url('coursesUrl'), {}, function (err, res) {
-            if (err) {
-                fn(err);
-            }
-            else if (res.data) {
-                if (res.data[id]) {
-                    fn(null, res.data[id]);
-                } else {
-                    fn(new Error('No course has that ID!'));
-                }
-            }
-        });
-    };
-
     _api.login = function (email, password, fn) {
         post(url('loginUrl'), {email: email, password: password}, fn);
     };
@@ -82,7 +67,7 @@ axios.defaults.withCredentials = true;
     };
 
     _api.allUsers = function (fn) {
-    	get(url('allUsers'), {}, fn);
+        get(url('allUsers'), {}, fn);
     };
 
     _api.myEntries = function (id, fn) {
@@ -94,7 +79,7 @@ axios.defaults.withCredentials = true;
     };
 
     _api.verifyEntry = function (user, fn) {
-    	post(url('editUserUrl'), {id: user._id, verified: true}, fn);
+        post(url('editUserUrl'), {id: user._id, verified: true}, fn);
     };
 
     _api.approvePairing = function (entry, fn) {
@@ -113,19 +98,19 @@ axios.defaults.withCredentials = true;
         post(url('notifyUserUrl'), {request: entry._id}, fn);
     };
 
-    _api.signup = function(user, fn) {
+    _api.signup = function (user, fn) {
         post(url('signupUrl'), user, fn);
     };
 
-    _api.editUser = function(user, fn) {
+    _api.editUser = function (user, fn) {
         post(url('editUserUrl'), user, fn);
     }
 
-    _api.getUser = function(id, fn) {
+    _api.getUser = function (id, fn) {
         get(url('getUserUrl'), {id: id}, fn);
     }
 
-    _api.submitTutorRequest = function(request, fn) {
+    _api.submitTutorRequest = function (request, fn) {
         post(url('newEntryUrl'), {
             fullName: request.firstName + ' ' + request.lastName,
             gender: request.gender,
@@ -140,7 +125,7 @@ axios.defaults.withCredentials = true;
             state: "MANUAL",
             ideas: request.ideas
         }, fn);
-    	//post(url('newEntryUrl'), request, fn);
-	    //post(url('newEntryUrl'), {fullName: request.fullName, gender: request.gender, grade: request.grade, email: request.email, cellPhoneNum: request.cellPhoneNum, parentFullName: request.parentFullName, parentEmail: request.parentEmail, parentCellPhoneNum: request.parentCellPhoneNum, payment: request.payment, courses: request.courses}, fn);	
+        //post(url('newEntryUrl'), request, fn);
+        //post(url('newEntryUrl'), {fullName: request.fullName, gender: request.gender, grade: request.grade, email: request.email, cellPhoneNum: request.cellPhoneNum, parentFullName: request.parentFullName, parentEmail: request.parentEmail, parentCellPhoneNum: request.parentCellPhoneNum, payment: request.payment, courses: request.courses}, fn);
     };
 })();

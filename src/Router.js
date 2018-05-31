@@ -65,17 +65,17 @@ export default new Router({
             component: ListUsers
         },
         {
-            path: '/edituser',
+            path: '/edit-user',
             name: 'EditUser',
             component: EditUser
         },
         {
-            path: '/admin/edituser/:id',
+            path: '/admin/edit-user/:id',
             name: 'AdminEditUser',
             component: AdminEditUser
         },
         {
-            path: '/editUser/success',
+            path: '/edit-user/success',
             name: 'EditUserSuccess',
             component: EditUserSuccess
         },
