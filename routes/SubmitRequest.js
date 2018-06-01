@@ -9,8 +9,8 @@ module.exports = {
     '/api/submit-tutor-request': {
         methods: ['post'],
         middleware: [boiler.requireFields(['fullName', 'gender', 'grade', 'email', 'cellPhoneNum', 'parentFullName', 'parentEmail', 'parentCellPhoneNum', 'payment', 'courses']),
-            boiler.makeInts(['grade']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum', 'parentCellPhoneNum']), boiler.makeAlphas(['gender', 'payment']),
-            boiler.makeAlphaWithSpaces(['fullName', 'parentFullName']), boiler.handleErrors],
+            boiler.makeInts(['grade']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum', 'parentCellPhoneNum']), boiler.makeAlphas(['gender']),
+            boiler.makeAlphaWithSpaces(['fullName', 'parentFullName']), boiler.makeAlphaSpecials(['payment']), boiler.handleErrors],
         fn: function (req, res, next) {
             let options = {
                 fullName: req.body.fullName,

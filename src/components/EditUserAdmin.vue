@@ -1,117 +1,148 @@
 <template>
-    <div class="editUserAdmin">
-        <h2>Edit User Admin</h2>
-        <hr style="width: 90%">
-        <br>
-        <form action="" method="">
-            <table class="postForm">
-                <tbody>
-                <tr>
-                    <td style="width: 65px; text-align: center">Full Name</td>
-                    <td>
-                        <input name="fullName" style="width: 145px;" type="text" v-model="user.fullName"  required>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 65px; text-align: center">Password</td>
-                    <td>
-                        <input name="password" style="width: 145px;" type="password" v-model="user.password" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 65px; text-align: center">Gender</td>
-                    <td>
-                        <input name="gender" id="boy" value="MALE" style="width: 145px;" type="radio" v-model="user.gender" required>
-                        <span>Boy</span>
-                        <br>
-                        <input name="gender" id="girl" value="FEMALE" style="width: 145px;" type="radio" v-model="user.gender" required>
-                        <span>Girl</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 65px; text-align: center">Grade</td>
-                    <td>
-                        <input name="grade" id="grade9" value="9" style="width: 145px;" type="radio" v-model="user.grade" required>
-                        <span>9th</span>
-                        <br>
-                        <input name="grade" id="grade10" value="10" style="width: 145px;" type="radio" v-model="user.grade" required>
-                        <span>10th</span>
-                        <br>
-                        <input name="grade" id="grade11" value="11" style="width: 145px;" type="radio" v-model="user.grade" required>
-                        <span>11th</span>
-                        <br>
-                        <input name="grade" id="grade12" value="12" style="width: 145px;" type="radio" v-model="user.grade" required>
-                        <span>12th</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 65px; text-align: center">Email</td>
-                    <td>
-                        <input name="email" style="width: 145px;" type="email" v-model="user.email" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 65px; text-align: center">Cellphone Number (Format: xxx-xxx-xxxx)</td>
-                    <td>
-                        <input name="cellPhoneNum" style="width: 145px;" type="text" pattern="^\d{3}-\d{3}-\d{4}" v-model="user.cellPhoneNum" required>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 65px; text-align: center">What type of tutor are you?</td>
-                    <td>
-                        <input name="userGroup" value="TUTOR" style="width: 145px;" type="checkbox" v-model="user.userGroup" required>
-                        <span>One-on-one tutor</span>
-                        <br>
-                        <input name="userGroup" value="PACK_TUTOR" style="width: 145px;" type="checkbox" v-model="user.userGroup" required>
-                        <span>PACK tutor</span>
-                        <input name="userGroup" value="ADMIN" style="width: 145px;" type="checkbox" v-model="user.userGroup">
-                        <span>Admin</span>
-                    </td>
-                </tr>
-                <div v-if="user.userGroup.includes('TUTOR')">
-                    <tr>
-                        <td style="width: 65px; text-align: center">How many students can you realistically tutor at one time?</td>
-                        <td>
-                            <input name="maxStudents" id="maxStudents1" value="1" style="width: 145px;" type="radio" v-model="user.maxStudents">
-                            <span>1</span>
-                            <br>
-                            <input name="maxStudents" id="maxStudents2" value="2" style="width: 145px;" type="radio" v-model="user.maxStudents">
-                            <span>2</span>
-                            <br>
-                            <input name="maxStudents" id="maxStudents3" value="3" style="width: 145px;" type="radio" v-model="user.maxStudents">
-                            <span>3</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 65px; text-align: center">Form of payment?</td>
-                        <td>
-                            <input name="payment" id="paymentCash" value="CASH" style="width: 145px;" type="radio" v-model="user.payment">
-                            <span>ONLY Cash</span>
-                            <input name="payment" id="paymentBoth" value="BOTH" style="width: 145px;" type="radio" v-model="user.payment">
-                            <span>Community Service and/or Cash</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 65px; text-align: center">What courses are you willing to tutor?</td>
-                        <td>
-                            <div v-for="(course, courseCode) in courses">
-                                <input name="courses" :value="courseCode" style="width: 145px;" type="checkbox" v-model="user.courses">
-                                <span>{{ course }}</span>
-                            </div>
-                        </td>
-                    </tr>
+    <form class="formyboy justify-content-center" @submit="editUser" action="/edit-user/success" method="GET">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" class="form-control" id="fullName" placeholder="Enter fullname" v-model="user.fullName">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" v-model="user.password">
+        </div>
+        <div class="form-group">
+            <label for="repeatPassword">Repeat Password</label>
+            <input type="password" class="form-control" id="repeatPassword" placeholder="Password"
+                   v-model="user.repeatedPassword">
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="MALE" v-model="user.gender">
+                <label class="form-check-label" for="male">
+                    Male
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="FEMALE"
+                       v-model="user.gender">
+                <label class="form-check-label" for="female">
+                    Female
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Grade</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="9" value="9" v-model="user.grade">
+                <label class="form-check-label" for="9">
+                    9th Grade
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="10" value="10" v-model="user.grade">
+                <label class="form-check-label" for="10">
+                    10th Grade
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="11" value="11" v-model="user.grade">
+                <label class="form-check-label" for="11">
+                    11th Grade
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="grade" id="12" value="12" v-model="user.grade">
+                <label class="form-check-label" for="12">
+                    12th Grade
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                   v-model="user.email">
+            <small id="emailHelp" class="form-text text-muted">We will only contact you through email as a last resort.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="cellPhoneNum">Cellphone Number</label>
+            <input type="text" pattern="^\d{3}-\d{3}-\d{4}" class="form-control" id="cellPhoneNum"
+                   aria-describedby="cellHelp" placeholder="Enter cellphone number" v-model="user.cellPhoneNum">
+            <small id="cellHelp"
+                   class="form-text text-muted">Cellphone numbers should be entered in xxx-xxx-xxxx format.
+            </small>
+        </div>
+        <div class="form-group">
+            <label>What type of tutor are you?</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="userGroup" id="tutor" value="TUTOR"
+                       v-model="user.userGroup">
+                <label class="form-check-label" for="tutor">
+                    Individual Tutor
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="userGroup" id="pack_tutor" value="PACK_TUTOR"
+                       v-model="user.userGroup">
+                <label class="form-check-label" for="pack_tutor">
+                    Pack Tutor
+                </label>
+            </div>
+        </div>
+        <div v-if="user.userGroup && user.userGroup.includes('TUTOR')">
+            <div class="form-group">
+                <label>How many students can you realistically tutor at one time?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="maxStudents" id="1" value="1"
+                           v-model="user.maxStudents">
+                    <label class="form-check-label" for="1">
+                        1
+                    </label>
                 </div>
-                <tr>
-                    <td colspan="2"
-                        style="padding: 5px 0; border: none; background: none; text-align: center; font-weight: normal; padding-bottom: 20px">
-                        <input value="Submit" style="margin: 0px;" type="button" v-on:click="updateUser">
-                    </td>
-                </tr>
-                </tbody>
-                <p v-if="error">{{ error }}</p>
-            </table>
-        </form>
-    </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="maxStudents" id="2" value="2"
+                           v-model="user.maxStudents">
+                    <label class="form-check-label" for="2">
+                        2
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="maxStudents" id="3" value="3"
+                           v-model="user.maxStudents">
+                    <label class="form-check-label" for="3">
+                        3
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Form of payment?</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment" id="cash" value="CASH"
+                           v-model="user.payment">
+                    <label class="form-check-label" for="cash">
+                        Only cash
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment" id="both" value="BOTH"
+                           v-model="user.payment">
+                    <label class="form-check-label" for="both">
+                        Community service and/or cash
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>What courses are you willing to tutor?</label>
+                <div class="form-check" v-for="(course, courseCode) in courseList">
+                    <input class="form-check-input" type="checkbox" :id="courseCode" :value="courseCode"
+                           v-model="user.courses">
+                    <label class="form-check-label" :for="courseCode">
+                        {{course}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
 </template>
 
 <script>
@@ -119,58 +150,85 @@
         data() {
             return {
                 loggedIn: false,
-                user: {},
-                courses: []
+                user: {
+                    fullName: "",
+                    password: "",
+                    repeatedPassword: "",
+                    gender: "",
+                    grade: "",
+                    email: "",
+                    cellPhoneNum: "",
+                    userGroup: [],
+                    courses: []
+                },
+                courseList: []
             }
         },
         created() {
             let vm = this;
             _api.session(function (err, res) {
                 if (err) {
-                    console.log("Not logged in." + err);
                     vm.$router.push('/login');
                 } else if (res.data) {
-                    if(res.data.userGroup.includes('ADMIN')) {
-                        vm.loggedIn = true;
-                        _api.courses(function(err, res) {
-                            if(err) {
-                                console.log("Error getting courses." + err);
-                            } else if(res.data) {
-                                vm.courses = res.data;
-                            }
-                        });
-                        _api.getUser(vm.$route.params.id, function(err, res) {
-                            if(err) {
-                                console.log("Error getting user." + err);
-                            } else if(res.data) {
-                                vm.user = res.data;
-                            }
-                        });
-                    } else {
-                        console.log("Improper credentials.");
-                        vm.$router.push('/');
+                    vm.loggedIn = true;
+                    if (!res.data.userGroup.includes('ADMIN')) {
+                        alert('Improper credentials.');
+                        vm.$router.push('/console');
                     }
+                }
+            });
+
+            _api.getUser(vm.$route.params.id, function (err, res) {
+                if (err) {
+                    alert('Problem obtaining user with the specified id.');
+                    vm.$router.push('/console');
+                } else if (res.data) {
+                    vm.user = res.data;
+                }
+            });
+
+            _api.courses(function (err, res) {
+                if (err) {
+                    console.log("Error getting courses." + err);
+                } else if (res.data) {
+                    vm.courseList = res.data;
                 }
             });
         },
         methods: {
-            updateUser() {
+            editUser() {
                 let vm = this;
-                if(vm.user.userGroup.length < 1) {
-                    console.log("No user group selected.");
-                    alert("Please select what type of tutor you are.");
+                if (!vm.user.userGroup || vm.user.userGroup.length < 1) {
+                    event.preventDefault();
+                    return alert("Please select what type of tutor you are.");
                 }
-                vm.user.id = vm.user._id;
-                vm.user.grade = vm.user.grade.toString();
-                vm.user.maxStudents = vm.user.maxStudents.toString();
-                _api.editUser(vm.user, function(err, res) {
-                    if(err) {
+                if (!vm.user.userGroup || (vm.user.userGroup.includes('TUTOR') && vm.user.courses.length < 1)) {
+                    event.preventDefault();
+                    return alert("Please select at least one course.");
+                }
+                if (vm.user.password !== vm.user.repeatedPassword) {
+                    event.preventDefault();
+                    return alert("Passwords don't match.");
+                }
+                if (vm.user.grade) vm.user.grade = vm.user.grade.toString();
+                if (vm.user.maxStudents) vm.user.maxStudents = vm.user.maxStudents.toString();
+
+                _api.editUser(vm.user, function (err, res) {
+                    if (err) {
                         console.log("Error updating profile." + err);
-                    } else if(res.data) {
-                        vm.$router.push('/edituser/success');
+                    } else if (res.data) {
+                        vm.$router.push('/edit-user/success');
                     }
                 });
             }
         }
     }
 </script>
+<style scoped>
+    .formyboy {
+        padding: 3rem;
+        border-width: 1px;
+        border: solid #f7f7f9;
+        width: 50%;
+    }
+</style>

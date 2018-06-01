@@ -107,7 +107,7 @@ axios.defaults.withCredentials = true;
     };
 
     _api.getUser = function (id, fn) {
-        get(url('getUserUrl'), {id: id}, fn);
+        get(url('getUserUrl'), {_id: id}, fn);
     };
 
     _api.newRequest = function (request, fn) {

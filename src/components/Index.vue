@@ -1,5 +1,5 @@
 <template>
-    <form class="formyboy justify-content-center" @submit="newRequest" action="" method="">
+    <form class="formyboy justify-content-center" @submit="newRequest" action="/request/success" method="GET">
         <div class="form-group">
             <label for="fullName">Full Name</label>
             <input type="text" class="form-control" id="fullName" placeholder="Enter fullname" v-model="entry.fullName"

@@ -6,10 +6,10 @@ const NAME = 'Modify User';
 module.exports = {
     '/api/edituser': {
         methods: ['post'],
-        middleware: [boiler.requireFields(['id']), boiler.makeAlphaSpecials(['id']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
+        middleware: [boiler.requireFields(['_id']), boiler.makeAlphaSpecials(['_id']), boiler.makeAlphaWithSpaces(['fullName']), boiler.makeAlphas(['gender', 'payment']),
             boiler.makeInts(['grade', 'maxStudents']), boiler.makeEmails(['email']), boiler.makePhoneNums(['cellPhoneNum']), boiler.handleErrors],
         fn: function (req, res, next) {
-            const id = req.body.id;
+            const id = req.body._id;
 console.log(req.user);
             if (req.user && (req.user.userGroup.includes('ADMIN') || req.user._id === id)) {
                 let updateFields = {};
