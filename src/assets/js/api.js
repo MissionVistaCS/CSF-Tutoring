@@ -79,7 +79,7 @@ axios.defaults.withCredentials = true;
     };
 
     _api.verifyEntry = function (user, fn) {
-        post(url('editUserUrl'), {id: user._id, verified: true}, fn);
+        post(url('editUserUrl'), {_id: user._id, verified: true}, fn);
     };
 
     _api.approvePairing = function (entry, fn) {

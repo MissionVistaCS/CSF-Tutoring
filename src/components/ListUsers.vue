@@ -60,13 +60,13 @@
                         <p v-if="openedUser.grade">Grade: {{openedUser.grade}}</p>
                         <p v-if="openedUser.email">Email: {{openedUser.email}}</p>
                         <p v-if="openedUser.cellPhoneNum">Cell Phone Num: {{openedUser.cellPhoneNum}}</p>
-                        <p v-if="openedUser.userGroup">User Groups: {{user.userGroup.join(', ')}}</p>
-                        <p v-if="openedUser.created">Created: {{new Date(user.created).toDateString()}}</p>
-                        <p v-if="openedUser.active">Active: {{user.active}}</p>
+                        <p v-if="openedUser.userGroup">User Groups: {{openedUser.userGroup.join(', ')}}</p>
+                        <p v-if="openedUser.created">Created: {{new Date(openedUser.created).toDateString()}}</p>
+                        <p v-if="openedUser.active">Active: {{openedUser.active}}</p>
                         <p v-if="openedUser.verified">Verified: {{user.verified}}</p>
-                        <p v-if="openedUser.cellPhoneVerified">Cellphone Verified: {{user.cellPhoneVerified}}</p>
-                        <p v-if="openedUser.warnings">Warnings: {{user.warnings}}</p>
-                        <p v-if="openedUser.maxStudents">Max Students: {{user.maxStudents}}</p>
+                        <p v-if="openedUser.cellPhoneVerified">Cellphone Verified: {{openedUser.cellPhoneVerified}}</p>
+                        <p v-if="openedUser.warnings">Warnings: {{openedUser.warnings}}</p>
+                        <p v-if="openedUser.maxStudents">Max Students: {{openedUser.maxStudents}}</p>
                         <p v-if="openedUser.payment">Payment: {{openedUser.payment}}</p>
                         <p v-if="openedUser.courses">Courses: {{openedUser.courses.join(', ')}}</p>
                     </div>
