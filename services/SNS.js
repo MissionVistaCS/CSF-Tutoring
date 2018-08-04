@@ -22,7 +22,7 @@ function sendMessage (message, phoneNumber, fn) {
 }
 
 function sendToAdmins (message, fn) {
-    User.find({ userGroup: { $all: ['ADMIN'] }, verified: true }, function (err, users) {
+    User.find({ userGroup: { $all: ['ADMIN'] } }, function (err, users) {
         if (err) {
             return fn(err);
         }
