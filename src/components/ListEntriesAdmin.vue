@@ -26,7 +26,7 @@
                 <td>{{new Date(entry.created).toDateString()}}</td>
                 <td>{{entry.state}}</td>
                 <td>{{entry.notifications.length === 0 ? 'None sent' : entry.notifications.join(', ')}}</td>
-                <td>{{new Date(entry.pairingAcceptance).toDateString()}}</td>
+                <td>{{entry.pairingAcceptance ? new Date(entry.pairingAcceptance).toDateString() : "Not accepted"}}</td>
                 <td v-if="entry.tutor">{{entry.tutor.fullName}}</td>
                 <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#entry">Open Entry</button></td>
             </tr>

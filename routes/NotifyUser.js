@@ -2,7 +2,8 @@ const boiler = require(_base + 'middleware/Boiler'),
     auth = require(_base + 'middleware/Authentication'),
     TutorRequestEntry = require(_base + 'models/TutorRequestEntry'),
     sprintf = require('sprintf-js').sprintf,
-    SNS = require(_base + 'services/SNS');
+    SNS = require(_base + 'services/SNS'),
+    courses = require(_base + 'resources/courses');
 
 const NAME = 'Notify User';
 
@@ -23,6 +24,10 @@ module.exports = {
 
                 if (!entry) {
                     return res.sendBaseResponse(NAME, new UserError('No entry found with that id'));
+                }
+
+                for(let i = 0; i < entry.courses.length; i++) {
+                    entry.courses[i] = courses[entry.courses[i]];
                 }
 
                 let message = sprintf("Here is the information for the student that you will be tutoring.\n\nStudent Information:\n%s\n%s\nNeeds help with:\n%s\n\nParent Information:\n%s\n%s\n\n" +

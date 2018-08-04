@@ -63,7 +63,7 @@
                         <p v-if="openedUser.userGroup">User Groups: {{openedUser.userGroup.join(', ')}}</p>
                         <p v-if="openedUser.created">Created: {{new Date(openedUser.created).toDateString()}}</p>
                         <p v-if="openedUser.active">Active: {{openedUser.active}}</p>
-                        <p v-if="openedUser.verified">Verified: {{user.verified}}</p>
+                        <p v-if="openedUser.verified">Verified: {{openedUser.verified}}</p>
                         <p v-if="openedUser.cellPhoneVerified">Cellphone Verified: {{openedUser.cellPhoneVerified}}</p>
                         <p v-if="openedUser.warnings">Warnings: {{openedUser.warnings}}</p>
                         <p v-if="openedUser.maxStudents">Max Students: {{openedUser.maxStudents}}</p>
