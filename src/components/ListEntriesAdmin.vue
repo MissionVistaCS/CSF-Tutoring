@@ -64,6 +64,12 @@
                     <div class="modal-footer" v-if="openedEntry">
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state !== 'INACTIVE'" v-on:click="deactivate(openedEntry)">Deactivate</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="newPair(openedEntry)">New Pair</button>
+                        <button class="btn btn-default dropdown-toggle" id="manualPair" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manual Pair
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="manualPair">
+                            <button v-for="user in users" class="dropdown-item" type="button" v-on:click="manualPair(openedEntry, user)">{{user.fullName}}</button>
+                        </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.state === 'PENDING'" v-on:click="approvePairing(openedEntry)">Approve Pairing</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-if="openedEntry.tutor && (openedEntry.state === 'UNACCEPTED' || openedEntry.state === 'ACTIVE')" v-on:click="notifyTutor(openedEntry)">Notify Tutor</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="editRequest(openedEntry)">Edit</button>
@@ -83,6 +89,7 @@
                 loggedIn: false,
                 user: false,
                 entries: [],
+                users: [],
                 openedEntry: null
             }
         },
@@ -123,6 +130,34 @@
                     });
                 }
             });
+
+
+
+            _api.allUsers(function (err, res) {
+                if (err) {
+                    console.log("Error getting users.");
+                }
+                else if (res.data) {
+                    vm.users = res.data;
+                    vm.users.forEach(function (user) {
+                        _api.courses(function (err, res) {
+                            if (err) {
+                                console.log("Error getting courses.");
+                            } else if (res.data) {
+                                user.courses.forEach(function (courseId, index) {
+                                    user.courses[index] = res.data[courseId];
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+
+
+
+
+
+
         },
         beforeRouteUpdate (to, from, next) {
             let vm = this;
@@ -134,6 +169,26 @@
                 {
                     vm.loggedIn = true;
                     vm.user = res.data;
+                }
+            });
+
+            _api.allUsers(function (err, res) {
+                if (err) {
+                    console.log("Error getting users.");
+                }
+                else if (res.data) {
+                    vm.users = res.data;
+                    vm.users.forEach(function (user) {
+                        _api.courses(function (err, res) {
+                            if (err) {
+                                console.log("Error getting courses.");
+                            } else if (res.data) {
+                                user.courses.forEach(function (courseId, index) {
+                                    user.courses[index] = res.data[courseId];
+                                });
+                            }
+                        });
+                    });
                 }
             });
 
@@ -205,6 +260,16 @@
                     else if (res.data)
                     {
                         alert("Successfully initiated new pairing for entry. Please wait for a text message and then reload the page.");
+                    }
+                });
+            },
+            manualPair(entry, user) {
+                _api.manualPair(entry, user, function (err, res) {
+                    if (err) {
+                        alert("Error initiating manual pair");
+                    }
+                    else if (res.data) {
+                        alert("Successfully initiated new manual pairing. Please wait for a text message and then reload the page.");
                     }
                 });
             },

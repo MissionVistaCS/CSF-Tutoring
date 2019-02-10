@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <div class="boardBanner">
-            <div class="boardTitle">Login</div>
+            <div class="boardTitle">CSF Tutor Portal</div>
         </div>
         <hr style="width: 90%">
         <br>
@@ -17,7 +17,7 @@
                 <tr>
                     <td style="width: 65px; text-align: center">Password</td>
                     <td>
-                        <input name="password" style="width: 145px;" type="password" v-model="password">
+                        <input name="password" style="width: 145px;" type="password" v-model="password" @keyup.enter="login">
                     </td>
                 </tr>
                 <tr>

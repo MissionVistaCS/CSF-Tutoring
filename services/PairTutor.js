@@ -119,5 +119,38 @@ module.exports = {
                 });
             });
         }, 0);
+    },
+    manualPairRequestWithTutor(entryID, tutorID) {
+        setTimeout(function () {
+            TutorRequestEntry.findById(entryID, function (err, entry) {
+                if(err) {
+                    return console.info("Error in querying tutor request entries");
+                }
+                else {
+                    User.findById(tutorID, function (err, user) {
+                        if (err) {
+                            return console.info("Error in querying users");
+                        }
+                        else {
+                            // TODO: doesn't manually pair if currently exceeds how many tutees the tutor can take
+                            entry.tutor = user._id;
+                            entry.state = 'PENDING';
+                            entry.notifications = [];
+                            entry.pairingAcceptance = null;
+                            entry.save(function (err) {
+                                if (err) {
+                                    return console.info("Error in saving assigned tutor to entry");
+                                }
+                                SNS.sendToAdmins("Pairing success: Tutee " + entry.fullName + " with tutor " + user.fullName, function (err) {
+                                    if (err) {
+                                        console.info("Error in notifying admins of pairing success between tutee " + entry.fullName + " and tutor " + user.fullName);
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        });
     }
 };

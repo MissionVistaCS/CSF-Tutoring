@@ -5,14 +5,6 @@ module.exports = {
 		methods: ['get'],
 		middleware: [],
 		fn: function(req, res, next) {
-		/*	let retArray = [];
-			for(let entry in courses) {
-				let push = {};
-				push[entry] = courses[entry];
-				retArray.push(push);
-			}
-			res.json({ retArray });
-		*/
 			res.sendBaseResponse("Get courses", null, courses);
 		}
 	}

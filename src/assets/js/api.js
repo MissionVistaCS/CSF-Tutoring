@@ -13,6 +13,7 @@ axios.defaults.withCredentials = true;
         allUsers: 'api/list-users',
         editRequestUrl: 'api/edit-request',
         newPairUrl: 'api/new-pair',
+        manualPairUrl: 'api/manual-pair',
         notifyUserUrl: 'api/notify-user',
         signupUrl: 'api/signup',
         editUserUrl: 'api/edituser',
@@ -92,6 +93,10 @@ axios.defaults.withCredentials = true;
 
     _api.newPair = function (entry, fn) {
         post(url('newPairUrl'), {request: entry._id}, fn);
+    };
+
+    _api.manualPair = function (entry, user, fn) {
+        post(url('manualPairUrl'), {entry: entry._id, user: user._id}, fn);
     };
 
     _api.notifyTutor = function (entry, fn) {

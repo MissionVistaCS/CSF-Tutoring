@@ -1,5 +1,8 @@
 <template>
+    
+    <!-- temporary until BS is figured out -->
     <form class="formyboy justify-content-center" @submit="signup" action="/signup/success" method="GET">
+        <h1> Signup to be a CSF Tutor! </h1>
         <div class="form-group">
             <label for="fullName">Full Name</label>
             <input type="text" class="form-control" id="fullName" placeholder="Enter fullname" v-model="user.fullName"
