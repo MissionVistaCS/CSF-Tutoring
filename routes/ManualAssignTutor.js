@@ -17,7 +17,7 @@ module.exports = {
 
             TutorRequestEntry.findOne({_id: entryID}).populate('tutor').exec(function (err, entry) {
                 if (err) {
-                    return res.sendBaseResponse(NAME, new UserError('Mongoose error w/ querying user: duplicate key, invalid field types, etc.'));
+                    return res.sendBaseResponse(NAME, err);
                 }
 
                 if (!entry) {

@@ -7,7 +7,7 @@ const NAME = 'Verify Cellphone';
 module.exports = {
     '/api/verify-cellphone/:id': {
         methods: ['get'],
-        middleware: [boiler.requireFields(['id']), boiler.makeAlphaNumerics(['id']), boiler.handleErrors],
+        middleware: [boiler.requireFields(['id']), boiler.makeAlphaSpecials(['id']), boiler.handleErrors],
         fn: function (req, res, next) {
             let verifyEntryId = req.params.id;
             CellphoneVerifyEntry.findById(verifyEntryId).populate('user').exec(function (err, entry) {
@@ -20,6 +20,7 @@ module.exports = {
                         res.sendBaseResponse(NAME, null, 'Verified cellphone');
                     });
                 }
+                return res.sendBaseResponse(NAME, new UserError('Did not find CellPhoneVerifyEntry with that id in the database.'));
             });
         }
     }

@@ -75,6 +75,9 @@
                                 v-if="openedUser.verified !== true" v-on:click="verify(openedUser)">Verify
                         </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"
+                                v-if="openedUser.cellPhoneVerified !== true" v-on:click="cellPhoneVerify(openedUser)">Re-send Cell Verification
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
                                 v-on:click="editUser(openedUser)">Edit
                         </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"
@@ -178,6 +181,17 @@
                     else if (res.data) {
                         alert("Successfully verified user!");
                         user.verified = true;
+                    }
+                });
+            },
+            cellPhoneVerify(user) {
+                _api.verifyCellPhone(user, function (err, res) {
+                    if (err) {
+                        alert("Error verifying cellphone.");
+                    }
+                    else if (res.data) {
+                        alert("Successfully verified cellphone!");
+                        user.cellPhoneVerified = true;
                     }
                 });
             },
