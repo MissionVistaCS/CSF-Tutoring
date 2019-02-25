@@ -18,7 +18,8 @@ axios.defaults.withCredentials = true;
         signupUrl: 'api/signup',
         editUserUrl: 'api/edituser',
         getUserUrl: 'api/get-user',
-        newEntryUrl: 'api/submit-tutor-request'
+        newEntryUrl: 'api/submit-tutor-request',
+        sendCellPhoneVerificationUrl: '/api/send-cellphone-verification'
     };
 
     function url(api) {
@@ -81,6 +82,10 @@ axios.defaults.withCredentials = true;
 
     _api.verifyEntry = function (user, fn) {
         post(url('editUserUrl'), {_id: user._id, verified: true}, fn);
+    };
+
+    _api.verifyCellPhone = function (user, fn) {
+        post(url('sendCellPhoneVerificationUrl'), user, fn);
     };
 
     _api.approvePairing = function (entry, fn) {
