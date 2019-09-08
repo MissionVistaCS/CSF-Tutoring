@@ -3,7 +3,6 @@ let _api = {};
 axios.defaults.withCredentials = true;
 
 (function () {
-    const root = 'http://localhost:3000/';
     const urls = {
         sessionUrl: 'api/session',
         coursesUrl: 'api/courses',
@@ -22,7 +21,7 @@ axios.defaults.withCredentials = true;
     };
 
     function url(api) {
-        return root + urls[api];
+        return urls[api];
     }
 
     function get(url, params, fn) {
