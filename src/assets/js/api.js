@@ -3,6 +3,7 @@ let _api = {};
 axios.defaults.withCredentials = true;
 
 (function () {
+	const root = 'http://tutoring.mvhscsf.org/';
     const urls = {
         sessionUrl: 'api/session',
         coursesUrl: 'api/courses',
@@ -21,7 +22,7 @@ axios.defaults.withCredentials = true;
     };
 
     function url(api) {
-        return urls[api];
+        return root + urls[api];
     }
 
     function get(url, params, fn) {
