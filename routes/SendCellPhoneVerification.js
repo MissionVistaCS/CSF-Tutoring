@@ -21,7 +21,7 @@ module.exports = {
                 if (!cellPhoneVerifyEntry) {
                     return res.sendBaseResponse(NAME, new UserError('No CellphoneVerifyEntry with that Tutor ID found.'));
                 }
-                User.findbyId(tutorId).exec(function (err, user) {
+                User.findById(tutorId).exec(function (err, user) {
                     if (err) {
                         return res.sendBaseResponse(NAME, err);
                     }
@@ -37,7 +37,6 @@ module.exports = {
                         return res.sendBaseResponse(NAME, null, 'Resent Cellphone Verification Message to Tutor');
                     });
                 })
-                return res.sendBaseResponse(NAME, null, cellPhoneVerifyEntry);
             }); 
         }
     }
